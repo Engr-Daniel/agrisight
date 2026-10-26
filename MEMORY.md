@@ -1,43 +1,32 @@
-# MEMORY.md — AgriSight durable project context
-Last updated: 2026-10-26
+# MEMORY.md — AgriSight durable context
+Updated 2026-10-26.
 
-## Identity
-- Project: **AgriSight — Agricultural Data Intelligence & Decision Support Platform**.
-- Owner and learner: Oyewale Daniel (GitHub: `Engr-Daniel`).
-- Repository: `Engr-Daniel/agrisight`; **private**, default branch `master`.
-- Objective: flagship portfolio + structured hands-on learning in modern analytics engineering, GIS, quality, SQL, BI and evaluation.
-- Collaboration: assistant acts as **mentor/reviewer**, explaining reasons and requiring reproducible evidence.
+## Project identity
+Private repository: `Engr-Daniel/agrisight` (default `master`). Owner: Oyewale Daniel. Mentored hands-on portfolio in agricultural data intelligence, database engineering, quality controls, geospatial analytics, BI and rigorous evaluations.
 
-## Confirmed commitments
-- Private-first development; no publication or public deployment without explicit owner consent.
-- Independent project, **not** a reproduction of a proprietary Petgrave.io client system.
-- Real permitted anonymized official survey data and clearly labelled synthetic operational profiles will have separate provenance and analysis paths.
-- No real PII, confidential client information, or unnecessary precise location data.
-- 55,000 registration entries is a **synthetic demonstration target**, not an achievement or real field registration.
-- Documentation files required: `README.md`, `AGENTS.md`, `TASK.md`, `MEMORY.md`.
-- Complete milestones only when independently verifiable evidence exists.
+## Confirmed
+- Private-first; explicit authorization required before any public code/data/demo release.
+- Independent of confidential Petgrave.io and Arzikin Noma Africa client work.
+- No field registration or real farmer profiles claimed.
+- Public survey analysis and 55k synthetic operational *role entries* are different data families and cannot be naively pooled.
+- No raw client material, personal identifying data or precise farm coordinates should be committed.
+- AGENTS.md governs disciplined small increments with explanations and evidence.
 
-## Proposed, NOT approved technology decisions
-Python/SQL, PostgreSQL(+PostGIS), DuckDB, dbt, one quality framework (Pandera or GX Core), Power BI, Streamlit/Plotly, pytest, Docker, GitHub Actions. LLM integration is optional M5. Formalize architectural choices in ADRs before binding integrations.
+## M0 work produced (drafts, not owner-approved)
+- Decision inventory: `docs/M0_DECISION_QUESTIONS.md` (10 questions, proposed personas).
+- Acceptance criteria: `docs/M0_ACCEPTANCE_CRITERIA.md`.
+- Source metadata audit: `docs/M0_SOURCE_ASSESSMENT.md`.
+- Architecture & grain proposal: `docs/adr/ADR-001-stack-and-grain.md`.
+- Location/privacy proposal: `docs/adr/ADR-002-geography-and-privacy.md`.
+- No public microdata actually downloaded, no survey-weight code audited, no real dashboard, no generator, and no working architecture demonstrated yet.
 
-## Current state
-- M0 documentation and skeletal Python packaging are being initialized.
-- **No operational pipeline, validated public dataset, 55k generator, dashboard, benchmark, or deployment exists yet.**
-- CI results and clean-install reproduction are not yet verified at initialization.
-- Next: M0-01 business/user questions and measurable acceptance criteria.
+## Metadata findings (2026-10-26)
+- NASS 2023 household sample survey, with multistage weighting and anonymized released microdata. Precise GPS/address identifiers withheld and geography below LGA suppressed in anonymized distribution. Source: https://microdata.worldbank.org/catalog/8194 and https://microdata.nigerianstat.gov.ng/index.php/catalog/173.
+- GHS Panel 2023–24 is a national/zone representative household panel (~5,000 households) under a research data licence, **not** a complete farmer registry or necessarily an LGA-resolution dataset. Source: https://datacatalog.worldbank.org/search/dataset/0066579/nigeria-general-household-survey-panel-2023-2024.
+- Actual dataset access permissions, released variables, consent scope, geography and weights remain to be checked before ingestion.
 
-## Open design questions
-1. Do 50,000 farmers + 5,000 processors mean roles, distinct persons, or both? What if a person qualifies twice?
-2. What geographic resolution can be legitimately supported by public survey datasets?
-3. Which metrics require survey weights and uncertainty intervals?
-4. What quality acceptance thresholds are defensible (completeness, suspected duplicates, back-check rates)?
-5. What is the minimum defensible set of KPI definitions and dashboard questions?
-6. Which transformations belong in PostgreSQL/dbt versus DuckDB? Which metric layer is canonical?
-7. Is a public runnable app possible using only generated and approved data, with no secret-bearing backend?
-8. Is an AI analyst worth the risk/complexity relative to traditional BI?
+## Proposed technology only
+Python, SQL, PostgreSQL/PostGIS, DuckDB, dbt, one of Pandera/GX Core, Power BI, Streamlit/Plotly, pytest, Docker, GitHub Actions. No cloud infrastructure or AI system yet.
 
-## Working log
-- 2026-10-26: Owner created private repository and requested full foundation including AGENTS/TASK/MEMORY. Initial scaffold drafted; **implementation remains planned**.
-
-## Update protocol
-After each accepted milestone: record decisions (with rationale and date), evidence links, commands/tests actually run, blockers, known limitations and next work. Don't overwrite uncertainty with invented certainty. Avoid storing personal secrets.
+## Next
+M0-04: validate microdata file permissions & codebook, KPI math test fixtures and minimal actual execution. M0 stays open until evidence and owner sign-off.
