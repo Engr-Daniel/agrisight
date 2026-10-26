@@ -1,24 +1,11 @@
-# MEMORY.md — AgriSight durable context
-Updated 2026-10-26.
+# MEMORY.md — AgriSight
+Updated: 2026-10-26.
 
-## Project
-Private repository Engr-Daniel/agrisight; development directly on master. Owner Oyewale Daniel; ChatGPT acts as learning mentor. Independent of confidential Petgrave.io/client data.
-
-## Boundaries
-Official NBS agricultural survey observations and 55,000 synthetic intended registration-role entries are separate data families. No genuine farmer profiling has been done. No personally identifiable data or actual farm coordinates to be committed. Private visibility does not waive licensing/privacy requirements.
-
-## Verified progress
-- M0 design questions, charter, evaluation proposals and ADRs drafted.
-- M0-04 six-role synthetic fixture (4 accepted roles, 3 distinct persons) with independent Python/SQLite KPI reconciliation and tests.
-- M0-05 official NBS NASS 2023 / GHS Wave 5 catalogue summaries, with dates, licences and representativeness cautions.
-- M0-05 standard-library quality contract, test fixtures for required IDs, categories, duplicate role keys and invalid booleans committed.
-- Literature/docs comparison favors Pandera provisionally for initial code-first data validation, with GX Core retained as an alternative for future operational validation reporting.
-
-## Unverified and open
-- Pandera/GX libraries were absent in the available local environment; pip install failed for lack of package network access, so no head-to-head benchmark was run.
-- Variable-level DDI/codebook, actual microdata, weights, licences for each released file, and GIS reporting resolution remain unverified.
-- Check new GitHub Actions run before claiming CI success.
-- Data model/status decisions and framework selection still require M0 sign-off.
-
-## Next
-Execute both framework prototypes in a provisioned environment; inspect released questionnaires and variable-level documentation; finalize M0 acceptance decisions.
+- Private repository Engr-Daniel/agrisight. Owner Oyewale Daniel. Work on master for now; mentor-guided engineering approach.
+- Independent of Petgrave.io client confidential materials. Synthetic registration data and official sampled survey observations never pooled as a real census.
+- M0-04 verified tiny synthetic fixture: six submissions; four accepted roles, three distinct accepted persons.
+- M0-05 dependency-free validation baseline and official NASS/GHS catalogue-level review previously committed; no original microdata or variable-level codebooks ingested yet.
+- Proposed stack: Python, SQL, PostgreSQL/PostGIS, dbt, DuckDB, one primary Python data validation framework, Power BI and Streamlit. AI optional.
+- Pandera vs GX Core initial **manual GitHub Actions experiment is available**, but is deliberately not recorded as executed until run evidence exists. GX expectations in prototype omit two Pandera checks; not semantic parity.
+- Official docs: https://pandera.readthedocs.io/en/latest/dataframe_schemas.html and https://docs.greatexpectations.io/docs/core/introduction/try_gx/
+- M0 pending actual comparison, source files/access audit, KPIs, privacy, review/sign-off.

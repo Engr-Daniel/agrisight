@@ -1,0 +1,19 @@
+name: M0 Validation Framework Comparison
+
+on:
+  workflow_dispatch:
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install research dependencies
+        run: |
+          python -m pip install -e ".[dev]"
+          python -m pip install "pandas>=2.2,<3" "pandera[pandas]>=0.25,<1" "great_expectations>=1.6,<2"
+      - name: Execute comparison
+        run: python -m agrisight.framework_comparison
