@@ -11,9 +11,9 @@ from agrisight.quality_baseline import example_inputs
 
 
 def compare() -> dict[str, object]:
+    import great_expectations as gx
     import pandas as pd
     import pandera.pandas as pa
-    import great_expectations as gx
 
     good, bad = example_inputs()
     # Nonidentifying synthetic records only.
