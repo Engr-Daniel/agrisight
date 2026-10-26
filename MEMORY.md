@@ -1,13 +1,24 @@
-# MEMORY.md — AgriSight context
+# MEMORY.md — AgriSight durable context
 Updated 2026-10-26.
 
-- Private repository Engr-Daniel/agrisight, default master. Owner Oyewale Daniel; assistant mentors a structured analytics learning project.
-- Independent of confidential Petgrave.io/Arzikin Noma Africa projects. No real registration or farmer dataset is represented.
-- Separate permitted survey microdata from clearly labelled synthetic registration demonstrations; never merge their population totals.
-- M0 initial documentation and draft ADRs merged under PR #1, commit bef7cf5.
-- M0-04 introduces a six-role **synthetic** unit test: submitted 6, accepted roles 4, distinct accepted persons 3, farmer roles 2, processor roles 2, complete accepted 3, incomplete accepted 1. One person has two roles.
-- Python and SQLite implement independent calculations checked against manual expected values; 9 targeted tests observed passing in an isolated local Python run. Full repository CI and Ruff checks not yet verified.
-- These are test examples, not empirical agricultural findings or performance benchmarks.
-- Proposed stack: Python/SQL, PostgreSQL, DuckDB, dbt, Pandera or GX Core, Power BI, Streamlit, GeoPandas/PostGIS, pytest and CI. Advanced AI optional.
-- M0 still open: source codebook/licence review, real quality schemas, architecture owner sign-off, privacy model, clean checkout and CI verification.
-- Next: actual sources and proof-of-concept validation framework, then formal M0 review.
+## Project
+Private repository Engr-Daniel/agrisight; development directly on master. Owner Oyewale Daniel; ChatGPT acts as learning mentor. Independent of confidential Petgrave.io/client data.
+
+## Boundaries
+Official NBS agricultural survey observations and 55,000 synthetic intended registration-role entries are separate data families. No genuine farmer profiling has been done. No personally identifiable data or actual farm coordinates to be committed. Private visibility does not waive licensing/privacy requirements.
+
+## Verified progress
+- M0 design questions, charter, evaluation proposals and ADRs drafted.
+- M0-04 six-role synthetic fixture (4 accepted roles, 3 distinct persons) with independent Python/SQLite KPI reconciliation and tests.
+- M0-05 official NBS NASS 2023 / GHS Wave 5 catalogue summaries, with dates, licences and representativeness cautions.
+- M0-05 standard-library quality contract, test fixtures for required IDs, categories, duplicate role keys and invalid booleans committed.
+- Literature/docs comparison favors Pandera provisionally for initial code-first data validation, with GX Core retained as an alternative for future operational validation reporting.
+
+## Unverified and open
+- Pandera/GX libraries were absent in the available local environment; pip install failed for lack of package network access, so no head-to-head benchmark was run.
+- Variable-level DDI/codebook, actual microdata, weights, licences for each released file, and GIS reporting resolution remain unverified.
+- Check new GitHub Actions run before claiming CI success.
+- Data model/status decisions and framework selection still require M0 sign-off.
+
+## Next
+Execute both framework prototypes in a provisioned environment; inspect released questionnaires and variable-level documentation; finalize M0 acceptance decisions.
