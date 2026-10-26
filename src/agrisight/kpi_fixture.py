@@ -2,6 +2,7 @@
 import sqlite3
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True)
 class Role:
     role_id: str

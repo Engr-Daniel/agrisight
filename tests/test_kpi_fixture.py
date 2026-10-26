@@ -1,10 +1,12 @@
 """Tests for person/role grain and verified numerical results."""
 import sqlite3
+
 import pytest
+
 from agrisight.kpi_fixture import ROLES, Role, python_metrics, sql_metrics
 
-EXPECTED = dict(submitted=6,accepted=4,farmers=2,processors=2,people=3,
-                complete=3,incomplete=1)
+EXPECTED = {"submitted": 6, "accepted": 4, "farmers": 2, "processors": 2,
+            "people": 3, "complete": 3, "incomplete": 1}
 
 def test_fixture_ground_truth():
     assert python_metrics() == EXPECTED
