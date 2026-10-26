@@ -1,49 +1,38 @@
-# TASK.md — AgriSight milestone tracker
-Updated: 2026-10-26.
+# TASK.md — AgriSight milestones
+Updated 2026-10-26.
 
-## M0 — Research foundation and architecture (IN PROGRESS)
-- [x] Create private repository with README.md, AGENTS.md, TASK.md and MEMORY.md.
-- [x] Draft ten stakeholder decision questions and actionable scenarios: `docs/M0_DECISION_QUESTIONS.md`.
-- [x] Draft engineering acceptance tests and metrics: `docs/M0_ACCEPTANCE_CRITERIA.md`.
-- [x] Review public metadata for two official Nigerian agricultural data sources: `docs/M0_SOURCE_ASSESSMENT.md`.
-- [x] Draft initial stack/grain and geography/privacy ADRs: `docs/adr/`.
-- [ ] Inspect source microdata codebooks, actual file access terms, sample variables, design variables, and geography.
-- [ ] Confirm person-role counts, accepted status logic, synthetic distributions and performance targets through fixtures.
-- [ ] Finalize KPI dictionary with tested numerator/denominator examples.
-- [ ] Compare primary validation framework Pandera vs GX Core in a working proof of concept.
-- [ ] Establish and **observe** passing local smoke tests, lint and GitHub Actions; record run URLs.
-- [ ] Review privacy threat model, boundary licences and disclosure policy.
-- [ ] Record owner M0 approval in `docs/M0_REVIEW.md`; only then move to M1.
+## M0 — Research foundation (IN PROGRESS)
+- [x] Private repository and starter documents.
+- [x] Ten stakeholder decision questions and proposed actions.
+- [x] Draft M0 evaluation framework and official survey metadata review.
+- [x] Draft architecture and geography/privacy ADRs.
+- [x] M0-04: implement synthetic six-role KPI fixture and independent Python/SQL calculations (9 focused tests passed in isolated local test environment; see lab).
+- [ ] Review actual microdata codebooks, permissions, variable definitions and geography.
+- [ ] Approve person-role interpretation, statuses and realistic validation rules.
+- [ ] Finalize versioned KPI dictionary and expanded test fixtures.
+- [ ] Compare Pandera vs GX Core in a practical example.
+- [ ] Verify clean-clone dependency installation, full suite, Ruff and GitHub Actions run.
+- [ ] Review geographic privacy policy, boundary licence and threat model.
+- [ ] Owner sign-off in docs/M0_REVIEW.md.
 
-**M0 status: design draft delivered; NOT closed.** Next: inspect actual datasets and design a first KPI fixture.
+**M0 remains OPEN.** Initial KPI fixture validates example definitions only.
 
-## M1 — Source acquisition and synthetic registry (PLANNED)
-- [ ] Inventory approved survey downloads and data cards; verify rights and weights.
-- [ ] Version synthetic registration form, entities and generators.
-- [ ] Seed known overlaps, missingness, duplicate truth, geospatial anomaly labels.
-- [ ] Test totals, constraints and repeatability.
+## M1 — Approved sources and seeded 55k synthetic demonstration (PLANNED)
+- [ ] source provenance; schema; generator with known defects and deterministic tests.
 
-## M2 — Analytics engineering (PLANNED)
-- [ ] PostgreSQL schema/migrations, raw and curated paths.
-- [ ] dbt staging/intermediate/marts, SQL contracts and documentation.
-- [ ] Independent DuckDB/Python reconciliation.
+## M2 — Database and transformations (PLANNED)
+- [ ] PostgreSQL relationships, migrations, dbt models, reconciliation.
 
-## M3 — Data quality and governance (PLANNED)
-- [ ] Validation, duplicate candidate review, injection benchmark and quality metrics.
-- [ ] Auditable corrections, privacy/geometry validation and disclosure tests.
+## M3 — Quality, identity and governance (PLANNED)
+- [ ] validation, supervised deduplication, injected-error evaluation, privacy.
 
-## M4 — Dashboard and geospatial evidence (PLANNED)
-- [ ] Power BI management report and consistent DAX measures.
-- [ ] Streamlit/Plotly exploratory and quality dashboard with protected maps.
-- [ ] Reconcile displayed measures with canonical SQL output.
+## M4 — Visualizations (PLANNED)
+- [ ] Power BI and Streamlit reporting with verified metric contracts and GIS.
 
-## M5 — Optional grounded natural-language analyst (GO/NO-GO)
-- [ ] Evaluate necessity vs BI baseline.
-- [ ] Read-only SQL safety design and benchmark for faithfulness, abstention, privacy.
+## M5 — Optional grounded analyst (PLANNED)
+- [ ] go/no-go, safe read-only queries and factual evaluation.
 
-## M6 — Release and portfolio proof (PLANNED)
-- [ ] Full CI, clean environment, measured ingestion and query benchmark.
-- [ ] Documented limitation-aware demonstration and owner-approved publication review.
+## M6 — Benchmarks, deployment and portfolio release (PLANNED)
+- [ ] CI, performance, documentation and explicit owner publication approval.
 
-## Next actionable assignment
-**M0-04:** Obtain codebooks and source terms (without committing restricted files), define three priority KPI fixtures, and run them in both Python and SQL.
+**Next:** M0-05 source dictionary and quality-framework comparison, followed by complete environment testing.
