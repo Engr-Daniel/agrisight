@@ -2,6 +2,10 @@ name: M0 Validation Framework Comparison
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'src/agrisight/framework_comparison.py'
+      - '.github/workflows/framework-comparison.yml'
 
 jobs:
   compare:
