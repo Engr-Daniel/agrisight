@@ -1,37 +1,33 @@
 # TASK.md — AgriSight milestone tracker
-Updated 2026-10-26.
+Updated 2026-10-27.
 
 ## M0 — Research foundation (IN PROGRESS)
 - [x] Private repository and README/AGENTS/TASK/MEMORY.
-- [x] Stakeholder decision questions, preliminary source review and architecture ADRs.
-- [x] M0-04 synthetic KPI reconciliations and automated tests.
-- [x] M0-05 standard library validation contract and survey catalogue assessment.
-- [x] Add optional experimental Pandera/GX script and manual GitHub Actions comparison workflow.
-- [x] Run first comparison workflow and capture version/results (run 40355059389: successful; still partial semantic contract).
-- [ ] Align both libraries to semantically equivalent missing-ID/strict-boolean validations and compare diagnostics.
-- [ ] Inspect NASS/GHS survey codebooks, sampling variables, geography and actual file-level permissions.
-- [ ] Confirm entity grain and acceptance criteria with owner; finalize KPI dictionary.
-- [ ] Privacy threat-model and boundaries licence review.
-- [ ] M0 review and explicit owner sign-off.
+- [x] Stakeholder questions, source metadata review and architecture ADR drafts.
+- [x] M0-04 role-level KPI reconciliation using Python/SQLite and tests.
+- [x] M0-05 initial validation and first successful Pandera/GX Core comparison.
+- [x] Add seven matched acceptance/rejection cases for framework comparison.
+- [ ] Verify seven-case execution and document observed parity and versions.
+- [ ] Compare error diagnostics, missing columns, nulls and typed data beyond pass/fail.
+- [ ] Inspect NASS/GHS survey codebooks, sample weights, geography and file-level permissions.
+- [ ] Agree role-vs-person grain, business status definitions and measurable acceptance thresholds.
+- [ ] Finalize KPI dictionary with tested numerator/denominator fixtures.
+- [ ] Complete privacy threat-model, geospatial boundary licence review.
+- [ ] Record explicit owner M0 review and approval.
 
-M0 NOT CLOSED. Do not claim Pandera/GX execution or data ingestion solely from committed prototypes.
+M0 remains OPEN. Do not treat proposed architecture or metadata audits as complete ingestion/fieldwork.
 
-## M1 — Seeded synthetic registry (PLANNED)
-- [ ] Approved source cards, data model and generators.
+## M1 — Approved sources and seeded synthetic registry (PLANNED)
+- [ ] Data cards, model, generator, injected defects and deterministic tests.
+## M2 — Database and analytics engineering (PLANNED)
+- [ ] PostgreSQL, dbt and DuckDB reconciliation.
+## M3 — Quality/identity/governance (PLANNED)
+- [ ] Validation, duplicate evaluation and privacy checks.
+## M4 — Decision-support dashboards (PLANNED)
+- [ ] Power BI, Streamlit and geographic analytics.
+## M5 — Optional grounded analyst (PLANNED)
+- [ ] Read-only SQL and evidence evaluation go/no-go.
+## M6 — Release engineering (PLANNED)
+- [ ] CI, benchmarks and owner-approved portfolio release.
 
-## M2 — Relational/analytics models (PLANNED)
-- [ ] PostgreSQL, dbt, DuckDB.
-
-## M3 — Data quality/governance (PLANNED)
-- [ ] Validation, duplicate evaluation, geographic/privacy.
-
-## M4 — BI applications (PLANNED)
-- [ ] Power BI, Streamlit dashboards.
-
-## M5 — Optional AI analyst (PLANNED)
-- [ ] Safety/evidence go/no-go.
-
-## M6 — Final verification (PLANNED)
-- [ ] CI, performance, documentation and release.
-
-**Next:** trigger the manual M0 Validation Framework Comparison GitHub Action and examine results.
+**Next:** verify matched comparison run and inspect actual source dictionaries.
