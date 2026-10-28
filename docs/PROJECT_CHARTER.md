@@ -1,36 +1,43 @@
-# Project Charter — draft for M0 sign-off
+# AgriSight project charter
 
-## Context
-Agricultural programmes may require structured registries, reliable field data, coverage monitoring and operational insights. Incomplete, duplicated or geographically inconsistent records can undermine decisions. AgriSight will **demonstrate** solutions using openly permitted research data and separate explicitly synthetic operations data.
+Updated: 2026-10-28. Working direction after the project review; M0 remains a completed design foundation. This is not evidence of user interviews, empirical findings or production readiness.
 
-## Purpose and scope
-Produce a traceable pipeline from documented data sources and synthetic registration events to verified quality metrics, geographic analysis and management dashboards.
+## Purpose
 
-**In scope:** documented requirements, data contracts, synthetic profiling, SQL/dbt models, quality and identity evaluation, privacy-aware spatial aggregates, Power BI and Streamlit, end-to-end testing, performance reports.
+AgriSight combines two connected objectives:
 
-**Out of scope:** enrolling real farmers, field deployment, claiming impacts on production/livelihoods, identifying households, storing personal contact details, representing any client system, promising geographic granularity unsupported by samples.
+1. **Empirical agricultural intelligence:** investigate authorized Nigerian agricultural data, estimate defensible indicators, assess uncertainty and communicate findings relevant to decisions.
+2. **Trustworthy analytics delivery:** demonstrate reproducible pipelines, SQL modelling, data quality, statistical reasoning, privacy-aware geography and interactive reporting.
 
-## Personas and decision examples (hypotheses awaiting review)
-- Programme manager: Which areas or activities appear underserved according to *appropriately supported* evidence?
-- Supervisor: Where do submitted records require quality review?
-- Registry admin: Which person-role candidates need a manual identity-resolution decision?
-- Analyst: How were a chart's numerators, denominators and filters constructed?
-- Governance lead: Can a sensitive attribute or precise location leak through filtered views?
+Research determines what the data support. Engineering makes those conclusions reproducible and useful. The first checked agricultural result is an initial complete workflow, not the full project's exit criterion.
 
-## Provisional research/engineering questions
-RQ1: Can a documented workflow handle 55,000 synthetic registration **entries** with consistent role accounting?
-RQ2: How accurately do deterministic/risk-based controls catch injected errors and duplicate candidates?
-RQ3: Are displayed KPIs reproducible from the same underlying model across tools?
-RQ4: How do spatial precision and privacy aggregation affect valid reporting?
-RQ5 (optional): Can safe natural-language queries deliver correct answers without unsupported claims?
+## Scope and evidence boundaries
 
-## Proposed quality gates — require approval
-- Reproducible seeded data and deterministic expectations.
-- Referential and uniqueness constraints hold; cross-tool KPI tests agree on defined fixture cases.
-- Quality detector evaluation reports precision/recall and false-positive trade-offs.
-- No raw synthetic PII-like fields in released screenshots; public survey conditions obeyed.
-- Benchmarks include hardware, input rows, execution settings, repeated trials and limitations.
-- Metrics always identify grain, time window, missingness, role-overlap policy and weight use.
+Real survey analysis is primary. Separate synthetic registration experiments provide known truth for counting, defect detection, duplicate evaluation and scale testing. The 55,000-role target is an engineering workload, not a real registry or population finding. Never pool these populations.
 
-## Stakeholder acceptance
-Sign off in a future `docs/M0_REVIEW.md` after explicit evaluation of scope, risks, data source licences, metrics and architecture; this draft is **not yet approved**.
+In scope: documented source selection, analytical contracts, survey-aware methods, independent SQL/Python checks, reproducible transformations, supported geographic summaries and tested reporting. PostgreSQL/dbt and dashboard capabilities remain learning goals whose introduction requires a concrete need.
+
+Out of scope: real farmer enrollment, client-system reproduction, confidential client materials, identifying locations, unsupported small-area estimates, causal claims from descriptive associations and public release without owner authorization.
+
+## Candidate research questions
+
+Provisional until the [feasibility matrix](RESEARCH_FEASIBILITY.md) establishes suitable variables, permissions and survey design:
+
+- **RQ1:** How does participation in selected agricultural activities vary across statistically supported geographic domains?
+- **RQ2:** How does access to selected agricultural inputs or services differ across defined farming groups?
+- **RQ3:** How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions?
+
+## Users and engineering questions
+
+Proposed users, not interview-validated personas: programme managers interpreting patterns; analysts tracing estimates; data administrators reviewing quality; governance reviewers checking disclosure. Supervisors and registry reviewers belong to the synthetic operational demonstration.
+
+Engineering questions: Do transformations preserve grain and reconcile? Can controls detect labelled defects without excessive false positives? Do dashboards preserve denominators and disclosure rules? How does performance change across documented input sizes?
+
+## Acceptance
+
+- E1 establishes suitability; E2 produces checked agricultural findings; E3 tests sensitivity. See the [investigation plan](M1_EXPERIMENT_PLAN.md).
+- Every indicator defines unit, population, denominator, reference period, exclusions, null semantics, weight and uncertainty method.
+- Every result has source/version provenance, reproducible commands, independent checks and limitations.
+- Reports expose provenance, missingness, scope and supported geography; synthetic outputs are explicitly labelled.
+- Engineering benchmarks report known truth, false positives, hardware, input size and repeat conditions where applicable.
+- Real user validation and explicit publication authorization remain future gates. See [M0 review](M0_REVIEW.md) for historical foundation evidence.

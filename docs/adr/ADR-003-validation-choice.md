@@ -1,6 +1,8 @@
 # ADR-003 — Python validation framework
 Status: **Accepted as working M1 baseline** (2026-10-27), subject to empirical review at scale.
 
+> Scope clarification (2026-10-28): the comparison evidence below concerns synthetic fixtures only. Pandera remains the initial choice where useful for real-data source contracts, with rules derived from inspected documentation. This does not establish survey suitability or a completed ingestion integration. Synthetic generator work is supporting and later; M1 begins with source feasibility.
+
 ## Decision
 Use **Pandera** for code-first synthetic registration ingestion contracts. Supplement with relational constraints and dbt tests once the database layer exists. Do not bring Great Expectations into the core dependency graph unless a need for managed expectations/reporting emerges.
 

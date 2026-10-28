@@ -5,7 +5,7 @@ Date: 2026-10-27. These definitions apply to **synthetic actor-role registration
 - `role_id`: one actor-role entry, unique in accepted registry; `person_id`: an opaque distinct simulated individual, potentially linked to more than one role.
 - `kind`: farmer or processor. `status`: pending, accepted or rejected.
 - Distinct people are **not** calculated by adding farmer and processor counts.
-- `complete`: currently a deliberately simplified educational flag. Actual completeness will use applicable required fields and skip logic in M1.
+- `complete`: a deliberately simplified educational flag. Real survey missingness uses source-specific eligibility and skip logic during E1; fuller synthetic questionnaire completeness belongs to later supporting engineering work. Acceptance is assigned in this fixture, not derived from an approved enrollment policy.
 - Report refresh date and origin on any exported metric.
 
 | ID | Indicator | Formula, grain and exclusions | Six-row fixture |

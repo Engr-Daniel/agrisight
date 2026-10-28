@@ -1,6 +1,8 @@
 # M0-02 — Measurable acceptance and evaluation design
 Status: proposal, not executed or owner approved.
 
+> Historical acceptance proposal, partly exercised by the M0 fixtures; see [M0 review](M0_REVIEW.md) for actual dispositions. M0 remains complete as a foundation. Current empirical questions and E1/E2/E3 exit criteria are in the [charter](PROJECT_CHARTER.md) and [investigation plan](M1_EXPERIMENT_PLAN.md). The gates below do not imply that every proposed system control is implemented.
+
 ## Outcomes versus tests
 | ID | Claim to test | Evidence and acceptance |
 |---|---|---|

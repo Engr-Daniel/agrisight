@@ -2,6 +2,8 @@
 
 Status: implementation committed; execution evidence to be appended after GitHub Actions completes.
 
+> Historical status above is superseded by the execution evidence recorded in [ADR-003](adr/ADR-003-validation-choice.md) and [M0 review](M0_REVIEW.md). Pandera is the working initial choice. No new framework run or performance benchmark is claimed by this clarification.
+
 ## Objective
 Compare Pandera and Great Expectations (GX Core) on **seven synthetic registration scenarios** using the same accepted/rejected outcome criterion.
 

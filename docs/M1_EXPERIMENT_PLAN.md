@@ -1,32 +1,41 @@
-# M1 — Real Agricultural Data: empirical experiment protocol
-**Status:** planned, not executed. **Date:** 2026-10-28.
+# Real-data investigation plan: E1 → E2 → E3
 
-## Scientific question (E1)
-**What is the observed structure, completeness, and internal consistency of the accessible NASS 2023 agricultural survey data, and which variables are appropriate for later decision-support analyses?**
+Updated: 2026-10-28. **Planned, not executed.** M1 covers feasibility and E1; E2 follows in M2, E3 in M3. These are observational investigations, not controlled experiments or impact evaluations.
 
-This is an empirical **data profiling / data-quality baseline** experiment, not an impact evaluation or inferential model-comparison study.
+## Source and question gate
 
-## Primary source
-Nigeria NBS National Agricultural Sample Survey 2023: https://microdata.nigerianstat.gov.ng/index.php/catalog/173
-Candidate secondary contextual source (not merged indiscriminately): Nigeria GHS Panel 2023–2024: https://microdata.nigerianstat.gov.ng/index.php/catalog/82
+Use the [candidate questions and feasibility matrix](RESEARCH_FEASIBILITY.md). Inspect NASS first; select GHS instead if it better supports the question. Choose one dataset for the first complete workflow. Neither has verified variable-level suitability in this project yet.
 
-## Work sequence
-1. **Source verification:** record catalog ID, actual file version, questionnaires, methods, data dictionary, sampling geography and legal access/redistribution conditions.
-2. **Secure acquisition:** if terms permit, download authorised files only to ignored local data storage. Record SHA256 and download date. Do not place confidential/restricted raw records in repo or CI artifacts.
-3. **Unit-of-analysis map:** identify respondent/household/plot/crop/enterprise grains, primary keys, multi-row joins, strata, PSU and weights. Never assume `n` rows equals `n` farmers.
-4. **E1 baseline:** inspect dimensions, column types, distinct identifiers, missingness (including coded missing values), categorical distributions, range consistency, join cardinality and duplicate key candidates.
-5. **Evaluation:** pre-specify validation rules from questionnaires/codebooks; distinguish genuine invalid values from legitimate skip logic, refusals, non-applicability and unknown responses. Cross-check at least three summary measures in independent code/SQL.
-6. **Evidence report:** tables/figures with citations, source hashes, scripts/environment, quality findings and clearly scoped uncertainty. No geographic granularity unsupported by source design.
+1. Inspect relevant questionnaires, codebooks, methods, reference periods and access/redistribution terms. Record study/release and evidence locations.
+2. Map variables, units, keys, join cardinality, eligibility/skip codes, supported domains, weights and variance-design information to questions. Mark supported, narrowed, deferred or unsupported with reasons.
+3. Select the first feasible indicator and finalize its analytical contract; do not promise population estimates if design information is insufficient.
+4. Select and lock dependencies for the chosen files/methods. Verify a Python 3.11+ clean environment and existing tests/lint; no need to install the future stack now.
 
-## Deliverables
-- `docs/data_sources/NASS_2023_CARD.md` including licensed access and variables (created during inspection).
-- `docs/experiments/E1_PROTOCOL.md` (finalized after codebook review).
-- Notebooks/scripts for reproducible descriptive profiling with tests.
-- `reports/E1_REAL_DATA_PROFILING.md` with verified findings and limits.
-- A documented decision on suitable measures for subsequent BI work.
+## E1 — Data suitability and profiling (M1)
 
-## Do not claim yet
-No survey microdata, weights or released variable codebooks have been verified and downloaded for analysis in this project; no E1 results or figures exist.
+Question: What is the structure, completeness and internal consistency of the authorized source, and which analyses can it support?
 
-## Supporting synthetic track
-A separate generator may later inject known errors and create 55k **synthetic actor-role entries** for scalability/deduplication evaluation. Never treat these as real survey data, do not synthesize population findings from them, and never combine them with real-sample totals.
+- Acquire only permitted files into ignored `data/raw/<source>/<release>/`. Record filename, version, download date, SHA256 and actual access terms in a non-identifying manifest. Preserve raw files; local storage is not permission to redistribute.
+- Keep intermediate and curated row-level outputs in ignored directories described in [data storage](../data/README.md).
+- Inspect rows/types, keys, join multiplicity, categories, coded missingness, ranges and rule violations. Distinguish legitimate repeated observations/skips from defects. Flag unusual values for review, not automatic deletion.
+- Define source-specific rules from documentation. Cross-check at least three baseline summaries independently in code/SQL; specify numeric tolerances.
+
+Deliverables: source card under `docs/data_sources/`, populated feasibility matrix, finalized protocol under `docs/experiments/`, reproducible scripts/tests, and `reports/E1_REAL_DATA_PROFILING.md` with observed findings and limits. Create these only when supporting work exists.
+
+Exit: documented access, hashes, units/keys/design, reviewed indicator definitions, verified profiling results and reproducible commands. Missing design information is a blocker or explicit scope restriction.
+
+## E2 — Agricultural pattern analysis (M2)
+
+Compute selected RQ1/RQ2 indicators with explicit population, denominator, eligibility, period and missingness. Identify the correct weight for each estimand; weights alone do not establish a valid confidence interval. Verify design-aware uncertainty methods before population inference, including supported domains and small-domain limitations. Otherwise restrict claims to labelled sample descriptions.
+
+Deliverables: versioned SQL/Python transformations and contracts, independent reconciliations, estimates with sample counts/uncertainty where justified, and a reproducible agricultural findings report. Introduce PostgreSQL/dbt through the architecture gates. No causal claims from descriptive associations.
+
+## E3 — Robustness and sensitivity (M3)
+
+Pre-specify plausible alternatives for missingness, eligibility/exclusions and definitions. Compare against E2 and report stability without selecting assumptions to support a preferred finding. Unknown is not automatically zero/no; do not impute or discard without a rationale.
+
+Deliverables: reproducible sensitivity comparisons, explanations of material changes, limitations and reporting recommendations.
+
+## Separate supporting engineering investigations
+
+Seeded synthetic records provide known truth for defect/duplicate evaluation and workload tests, including 55k role entries and other sizes. Report precision, recall, false positives and measured performance with conditions. Never pool simulated people with survey respondents. Interactive reporting follows checked findings; the first report is an increment toward the full platform.

@@ -1,5 +1,7 @@
 # M0 source and sampling decision (2026-10-27)
 
+> Historical record. The synthetic-first ordering below was superseded on 2026-10-28. Real analysis is primary; inspect NASS first and select GHS instead if it better supports the chosen question. Current source selection is governed by [research feasibility](RESEARCH_FEASIBILITY.md) and the [E1–E3 plan](M1_EXPERIMENT_PLAN.md). Original source caveats are retained, not newly verified here.
+
 ## Decision
 The first deliverable is a **fully synthetic, deterministic registry**. Official Nigerian surveys are a separate, optional evidence lane to be incorporated only after source-file due diligence during M1.
 

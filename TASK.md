@@ -1,36 +1,59 @@
 # TASK.md — AgriSight roadmap
-Updated: 2026-10-28
 
-## M0 — Engineering research foundation (COMPLETE, with revised M1 priority)
-- [x] Stakeholder decision questions, architecture options and provenance/privacy rules.
+Updated: 2026-10-28. Checkboxes record observed evidence, not planned outputs.
+
+## M0 — Engineering research foundation (COMPLETE)
+
+- [x] Stakeholder decision hypotheses, architecture options and provenance/privacy rules.
 - [x] Seven synthetic-registration KPI contracts and independent Python/SQL fixture tests.
-- [x] Pandera vs GX Core seven-case comparison; CI evidence: https://github.com/Engr-Daniel/agrisight/actions/runs/40495776119
-- [x] Pandera-first decision for initial Python validation.
-- [x] Record correction: **real survey empirical analysis is primary; synthetic work is supporting only**.
-M0 establishes a design baseline, not an empirical result or a final user-study approval.
+- [x] Seven-case Pandera/GX comparison; historical CI: https://github.com/Engr-Daniel/agrisight/actions/runs/40495776119
+- [x] Pandera-first working decision for initial Python validation.
 
-## M1 — Real agricultural data: acquisition and Experiment E1 (NEXT)
-- [ ] M1-01: inspect NASS 2023 official catalogue, all relevant questionnaires and downloadable codebooks.
-- [ ] M1-02: record actual licence/access conditions, study version, file inventory and analysis permissions.
-- [ ] M1-03: acquire permitted microdata in a **local ignored directory**, record hashes and provenance; never commit restricted files.
-- [ ] M1-04: identify observational unit, survey strata/PSU/weights, geographic limits, missing codes and relevant variables.
-- [ ] M1-05: execute E1 reproducible data profiling (rows, schema, missingness, duplication, invalid values) on actual permitted records.
-- [ ] M1-06: compare chosen quality rules, document exclusions and baseline findings; distinguish sample descriptive summaries from weighted population estimates.
-- [ ] M1-07: add tests, reviewed findings, limitations and clear report before closing M1.
+M0 is a design baseline, not empirical findings, completed user validation or production readiness. Preserve the [historical review](docs/M0_REVIEW.md); no need to reopen M0.
 
-## M2 — Analytics engineering (PLANNED)
-- [ ] PostgreSQL/dbt models, SQL KPI definitions and independent reconciliation for approved real-data analysis.
+## Review alignment — targeted correction
 
-## M3 — Robustness and supporting registry experiments (PLANNED)
-- [ ] Controlled seeded synthetic records to benchmark 55k role entries, duplicate detection and quality controls. No simulated counts presented as real observations.
+- [x] Align current purpose, roadmap and architecture with empirical intelligence plus trustworthy delivery; record [rationale/trade-offs](docs/REVIEW_ALIGNMENT.md).
+- [x] Record provisional RQ1–RQ3, E1/E2/E3 outputs and [source selection matrix](docs/RESEARCH_FEASIBILITY.md); GHS remains an alternative.
+- [x] Verify raw-data Git protection and foundation environment checks; Python 3.11.9, 19 tests passed and Ruff passed locally. Commands and limitations in MEMORY.md.
+- [ ] Select and lock actual M1 analytical dependencies after file/method requirements are known; reproduce a clean install. No wholesale stack change or new CI infrastructure.
+
+## M1 — Source feasibility, acquisition and E1 (NEXT)
+
+- [ ] M1-01: inspect NASS questionnaires, codebooks and design documentation against candidate questions; assess GHS where it offers a better fit.
+- [ ] M1-02: populate exact-variable/file feasibility evidence; record access/redistribution terms, study version and decision rationale. Mark each question supported, needs narrowing, deferred or unsupported. Select one source and first feasible indicator.
+- [ ] M1-03: acquire only permitted microdata in ignored local storage; record hashes, filenames, release and download date. Never commit restricted inputs.
+- [ ] M1-04: confirm units/keys, join cardinality, strata/PSU/weights or other variance-design requirements, geography, reference periods and coded missingness. Finalize the indicator contract/protocol.
+- [ ] M1-05: execute E1 profiling on actual authorized records: schema, rows, missingness, duplicate-key candidates and rule findings. Cross-check at least three summaries independently.
+- [ ] M1-06: review exclusions and unusual values against documentation; distinguish sample descriptions from population estimates. Do not silently delete outliers or treat skipped questions as defects.
+- [ ] M1-07: deliver tested scripts, observed environment/commands, suitability report and limitations; close M1 only with evidence.
+
+**Exit:** supported source/question mapping, verified permissions and provenance, analytical definitions, reproducible profiling and reviewed findings. See [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md).
+
+## M2 — E2 agricultural findings and analytics engineering (PLANNED)
+
+- [ ] Compute selected RQ1/RQ2 indicators with documented population, eligibility, denominator, period, missingness, applicable weights and verified uncertainty methods.
+- [ ] Independently reconcile results using SQL/Python, with tolerances for estimates; report supported geographic scope and sample counts.
+- [ ] Deliver reproducible agricultural findings. Introduce PostgreSQL/dbt only when persistence/model complexity justifies them, with contracts and tests.
+
+## M3 — E3 robustness and separate engineering studies (PLANNED)
+
+- [ ] Pre-specify and evaluate reasonable missingness, eligibility and definition alternatives for RQ3; report stability and limitations without causal claims.
+- [ ] Separately implement labelled synthetic ground truth for defect/duplicate precision, recall and false positives.
+- [ ] Benchmark documented workload sizes, including 55k role entries, with hardware/repeats and observed results. Never present simulated counts as agricultural findings.
 
 ## M4 — Evidence-backed reporting (PLANNED)
-- [ ] Power BI and Streamlit dashboards grounded in authorized real-data findings; synthetic-only operational demonstrations explicitly separated.
+
+- [ ] Choose Power BI or Streamlit initially; build interactive reporting from checked findings. Add the second only for a distinct purpose.
+- [ ] Reconcile filters/denominators, expose provenance and uncertainty, and test licensed geography/disclosure safeguards before maps or drill-down.
 
 ## M5 — Advanced analytics (OPTIONAL)
-- [ ] Evaluate advanced statistics or evidence-grounded AI only if justified.
+
+- [ ] Evaluate advanced statistics or evidence-grounded AI only for a justified need with baseline comparisons and appropriate tests.
 
 ## M6 — Publication and reproducibility (PLANNED)
-- [ ] Independent checks, CI, measurement reports, licensing/privacy review and approved portfolio release.
 
-**Immediate next:** M1-01 official source documentation inspection. See docs/M1_EXPERIMENT_PLAN.md.
+- [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
+- [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
+
+**Immediate next:** complete NASS question-to-variable feasibility inspection, not another architecture redesign. No dataset, question or result is selected merely by creating a planning matrix.

@@ -1,39 +1,39 @@
-# Architecture — candidate design, not implemented
+# Architecture and introduction gates
 
-## Responsibilities
-| Component | Responsibility | Validation |
+Updated: 2026-10-28. Staged implementation of existing engineering goals; no full platform is implemented.
+
+## First analytical workflow
+
+Authorized immutable inputs in ignored local storage → Python inspection and source-specific validation → documented transformations → independently checked indicators → reproducible report.
+
+Survey and synthetic data use separate directories, contracts and outputs. Survey relationships must come from documentation; the synthetic person/role model is not imposed on a household or plot survey. Flag unusual observations for review; never silently delete or overwrite them.
+
+| Component | Responsibility | Introduction gate / verification |
 |---|---|---|
-| Python/Pandas | source parsing, synthetic generation, ingestion | schema, deterministic tests |
-| PostgreSQL | normalized operational store, relationships, migration-based schema | constraints, SQL integration tests |
-| PostGIS | optional permitted spatial indices/query logic | CRS and boundary validation |
-| dbt | canonical staging/intermediate/marts SQL transformations | model, relationship, accepted-value tests |
-| DuckDB | exploratory analysis, Parquet and independent metric reconciliation | independently computed fixtures |
-| Quality library (TBD) | data contract/rule checks | induced failures and error examples |
-| Power BI | semantic measures, enterprise report prototype | DAX vs authoritative SQL reconciliation |
-| Streamlit/Plotly | private demonstrator, controlled filters and reports | UX and permission tests |
-| pytest / GitHub Actions | reproducible local and CI checks | observed jobs, versioned artifacts |
+| Python, pytest, Ruff, existing CI | scripts and automated checks | Reproduce the foundation locally under Python 3.11+ |
+| Pandas | source inspection and tabular processing | Select and lock when source formats are known |
+| Pandera | initial schema/quality library where useful | Source-specific rules and edge cases; not a completed survey integration |
+| Jupyter | optional exploration and teaching | Reusable logic stays in tested modules; clear outputs before sharing |
+| DuckDB / SQL / Parquet | transformations and independent reconciliation | Introduce for selected files/queries; document types and join cardinality |
+| Survey-statistical implementation | design-aware estimates and uncertainty | Verify design support and validate methods before population inference; library not yet selected |
+| PostgreSQL | persistent relational storage and constraints | Demonstrated persistence, relational or concurrent access need; migration/integration checks |
+| dbt | managed SQL models, lineage and tests | Repeated transformation graph warrants it; keep one versioned authoritative metric definition |
+| PostGIS / GeoPandas | justified spatial processing | Licensed geography, CRS, sample support and disclosure review |
+| Power BI or Streamlit/Plotly | communicate checked findings | Choose one first; reconcile filters/totals; add another for a distinct purpose |
+| Docker | runtime packaging | Demonstrated environment/deployment need |
+| Advanced analytics / AI | optional later capability | Explicit need, baseline comparison and separate evaluation |
 
-## Entity model (candidate)
-- `person`: synthetic, opaque person key. No phone/email/name required for public demonstration.
-- `actor_role`: person key, type (`farmer`, `processor`), status, effective date; **role count differs from person count**.
-- `farm`, `enterprise`, `person_site_link`: optional many-to-many geographic/operational assignments.
-- `location`: administrative hierarchy and approved aggregate geographies.
-- `submission`: raw immutable intake event with instrument version, consent simulation indicator, batch, time.
-- `verification_event`: review, findings and human-approved decisions.
-- `quality_issue` and `audit_event`: rule code, source, severity, status and corrective history.
-- `commodity` and association tables: explicit multi-value commodity relationships.
+No new framework or CI infrastructure is required by this review. Great Expectations remains a comparison experiment, not a second core validator. Dependency locks cover the chosen increment, not the whole proposed stack.
 
-## Data flows
-Raw landing zone (immutable) → validated operational records → versioned analytics models → verified KPI views → reports. Different data origins get separate namespaces, schemas or datasets; **never union them into one population total**.
+## Supporting synthetic entity model
 
-## Design issues / ADR backlog
-ADR-001: PostgreSQL vs DuckDB responsibilities and canonical metrics.
-ADR-002: person-role overlap and target-grain definition.
-ADR-003: GIS geography/CRS, spatial precision and privacy thresholds.
-ADR-004: primary data quality library (Pandera vs GX Core).
-ADR-005: BI model integration and power-bi artifact release.
-ADR-006: synthetic data distributions and injectible ground truth.
-ADR-007: optional LLM analyst access policy and SQL safety.
+Opaque person IDs link to actor-role entries; submissions and approval events are separate concepts. Commodity associations are many-to-many. Optional farm, enterprise, location, quality-issue and audit entities require contracts before implementation. Acceptance and completeness are separate in the fixture, not an approved enrollment policy.
 
-## Non-goals at initialization
-No deployed architecture, orchestrator, authenticated user model, infrastructure-as-code, API, production monitoring or LLM service is claimed. All require independent implementation and validation.
+Keep raw events immutable and record corrections. Evaluate labelled duplicate candidates against known truth; repeated keys alone are not person matching. Test multiple workload sizes, retaining 55k role entries as a selected workload rather than a universal scale threshold.
+
+## Decision references
+
+- [ADR-001](adr/ADR-001-stack-and-grain.md): historical stack/grain baseline and current staging amendment.
+- [ADR-002](adr/ADR-002-geography-and-privacy.md): geographic and privacy boundaries.
+- [ADR-003](adr/ADR-003-validation-choice.md): initial Pandera selection with limited comparison evidence.
+- [Review alignment](REVIEW_ALIGNMENT.md): rationale, benefit, trade-offs and verification.

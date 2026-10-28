@@ -1,6 +1,8 @@
 # ADR-001 — Minimal analytics architecture and entity grain
 **Decision status:** Proposed, pending owner approval (2026-10-26).
 
+> Status clarification (2026-10-28): retained as the historical proposal used by the M0 working baseline, not blanket approval to implement every tool. The [M0 review](../M0_REVIEW.md) records foundation acceptance; the [current architecture](../ARCHITECTURE.md) stages introduction by demonstrated need. Empirical analysis is primary, survey entities follow source documentation, PostgreSQL/dbt are conditional, and one dashboard tool is introduced first. Pandera is the initial working choice under ADR-003. The original proposal below is preserved for traceability.
+
 ## Context
 A reproducible flagship analytics project must demonstrate relational registry modelling and independent analytical checks without needless platform complexity.
 

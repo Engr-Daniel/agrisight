@@ -7,6 +7,12 @@
 
 Do not merge official survey samples and 55k synthetic profiles into a single real-world statistical population. Independent analyses may be presented side by side with clear source labels.
 
+## Local storage before acquisition
+
+Use the ignored paths in [data storage](../data/README.md) for all downloaded inputs and row-level derivatives, including synthetic working datasets. Keep reviewed tiny synthetic test fixtures in code/tests; adding a distributable fixture requires a separate privacy/provenance review. Never force-add restricted data or expose it through notebook outputs, reports or CI artifacts. Check ignore behaviour and tracked files before acquisition; Git ignores are not encryption or access controls.
+
+NASS is inspected first; GHS is a genuine alternative if it better supports the chosen question. Select one source for the first analysis under the [feasibility gate](RESEARCH_FEASIBILITY.md), not a predetermined combination of surveys.
+
 ## Official source candidates — not yet licensed/ingested
 - Nigeria National Agricultural Sample Survey 2023: https://microdata.nigerianstat.gov.ng/index.php/catalog/173
 - Nigeria General Household Survey Panel 2023–2024: https://microdata.nigerianstat.gov.ng/index.php/catalog/82

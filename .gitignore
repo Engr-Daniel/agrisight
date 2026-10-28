@@ -1,3 +1,10 @@
+# Local survey/synthetic inputs and row-level derivatives (never version these).
+# Keep storage guidance in data/README.md; Git ignores do not untrack existing files.
+/data/*
+!/data/README.md
+/reports/private/
+.ipynb_checkpoints/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
