@@ -1,24 +1,18 @@
-# MEMORY.md — AgriSight project memory
-Updated 2026-10-27.
+# MEMORY.md — AgriSight durable project context
+Updated 2026-10-28.
 
-## Status
-Private Engr-Daniel/agrisight, development on master. Owner: Oyewale Daniel. M0 **design baseline completed for synthetic-registry lane**; external survey and GIS use remain conditional on further due diligence. No real field registration, 55k synthetic dataset, dashboard, model deployment or proven outcomes exist.
+## Direction
+Owner: Oyewale Daniel; private repository Engr-Daniel/agrisight, single master branch.
+**Priority correction:** real-world agricultural analysis is the MAIN objective. Synthetic registration data is strictly a supporting engineering test fixture/stress test, not the main analytical dataset. The previous M1 synthetic-first plan is superseded; see docs/M1_EXPERIMENT_PLAN.md.
 
-## Design decisions
-- Person is an opaque synthetic identity; one person may carry farmer and processor roles. Targets 50k/5k indicate synthetic **roles**, not guaranteed distinct persons.
-- Status pending/accepted/rejected; completeness independent. Role vs unique-person KPIs explicitly separated.
-- Canonical future metrics in SQL/dbt; PostgreSQL operational data, DuckDB/Python for independent checks; Power BI management output and Streamlit demonstrator.
-- Pandera first for M1 Python validation; GX Core optional for later documented use, not a required ongoing workflow. Seven case agreement observed, not comprehensive performance/diagnostics parity.
-- Separate synthetic registration records and licensed public survey samples. No client-specific data.
-- No actual GPS, contact details, individual identities or fine-grained real survey locations; maps require licensed boundaries/privacy tests.
-- Lightweight CI is sufficient, no unnecessary feature branches or orchestration.
+## Completed M0
+Design foundation and seven-case validation comparison. Foundation CI and Pandera/GX Core experimental runs passed on prior commits. No real survey files yet inspected at variable level, no real empirical experiment run, no dashboard, no 55k generator or real registrations. Experimental findings must not be fabricated.
 
-## Evidence
-- M0-04 six synthetic submissions, four accepted role entries, three distinct accepted persons, two accepted farmer roles and two processor roles; verified Python/SQL fixture.
-- GitHub foundation CI passed: https://github.com/Engr-Daniel/agrisight/actions/runs/40495776063
-- Pandera 0.35 / GX 1.24.1 seven-scenario experiment passed: https://github.com/Engr-Daniel/agrisight/actions/runs/40495776119 (tiny cases only).
-- Source selection/limitations recorded in docs/M0_SOURCE_DECISION.md; official NASS/GHS codebooks, file licensing, weights and raw data NOT downloaded or inspected.
-- Technical M0 completion review: docs/M0_REVIEW.md. User requested M0 completion; no signed itemized approval is represented.
+## Next M1
+NASS 2023 official survey documentation and permission review; permitted data acquisition without repository redistribution; codebook and survey design inspection; then E1 real-data profiling. GHS Panel is a secondary candidate. Confirm survey sampling weights and supported geographic domains before prevalence inference.
 
-## Next
-M1-01 schema, grain, synthetic distributions, seeded defect scenarios, tests; official data lane gated pending actual files/docs/license/weight inspection.
+## Supporting engineering track
+Use seeded synthetic role registrations for deduplication and scale checks in M3, with labels and strict separation. Person and actor-role remain separate keys. Pandera initially chosen for Python ingest contract; PostgreSQL/dbt/DuckDB and BI later when justified.
+
+## Boundaries
+Independent of confidential Petgrave.io/client work. No personal identifiers, real precise coordinates, secrets or restricted downloads in Git. No public release without owner consent.

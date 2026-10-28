@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0 — project foundation (in progress) · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M1 — real agricultural data acquisition and first empirical profiling experiment (planned) · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, reproducible portfolio and learning project exploring how agricultural survey and synthetic registration data can be transformed into **trustworthy indicators, geographic insights, operational monitoring, and actionable decisions**. It is **not** an operational farmer registry, a deployed client system, or evidence that field profiling has occurred.
 
@@ -44,6 +44,13 @@ Build the smallest trustworthy vertical slice first. Avoid adding unnecessary in
 
 ## Proposed stack
 Python, SQL, PostgreSQL/PostGIS, DuckDB, dbt, Pandas, GeoPandas, pytest, Power BI, Streamlit/Plotly, GitHub Actions and Docker. Choose one primary validation framework after evaluation (Pandera or GX Core). Optional later: FastAPI, scikit-learn, SQLGlot, an LLM API. Versions and licensing must be assessed before adoption.
+
+## Data strategy (revised 2026-10-28)
+**Primary track: real agricultural data.** Begin with officially documented Nigerian agricultural surveys; inspect access terms, questionnaire/codebook, survey design, weights, missing-value codes and geographic support before analysis. First experiment E1 profiles actual authorized data quality and variable availability; do not invent findings or treat a sample as a census.
+
+**Supporting track: synthetic registry engineering.** Use seeded, labelled simulations only to test identity handling, quality detection, system scale and software correctness. Never pool simulated entries with real survey respondents.
+
+The current 55,000-entry objective is a synthetic **engineering stress-test target**, not the principal empirical dataset or evidence of field registrations. See [M1 protocol](docs/M1_EXPERIMENT_PLAN.md).
 
 ## Roadmap
 | Milestone | Focus | Status |

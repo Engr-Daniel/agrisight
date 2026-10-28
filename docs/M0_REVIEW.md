@@ -40,3 +40,6 @@ M0 determines **what to build, for whom, how success is assessed, and what evide
 ## Milestone decision
 **M0 completed for the synthetic-registry engineering track; M1 ready to start with guarded scope.**
 Not evidence of production readiness, field enumeration, full survey processing, validated impact or an approved client proposal.
+
+## 2026-10-28 scope amendment (supersedes M1 ordering only)
+The owner clarified that **empirical work using real agricultural data is the primary project objective**. M1 now starts with source access/dictionary review and E1 empirical data profiling. The synthetic 55k role registry is retained strictly as a supporting engineering benchmark in a later workstream. The previous M0 design findings remain useful but do not constitute evidence that survey data have been acquired. See `docs/M1_EXPERIMENT_PLAN.md`. No retrospective changes to prior test results are implied.
