@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0 design foundation complete; M1 source feasibility and E1 profiling next · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0 design foundation complete; M1 documentation feasibility in progress, E1 profiling pending · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -23,7 +23,7 @@ Analysts and programme managers need to understand agricultural patterns without
 
 ## Questions and dataset decision
 
-Candidate questions concern geographic patterns in agricultural participation, differences in input/service access, and sensitivity of findings to analytical assumptions. **None is yet established as answerable.** See the [research feasibility matrix](docs/RESEARCH_FEASIBILITY.md).
+Candidate questions concern geographic patterns in agricultural participation, differences in input/service access, and sensitivity of findings to analytical assumptions. Initial questionnaire/dictionary evidence identifies plot irrigation-infrastructure responses as a proposed E1 target; population inference remains unverified. See the [research feasibility matrix](docs/RESEARCH_FEASIBILITY.md) and [initial source card](docs/data_sources/NASS_2023_CARD.md).
 
 Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
 
@@ -48,7 +48,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 | Milestone | Focus | Status |
 |---|---|---|
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
-| M1 | Source feasibility, permitted acquisition, E1 data suitability/profiling | Next |
+| M1 | Source feasibility, permitted acquisition, E1 data suitability/profiling | Documentation inspection in progress |
 | M2 | E2 agricultural findings and tested analytical models | Planned |
 | M3 | E3 sensitivity; separate synthetic quality/scale investigations | Planned |
 | M4 | Verified interactive reporting and supported geography | Planned |

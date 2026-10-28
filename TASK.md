@@ -18,9 +18,10 @@ M0 is a design baseline, not empirical findings, completed user validation or pr
 - [x] Verify raw-data Git protection and foundation environment checks; Python 3.11.9, 19 tests passed and Ruff passed locally. Commands and limitations in MEMORY.md.
 - [ ] Select and lock actual M1 analytical dependencies after file/method requirements are known; reproduce a clean install. No wholesale stack change or new CI infrastructure.
 
-## M1 — Source feasibility, acquisition and E1 (NEXT)
+## M1 — Source feasibility, acquisition and E1 (IN PROGRESS)
 
 - [ ] M1-01: inspect NASS questionnaires, codebooks and design documentation against candidate questions; assess GHS where it offers a better fit.
+  Progress: relevant questionnaire sections and mirrored household/plot/input dictionaries inspected; [source card](docs/data_sources/NASS_2023_CARD.md) records initial findings and provenance. Full access, design and variable audit remain open.
 - [ ] M1-02: populate exact-variable/file feasibility evidence; record access/redistribution terms, study version and decision rationale. Mark each question supported, needs narrowing, deferred or unsupported. Select one source and first feasible indicator.
 - [ ] M1-03: acquire only permitted microdata in ignored local storage; record hashes, filenames, release and download date. Never commit restricted inputs.
 - [ ] M1-04: confirm units/keys, join cardinality, strata/PSU/weights or other variance-design requirements, geography, reference periods and coded missingness. Finalize the indicator contract/protocol.
@@ -56,4 +57,4 @@ M0 is a design baseline, not empirical findings, completed user validation or pr
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** complete NASS question-to-variable feasibility inspection, not another architecture redesign. No dataset, question or result is selected merely by creating a planning matrix.
+**Immediate next:** verify authenticated NBS terms/file inventory and reconcile release/design documentation. Plot irrigation-infrastructure response quality is the proposed E1 starting target, not a completed result or finalized population indicator. No need for another architecture redesign.

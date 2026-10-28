@@ -1,6 +1,6 @@
 # Research questions and source feasibility
 
-Date: 2026-10-28. **Planning matrix only: variable-level feasibility is not established.** No indicator has been selected and no microdata findings exist.
+Date: 2026-10-28. **Initial documentation evidence recorded; downloaded-file feasibility is not established.** A first E1 profiling target is proposed, not a finalized population indicator. No microdata findings exist. See the [source card](data_sources/NASS_2023_CARD.md) for citations, questionnaire provenance and unresolved gates.
 
 ## Dataset decision
 
@@ -18,9 +18,9 @@ Compare question fit, variables, access conditions, unit/keys, weight and varian
 
 | ID | Question | Required concepts, not verified variable names | Current disposition |
 |---|---|---|---|
-| RQ1 | How does participation in selected agricultural activities vary across statistically supported geographic domains? | Activity participation, eligible universe, domain, appropriate weight/design | Pending inspection |
-| RQ2 | How does access to selected agricultural inputs or services differ across defined farming groups? | Access/use distinction, groups, eligibility, period, weight/design | Pending inspection |
-| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | Pending inspection |
+| RQ1 | How does participation in selected agricultural activities vary across statistically supported geographic domains? | Activity participation, eligible universe, domain, appropriate weight/design | Needs narrowing: household activity fields documented; supported domains/design unresolved |
+| RQ2 | How does access to selected agricultural inputs or services differ across defined farming groups? | Access/use distinction, groups, eligibility, period, weight/design | Needs narrowing: infrastructure presence and input quantity are not equivalent to access |
+| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | Deferred until E1 and an E2 baseline exist |
 
 ## Variable-to-question evidence matrix
 
@@ -28,7 +28,10 @@ Add rows for each required variable and relationship during documentation inspec
 
 | Question | Source/release | File/module | Exact variable + label | Unit/key and joins | Universe/skip/missing codes | Period/domain | Weight and variance design | Evidence page/section | Decision |
 |---|---|---|---|---|---|---|---|---|---|
-| RQ1–RQ3 | Not selected | Not verified | Not verified | Not verified | Not verified | Not verified | Not verified | None yet | Pending |
+| RQ1 | NASS mirrored release; actual download pending | 1_households / F14 | s00_q15a/b, s00_q16/17/18; zone_id | Candidate hhid; uniqueness untested | Season-specific activities; full codes pending | Reference fields documented; domains unresolved | final_weight listed; applicability and variance design pending | Source card: F14; questionnaire administrative activity questions | Needs narrowing |
+| RQ2 | Same | 3_Plot_mainSeason / F16 | s02_q07; 1=yes, 2=no | Candidate hhid + s02_plotRoster__id | Plot roster; missingness untested | Main season; period reconciliation pending | Household weight listed on plots; estimand/design unresolved | Source card: F16/V1112; questionnaire p.13 | Needs narrowing; proposed first E1 target |
+| RQ2 | Same | 9_Input_use_mainSeason / F22 | s03c_inputType__id; s03c_q01 | Household/input rows; candidate keys untested | Type roster depends on previous responses | Rainy season questionnaire; units need review | final_weight listed; not a complete estimation contract | Source card: F22; questionnaire p.39 | Deferred for use/access indicator |
+| RQ3 | Not yet selected | Depends on baseline | Codes/exclusions to be specified | Depends on selected unit | Missing is not no | Depends on E2 | Depends on E2 | Source card: remaining gates | Deferred |
 
 Final dispositions: **supported**, **needs narrowing**, **deferred**, **unsupported**. Explain each decision and blocker. If neither source supports a question, revise or defer it; do not invent fields or substitute synthetic observations.
 
