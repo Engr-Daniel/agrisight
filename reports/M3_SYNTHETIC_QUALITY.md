@@ -1,6 +1,6 @@
 # M3-04 synthetic quality and duplicate evaluation
 
-Observed 2026-10-29. **SYNTHETIC DEMONSTRATION DATA.** M3-04 complete for the fixed baseline experiment; M3-05 benchmarking remains unexecuted. These are no agricultural survey findings, enrollment counts or production accuracy estimates.
+Observed 2026-10-29. **SYNTHETIC DEMONSTRATION DATA.** M3-04 complete for the fixed baseline experiment; M3-05 benchmarking remains unexecuted. These are synthetic engineering results, not agricultural survey findings, enrollment counts or production accuracy estimates.
 
 ## Decision
 
@@ -112,4 +112,3 @@ The CLI accepts only outputs beneath ignored `reports/private` and writes aggreg
 Next define M3-05's fixed workflow, exact event-count configurations, repeats, hardware, time/memory methods and failure handling before timing. Include55000 events as one workload, not a special capacity threshold. Full M3 stays open. Large matching-key collisions can cause quadratic candidate output even though negative pairs are not enumerated; this accuracy study does not establish scalability.
 
 Learning checkpoint: finding two roles for one person is correct identity matching; calling that pair a repeated role would be incorrect. Missing an actual repeat and falsely joining different people are separate errors with different consequences.
-
