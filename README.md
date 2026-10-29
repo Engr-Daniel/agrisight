@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M2 first sample-analysis workflow complete; M3 robustness planning next · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M2 first sample workflow complete; M3 sensitivity readiness in progress · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -52,7 +52,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
-| M3 | E3 sensitivity; separate synthetic quality/scale investigations | Planned |
+| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | In progress; substantive E3 not executed |
 | M4 | Verified interactive reporting and supported geography | Planned |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |

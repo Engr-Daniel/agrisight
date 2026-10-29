@@ -40,11 +40,13 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] Independently reconcile seven integer counts exactly and proportion/percentage at absolute tolerance 1e-12 in SQL/Python. Actual result 132859/143105 = 92.84022221445791%; 92.84% for display, pooled sample only.
 - [x] Deliver [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), versioned staging/eligibility/mart SQL, model/provenance documentation and tested commands. 52 tests and Ruff passed; installed wheel reproduces full JSON exactly. No new dependencies/services; PostgreSQL/dbt remain conditional.
 
-## M3 — E3 robustness and separate engineering studies (PLANNED)
+## M3 — E3 robustness and separate engineering studies (IN PROGRESS)
 
-- [ ] Pre-specify and evaluate reasonable missingness, eligibility and definition alternatives for RQ3; report stability and limitations without causal claims.
-- [ ] Separately implement labelled synthetic ground truth for defect/duplicate precision, recall and false positives.
-- [ ] Benchmark documented workload sizes, including 55k role entries, with hardware/repeats and observed results. Never present simulated counts as agricultural findings.
+- [x] M3-01: pre-specify and execute the limited NASS-01 readiness audit; distinguish genuine sensitivity from target changes or software checks. No missing responses means no response-exclusion variation. [Protocol/shortlist](docs/experiments/E3_PROTOCOL.md), [assessment](reports/E3_READINESS.md).
+- [ ] M3-02: verify released plot-area units/measurement lineage, eligible plot types and null semantics; finalize the next indicator contract. Proposed full-roster median bounds remain conditional, no new indicator implemented.
+- [ ] M3-03: if supported, execute the pre-specified same-target missing-area bounds, independently reconcile SQL/Python and report sensitivity/limitations. Do not label identification bounds as population CIs or treat a changed target as sensitivity.
+- [ ] M3-04: separately implement labelled synthetic ground truth for defect/duplicate precision, recall and false positives.
+- [ ] M3-05: benchmark documented workload sizes, including 55k role entries, with hardware/repeats and observed results. Never present simulated counts as agricultural findings.
 
 ## M4 — Evidence-backed reporting (PLANNED)
 
@@ -60,4 +62,4 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M3 pre-specifies E3 sensitivity questions against the verified E2 baseline and reviews what further evidence would enable informative comparisons. Population/domain inference, dry-season comparisons and area/quantity analyses remain gated. No automatic move to dashboards or additional infrastructure.
+**Immediate next:** M3-02 plot-area feasibility/contract, before any successor indicator or substantive E3 computation. Population/domain inference, dry-season comparison and area/quantity measures remain gated; the area gate is not waived by proposing bounds. No automatic move to dashboards or additional infrastructure.

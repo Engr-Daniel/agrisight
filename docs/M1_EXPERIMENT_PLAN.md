@@ -1,6 +1,6 @@
 # Real-data investigation plan: E1 → E2 → E3
 
-Updated: 2026-10-29. **M1 E1 baseline and the first M2 E2 workflow are complete; E3 remains planned.** See [M1 review](M1_REVIEW.md), [M2 review](M2_REVIEW.md), [E1 protocols](experiments/E1_PROTOCOL.md) and [E2 findings](../reports/E2_AGRICULTURAL_FINDINGS.md). Not all 21 modules are analytically certified. Population/time/quantity restrictions remain binding. These are observational investigations, not controlled experiments or impact evaluations.
+Updated: 2026-10-29. **M1 E1 baseline and the first M2 E2 workflow are complete; E3 readiness is documented and substantive execution remains pending.** See [M1 review](M1_REVIEW.md), [M2 review](M2_REVIEW.md), [E3 protocol](experiments/E3_PROTOCOL.md) and [E2 findings](../reports/E2_AGRICULTURAL_FINDINGS.md). Not all 21 modules are analytically certified. Population/time/quantity restrictions remain binding. These are observational investigations, not controlled experiments or impact evaluations.
 
 ## Source and question gate
 

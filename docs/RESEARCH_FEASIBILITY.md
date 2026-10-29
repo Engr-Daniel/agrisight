@@ -24,6 +24,8 @@ Compare question fit, variables, access conditions, unit/keys, weight and varian
 | RQ2 | How does access to selected agricultural inputs or services differ across defined farming groups? | Access/use distinction, groups, eligibility, period, weight/design | Needs narrowing: infrastructure presence and input quantity are not equivalent to access |
 | RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | E2 NASS-01 baseline now exists; E3 protocol and execution pending |
 
+E3 update: [readiness protocol](experiments/E3_PROTOCOL.md) and [limited audit](../reports/E3_READINESS.md) establish that NASS-01 has no observed response-exclusion variation. A proposed full-roster median plot-area study has genuine missingness but remains conditional on units/measurement and eligibility verification. No substantive RQ3 robustness result or new indicator is claimed yet.
+
 ## Variable-to-question evidence matrix
 
 Add rows for each required variable and relationship during documentation inspection. A catalogue description alone does not establish feasibility.
