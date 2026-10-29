@@ -71,3 +71,14 @@ Reuse the unchanged E1 lock. Run from the repository root:
 ```
 
 Repeat the wheel build/install and checks above, then run the same module with `.venv-e1-repro` and output `reports/private/nass02_reproduced.json`. Compare complete parsed JSON, including provenance. Both environments passed77 tests and reproduced exactly on Windows/Python3.11.9. SQL is packaged; CI requires only synthetic fixtures. Outputs remain ignored; the source hash and field labels are guarded. See the [contract](NASS02_INDICATOR_CONTRACT.md) for support assumptions and fail-fast cases.
+
+## M3-04 synthetic accuracy
+
+Reuse the current lock; no new dependencies. Run development seeds first and freeze the source/protocol/contract hashes before evaluation. The [protocol](experiments/M3_04_PROTOCOL.md) fixes seed/configuration and mutation choices. Commands and actual metrics are in the [findings/review](../reports/M3_SYNTHETIC_QUALITY.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m agrisight.synthetic_quality --phase development --output reports/private/m3_04_development.json
+.\.venv\Scripts\python.exe -m agrisight.synthetic_quality --phase evaluation --output reports/private/m3_04_evaluation.json
+```
+
+Build/install the wheel using the M2 commands above, then run the evaluation with `.venv-e1-repro` and output `reports/private/m3_04_reproduced.json`; complete parsed JSON should match in the observed pinned Windows environment. This regenerates fictional rows in memory, passes observation-only records to the detector, and writes only aggregate results and provenance. No survey input or external account is needed. The CLI output guard rejects paths outside ignored `reports/private`. `generate` has a deliberately fixed1000-person accuracy workload; performance scaling is a separately versioned M3-05 task.
