@@ -9,7 +9,7 @@ data/curated/<source>/<release>/   checked row-level analytical files
 data/synthetic/<experiment>/      labelled seeded engineering records
 ```
 
-These directories do not contain acquired datasets yet. Create them when needed. Never pool survey and synthetic populations. Do not commit restricted data by force-adding ignored files. Ignore rules do not remove previously tracked files or provide encryption/access control.
+These are local directory conventions; acquired files are not distributed with a checkout. The owner's NASS archive is recorded in the [acquisition inventory](../docs/data_sources/NASS_2023_INVENTORY.md). Never pool survey and synthetic populations. Do not commit restricted data by force-adding ignored files. Ignore rules do not remove previously tracked files or provide encryption/access control.
 
 Reviewed tiny synthetic fixtures belong in code/tests rather than ignored working storage. Their methods, labels and privacy handling must be reviewed before committing. See the [data policy](../docs/DATA_POLICY.md).
 

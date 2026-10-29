@@ -1,16 +1,16 @@
 # MEMORY.md — AgriSight durable project context
 
-Updated: 2026-10-28.
+Updated: 2026-10-29.
 
 ## Direction
 
 Owner: Oyewale Daniel; private repository Engr-Daniel/agrisight; stable integration branch master. On 2026-10-28 the owner explicitly requested merging and proceeding without unnecessary new branches; continue this increment on master with scoped commits and checks.
 
-AgriSight combines empirical agricultural intelligence with trustworthy analytics delivery. Real-data research is primary; pipelines, SQL modelling, quality, statistics, supported geography and reporting remain engineering goals. Synthetic records provide separate known-truth and scale experiments, never population evidence. M0 remains complete as a foundation, not full user validation or empirical completion.
+AgriSight combines empirical agricultural intelligence with trustworthy analytics delivery. Real-data research is primary; pipelines, SQL modelling, quality, statistics, supported geography and reporting remain engineering goals. Synthetic records provide separate known-truth and scale experiments, never population evidence. M0 is a completed foundation; M1 is now technically complete as a scoped suitability baseline with explicit M2 restrictions. Neither is external user validation or population-estimation approval.
 
 ## Existing evidence
 
-The repository records prior foundation CI and seven-case Pandera/GX runs. The six-row synthetic fixture independently checks Python/SQLite counts; the basic validator reports issues without changing records. Pandera remains the initial working choice; comparison evidence is limited to tiny synthetic cases. Initial source-documentation inspection is now recorded below; full downloaded-file feasibility remains open. No respondent microdata acquisition, agricultural findings, dashboard, operational database, 55k generator or deployment exists.
+The repository records prior foundation CI and seven-case Pandera/GX runs. The six-row synthetic fixture independently checks Python/SQLite counts; the basic validator reports issues without changing records. Pandera remains the initial working choice; comparison evidence is limited to tiny synthetic cases. NASS acquisition and bounded E1.1 household/plot quality findings are now recorded below; broader analytical feasibility remains open. No population estimates, dashboard, operational database, 55k generator or deployment exists.
 
 ## Review decisions — 2026-10-28
 
@@ -38,6 +38,8 @@ No confidential Petgrave.io/client materials, identifying locations, secrets or 
 
 Next: authenticated NBS access terms/file inventory, release/design reconciliation, analytical dependency locking and permitted acquisition. Do not mark feasibility, E1 or statistical methods verified merely because the plan exists.
 
+Handoff updated 2026-10-29: local acquisition/inventory completed as described below; next select/lock a Stata reader, inspect selected-file metadata, finalize E1 and reconcile remaining upstream access/release/design details.
+
 ## Merge and initial source inspection — 2026-10-28
 
 - Fetched origin, fast-forwarded master to alignment commit `b4d4fb8`, and successfully pushed master at the owner's request. No reset, force push or branch deletion.
@@ -48,3 +50,41 @@ Next: authenticated NBS access terms/file inventory, release/design reconciliati
 - Proposed first E1 field: main-season plot irrigation infrastructure `s02_q07`, documented codes 1=yes, 2=no. Infrastructure presence is not input/service access. No sample proportions or population estimates were computed.
 - NBS microdata requires login; World Bank routes to FAO, which routes to NBS. Actual authenticated terms/files remain pending. No account creation, login, acceptance of terms or respondent-file download was attempted. GHS remains an alternative, with variable-level matching incomplete.
 - Verification after inspection updates: 19 existing tests passed, Ruff passed, `git diff --check` passed, relative links in all five changed/new documents resolved, and downloaded/extracted questionnaire paths were confirmed ignored. No source-documentation claim is treated as an executed empirical result.
+
+## Owner-provided signed-in snapshots — 2026-10-28
+
+Read the two supplied PDFs locally with pypdf. The access page shows an intended-use application and agreement checkbox, not approved access or download files. Recorded the seven displayed conditions in paraphrase in the source card, including redistribution restrictions, aggregate-only research, non-identification, citation and sending publication copies to the archive. Related materials are documentation, not microdata inventory. No account details/snapshots copied into Git; no application submitted, terms accepted or message sent. Next: owner submits their truthful intended-use description in the signed-in browser, then provides the resulting file inventory or locally downloaded authorized files. Documentation-only update; no application behaviour changed.
+
+## Owner-supplied archive acquisition — 2026-10-29
+
+- Used Google Drive skill/connector to list the supplied folder: one ZIP, `NASS_anonymized_dataset.zip`, 118711951 bytes. No permission or organization changes. Raw Drive fetch was stopped after an existing local Downloads copy of matching filename/size was found; no byte-identity claim against Drive.
+- Copied local archive to ignored `data/raw/nass_2023/owner_download_2026-10-29/` without overwriting a differing raw file. Source/copy SHA256 matched: `a5c0544f8b17f7e1f0627928b82ad19559110886930bf5f2e447fdef1b205d02`. Python ZIP CRC verification passed all 21 members; uncompressed size 2163973481 bytes.
+- Inspected file-format headers only: all Stata format 115. Header declarations include 143105 household rows and 273887 main-season plot rows, not independently parsed row counts or unique people. First attempted XML-style header detection returned no metadata; binary-format decoding succeeded. No raw values/IDs printed and no members extracted.
+- Local ignored JSON manifest records archive provenance/size/hash and member inventory. Reviewed non-identifying inventory is in `docs/data_sources/NASS_2023_INVENTORY.md`; no raw data, owner PDFs, sharing links or account information added to Git.
+- Download is owner-reported from NBS; exact upstream download time/release and any additional terms are not independently observed. M1-03 remains open for those details. No E1 quality findings, survey estimates, inference or new analytical dependency installation in this increment.
+- Verification: changed document links resolved; archive/manifest ignored; tracked data contains only the data README; existing tests 19 passed; Ruff and `git diff --check` passed. Updates remain local and uncommitted.
+
+## E1.1 first bounded real-data profiling — 2026-10-29
+
+- Owner requested proceeding. Continued on master, preserving prior uncommitted acquisition/access notes. Defined `docs/experiments/E1_PROTOCOL.md` before record-level execution: household/plot keys, missingness, infrastructure code validity, orphan coverage and basic weight checks; no population inference, geographies or raw-row output.
+- Added optional `e1` extra (Pandas 2.3.3), `src/agrisight/e1_profile.py` and synthetic tests. Code requires the acquired archive hash, reads fixed members/selected fields in memory, preserves numeric codes and recognizes tagged Stata missing. Raw ZIP remains unchanged; reports are confined to ignored `reports/private/`. Python/Pandas and SQLite independently reconcile all 14 integer counts, sharing explicit normalization; this is not independence of all preprocessing.
+- Locked actual runtime/transitive/test/build versions in `requirements/e1.lock`, excluding inspection-only pypdf. Existing foundation CI installs the lock/e1 extra and runs synthetic tests; no new workflow or framework. Optional E1 tests skip if Pandas is absent in a minimal foundation-only install.
+- First run command: `.\.venv\Scripts\python.exe -m agrisight.e1_profile data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/e1_1.json`.
+- Observed 143105 household rows/unique complete household keys and 273887 main-season plot rows/unique complete composite keys. No missing keys, duplicate excess or orphan plot household IDs. Infrastructure codes: 11268 yes, 262619 no, 0 missing, 0 other. All selected weights are positive finite. These are unweighted file-quality findings, not estimates of unique people or population infrastructure prevalence.
+- Parsed file variable counts (254/27) agree with acquisition headers. Selected column labels agree with dictionary descriptions; selected fields are float64. No full-schema equivalence, reference-period, geographic precision or variance-design verification claimed. Findings and exact exclusions/denominators are in `reports/E1_REAL_DATA_PROFILING.md`.
+- Fresh reproduction: `py -3.11 -m venv .venv-e1-repro`; its Python installed `-r requirements/e1.lock`, then `--no-build-isolation --no-deps -e '.[dev,e1]'`. Python 3.11.9 Windows; `pip check` passed. Full output JSON from a second real-data run matched exactly, including schema and weight counts.
+- Tests: 14 new synthetic cases (including parametrization), 33 total passed in both working/fresh environments; Ruff passed. Reader roundtrip fixture uses Stata 114 because Pandas cannot write 115; the actual local NASS runs verified 115 reading. No GitHub/Linux run claimed. Exact versions are pinned, but artifact hashes/offline wheel bundle and cross-platform verification are not provided.
+- M1 remains open for broader codebook/skip/missingness review, reference periods, upstream release/access clarification, survey design and owner review. E2 population analysis remains gated. Current changes are local and uncommitted; no external release or report transmission.
+
+## M1 completion — 2026-10-29 (supersedes previous handoff)
+
+- Owner explicitly requested finishing M1. Defined E1.2 extension protocol before executing broader checks; kept M1 focused on source suitability for a first workflow, not certification of all modules. Added `e1_suitability.py`, four synthetic tests and methodology/period review, NASS-01 contract and M1 technical review.
+- Downloaded public methodology report to ignored storage: 12385265 bytes, 322 pages, SHA256 `0fb2343f300692b1e16146f944f86974e5302c5ff528c4c8e10a2ea94812ddeb`. Inspected report sections 2.1–2.2 and 2.13–2.14 and relevant codebooks/questionnaire. No raw report committed.
+- All 21 schemas scanned. No usable household/plot PSU/strata/replicate contract identified; forestry has `ea_name` metadata only (values never read/exported). No assumption that geography reconstructs design. Final weights cannot alone support population CIs.
+- All household reference fields constant/nonmissing. Main season agrees with report: April–October 2022. Released minor season says November 2021–March 2022, conflicting with report's November 2022–March 2023. Raw labels preserved; cross-season comparison explicitly excluded pending producer clarification. No producer contact made.
+- Main/dry plot keys complete/unique, no orphan household links. Dry plot rows 26524, infrastructure codes 8349 yes/18175 no, no missing/other. All 14 per-season key/response counts reconcile with SQLite.
+- Five household activity fields all 1/2, no missing/other; main-crop yes132859/no10246. Main irrigation method/source skips consistent. Area missing48; input quantity missing15409 of321103 input rows; remaining quantities positive, keys complete/unique, no orphans. No imputations/deletions. Reasons for missing quantities not invented; no area/quantity or usage inference approved.
+- GHS extension-service metadata inspected: hhid/topic_cd/s11l1q1/s11l1q2 support an alternative conceptually, not empirical readiness. Retain NASS for selected NASS-01 pooled **sample** main-season crop-participation indicator. RQ1 narrowed; RQ2/RQ3 deferred. Exact upstream download timestamp/mirror byte identity remains unknown; analysed release is fixed by local hash and owner-reported origin/application terms.
+- Commands: `python -m agrisight.e1_suitability <ignored archive> --output reports/private/e1_2.json` in fresh pinned environment and corresponding `e1_2_reproduced.json` in working environment. Complete JSON matched exactly. All 37 tests passed; Ruff passed. Extension quantities/skip flags are tested descriptive diagnostics; independent SQL claim applies to reconciled key/response measures, not every added flag.
+- M1 tasks now checked against concrete review evidence, with design/period/quantity gates carried into M2 rather than silently declared resolved. Technical completion is not owner line-by-line ratification, public release approval or full data certification. Next: implement NASS-01 sample analysis and analytical model; population/domain inference requires additional evidence. No new infrastructure or source mixing.
+- Final review: 37 tests passed in both environments; Ruff passed with local and isolated configuration. Changed Markdown links resolved; raw/private/reproduction environment paths ignored; no restricted artifacts in changed/untracked files; data tracking limited to its README. All 21 schema variable counts matched the binary-header inventory, and the raw archive hash remained unchanged. `git diff --check` passed. Prepared a scoped local M1 checkpoint; no push or external publication requested in this turn.

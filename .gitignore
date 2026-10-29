@@ -160,6 +160,7 @@ activemq-data/
 .env
 .envrc
 .venv
+/.venv-e1-repro/
 env/
 venv/
 ENV/

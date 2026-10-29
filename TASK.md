@@ -1,6 +1,6 @@
 # TASK.md — AgriSight roadmap
 
-Updated: 2026-10-28. Checkboxes record observed evidence, not planned outputs.
+Updated: 2026-10-29. Checkboxes record observed evidence, not planned outputs.
 
 ## M0 — Engineering research foundation (COMPLETE)
 
@@ -16,20 +16,21 @@ M0 is a design baseline, not empirical findings, completed user validation or pr
 - [x] Align current purpose, roadmap and architecture with empirical intelligence plus trustworthy delivery; record [rationale/trade-offs](docs/REVIEW_ALIGNMENT.md).
 - [x] Record provisional RQ1–RQ3, E1/E2/E3 outputs and [source selection matrix](docs/RESEARCH_FEASIBILITY.md); GHS remains an alternative.
 - [x] Verify raw-data Git protection and foundation environment checks; Python 3.11.9, 19 tests passed and Ruff passed locally. Commands and limitations in MEMORY.md.
-- [ ] Select and lock actual M1 analytical dependencies after file/method requirements are known; reproduce a clean install. No wholesale stack change or new CI infrastructure.
+- [x] Select/lock E1.1 Stata-reading dependencies and reproduce a fresh Python 3.11.9 install; full JSON outputs match, 33 tests and Ruff pass. Later methods require their own selection/verification. Existing CI extended, no new workflow.
 
-## M1 — Source feasibility, acquisition and E1 (IN PROGRESS)
+## M1 — Source feasibility, acquisition and E1 (COMPLETE: scoped suitability baseline)
 
-- [ ] M1-01: inspect NASS questionnaires, codebooks and design documentation against candidate questions; assess GHS where it offers a better fit.
-  Progress: relevant questionnaire sections and mirrored household/plot/input dictionaries inspected; [source card](docs/data_sources/NASS_2023_CARD.md) records initial findings and provenance. Full access, design and variable audit remain open.
-- [ ] M1-02: populate exact-variable/file feasibility evidence; record access/redistribution terms, study version and decision rationale. Mark each question supported, needs narrowing, deferred or unsupported. Select one source and first feasible indicator.
-- [ ] M1-03: acquire only permitted microdata in ignored local storage; record hashes, filenames, release and download date. Never commit restricted inputs.
-- [ ] M1-04: confirm units/keys, join cardinality, strata/PSU/weights or other variance-design requirements, geography, reference periods and coded missingness. Finalize the indicator contract/protocol.
-- [ ] M1-05: execute E1 profiling on actual authorized records: schema, rows, missingness, duplicate-key candidates and rule findings. Cross-check at least three summaries independently.
-- [ ] M1-06: review exclusions and unusual values against documentation; distinguish sample descriptions from population estimates. Do not silently delete outliers or treat skipped questions as defects.
-- [ ] M1-07: deliver tested scripts, observed environment/commands, suitability report and limitations; close M1 only with evidence.
+Evidence and restrictions: [M1 technical review](docs/M1_REVIEW.md). This closes first-workflow suitability, not every agricultural module or population-estimation readiness.
 
-**Exit:** supported source/question mapping, verified permissions and provenance, analytical definitions, reproducible profiling and reviewed findings. See [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md).
+- [x] M1-01: inspect relevant NASS questionnaire/codebooks/methodology and all 21 released schemas; consider exact GHS service fields. Four relevant modules profiled at record level.
+- [x] M1-02: finalize feasibility decisions; select NASS-01 observed-sample main-season crop participation. Access conditions recorded; RQ1 narrowed, RQ2/RQ3 deferred explicitly.
+- [x] M1-03: acquire owner-authorized NBS archive in ignored storage; record observed acquisition date, hash, inventory and CRC. Exact upstream transaction time/mirror byte equality remain unknown, not fabricated; local input version is frozen by hash.
+- [x] M1-04: document units/keys, null/skip semantics, reference periods and design availability. Main-season period supported; dry-season conflict excluded from comparisons. Missing usable variance design explicitly blocks population inference.
+- [x] M1-05: execute E1.1/E1.2 schema/activity/main-dry plot/input checks. Independent Pandas/SQLite key/response counts agree exactly.
+- [x] M1-06: review exclusions: 48 missing plot areas and 15409 missing quantities retained; no destructive cleaning. Sample diagnostics clearly distinguished from population estimates.
+- [x] M1-07: deliver scripts, pinned environment, protocols, report and limitations. Full E1.2 output reproduced across working/fresh Python 3.11.9 environments; 37 tests and Ruff passed.
+
+**Exit evidence:** [design/period review](docs/data_sources/NASS_DESIGN_AND_PERIOD_REVIEW.md), [indicator contract](docs/NASS_INDICATOR_CONTRACT.md), [findings](reports/E1_REAL_DATA_PROFILING.md) and [technical review](docs/M1_REVIEW.md). Technical review is not external user validation or public-release permission.
 
 ## M2 — E2 agricultural findings and analytics engineering (PLANNED)
 
@@ -57,4 +58,4 @@ M0 is a design baseline, not empirical findings, completed user validation or pr
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** verify authenticated NBS terms/file inventory and reconcile release/design documentation. Plot irrigation-infrastructure response quality is the proposed E1 starting target, not a completed result or finalized population indicator. No need for another architecture redesign.
+**Immediate next:** M2 implements NASS-01 and its reconciled analytical model. Population/domain inference, dry-season comparisons and area/quantity analyses remain gated as recorded in the M1 review. No automatic move to dashboards or additional infrastructure.

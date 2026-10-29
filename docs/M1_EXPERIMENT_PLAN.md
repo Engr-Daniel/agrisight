@@ -1,10 +1,10 @@
 # Real-data investigation plan: E1 → E2 → E3
 
-Updated: 2026-10-28. **Planned, not executed.** M1 covers feasibility and E1; E2 follows in M2, E3 in M3. These are observational investigations, not controlled experiments or impact evaluations.
+Updated: 2026-10-29. **M1 feasibility/E1 baseline complete after E1.1/E1.2; E2/E3 remain planned.** See [technical review](M1_REVIEW.md), [E1.1 protocol](experiments/E1_PROTOCOL.md), [extension protocol](experiments/E1_EXTENSION_PROTOCOL.md) and [observed findings](../reports/E1_REAL_DATA_PROFILING.md). Not all 21 modules are analytically certified. E2 follows in M2, E3 in M3; population/time/quantity scope restrictions are binding. These are observational investigations, not controlled experiments or impact evaluations.
 
 ## Source and question gate
 
-Use the [candidate questions and feasibility matrix](RESEARCH_FEASIBILITY.md). Inspect NASS first; select GHS instead if it better supports the question. Choose one dataset for the first complete workflow. Neither has verified variable-level suitability in this project yet.
+Use the [feasibility decisions](RESEARCH_FEASIBILITY.md). NASS is selected for the first sample descriptive workflow under [NASS-01](NASS_INDICATOR_CONTRACT.md); GHS remains a separately gated alternative for service-access questions. The following sequence records the original gates, now assessed in the technical review; it is not evidence that every possible indicator is supported.
 
 1. Inspect relevant questionnaires, codebooks, methods, reference periods and access/redistribution terms. Record study/release and evidence locations.
 2. Map variables, units, keys, join cardinality, eligibility/skip codes, supported domains, weights and variance-design information to questions. Mark supported, narrowed, deferred or unsupported with reasons.

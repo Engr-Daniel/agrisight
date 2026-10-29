@@ -1,6 +1,6 @@
 # NASS 2023 — initial source feasibility card
 
-Reviewed: 2026-10-28. **Documentation inspection only; no respondent microdata acquired or analysed.** Relevant sections were inspected, not an exhaustive audit of all variables or the full survey report.
+Updated: 2026-10-29. M1 suitability baseline is technically complete after E1.1/E1.2; **no population analysis is approved**. See [findings](../../reports/E1_REAL_DATA_PROFILING.md), [inventory](NASS_2023_INVENTORY.md), [design/period review](NASS_DESIGN_AND_PERIOD_REVIEW.md) and [M1 disposition](../M1_REVIEW.md). This is not an exhaustive audit of every variable or the full survey report.
 
 ## Release and acquisition route
 
@@ -39,3 +39,22 @@ Population estimates remain deferred: verify downloaded release, universe, key u
 The [GHS Wave 5 catalogue](https://microdata.worldbank.org/catalog/6410) describes agriculture and household modules, national/zonal scope, and distinct cross-sectional versus longitudinal weights. Current ID is `NGA_2023_GHSP-W5_v02_M`; recheck at acquisition. It also notes a mixed-mode input/labour subsample whose reference periods require care.
 
 GHS remains a genuine alternative for services/welfare questions. Retain NASS for this first documentation-led E1 target; this is not a final source lock. GHS variable-level matching is incomplete. Both require verified access terms; do not merge them to fill missing fields.
+
+## Signed-in application evidence — 2026-10-28
+
+Owner supplied two locally saved page PDFs. The get-microdata snapshot (p. 2) displays an access application, not a granted download inventory. The related-materials snapshot lists questionnaires, reports and tables, not respondent microdata files. Account details and full snapshots are not copied into Git.
+
+Observed application conditions, paraphrased:
+
+- No redistribution or sale of supplied data/materials without written archive agreement.
+- Statistical/scientific research and aggregate reporting only; no investigations of specific individuals or organizations.
+- No reidentification or use of inadvertently discovered identities; discoveries must be reported to the archive.
+- No identifying linkage across archive or external datasets. This does not establish permission for arbitrary joins; retain only documented analytical relationships and verify ambiguity before use.
+- Cite the dataset as required and send electronic copies of resulting reports/publications to the archive.
+- Data providers disclaim responsibility for users' interpretations. Proceeding to retrieval signifies acceptance of the displayed conditions.
+
+The owner must review and submit the intended-use application through their signed-in session. No submission, agreement acceptance, access grant or microdata acquisition was performed by the assistant. File inventory, authenticated download terms and release details remain pending after submission. Publication obligations are recorded for later fulfillment; no report has been sent to anyone.
+
+The paragraph above records the 2026-10-28 state. On 2026-10-29 the owner reported a completed download and supplied a Drive folder. The archive was found locally, copied into ignored storage, hashed and CRC-checked. Its 21 Stata files are listed in the linked inventory. This establishes local acquisition, not independent observation of application acceptance or any additional authenticated terms. Record-level schema, keys, labels, release equivalence and survey-design suitability remain to be checked.
+
+E1.1 update: household `hhid` and plot (`hhid`, `s02_plotRoster__id`) keys are complete and unique in the parsed files; all plot household IDs match household records. Selected infrastructure/weight labels agree with the dictionary descriptions. These checks support the bounded protocol, not full release equivalence or survey-design suitability. Wider schemas and analytical eligibility remain unverified.

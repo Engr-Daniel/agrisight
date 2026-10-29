@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0 design foundation complete; M1 documentation feasibility in progress, E1 profiling pending · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M1 source suitability baseline complete; M2 sample-analysis workflow next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -23,7 +23,7 @@ Analysts and programme managers need to understand agricultural patterns without
 
 ## Questions and dataset decision
 
-Candidate questions concern geographic patterns in agricultural participation, differences in input/service access, and sensitivity of findings to analytical assumptions. Initial questionnaire/dictionary evidence identifies plot irrigation-infrastructure responses as a proposed E1 target; population inference remains unverified. See the [research feasibility matrix](docs/RESEARCH_FEASIBILITY.md) and [initial source card](docs/data_sources/NASS_2023_CARD.md).
+Candidate questions concern geographic agricultural participation, input/service access and sensitivity to analytical assumptions. E1 now supports a narrowed first workflow: **main-season crop participation in the observed sample**. Population inference remains gated by design verification; a dry-season year conflict excludes cross-season comparison. See [observed E1 findings](reports/E1_REAL_DATA_PROFILING.md), [feasibility decisions](docs/RESEARCH_FEASIBILITY.md) and [M1 technical review](docs/M1_REVIEW.md).
 
 Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
 
@@ -48,7 +48,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 | Milestone | Focus | Status |
 |---|---|---|
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
-| M1 | Source feasibility, permitted acquisition, E1 data suitability/profiling | Documentation inspection in progress |
+| M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | E2 agricultural findings and tested analytical models | Planned |
 | M3 | E3 sensitivity; separate synthetic quality/scale investigations | Planned |
 | M4 | Verified interactive reporting and supported geography | Planned |
@@ -63,7 +63,8 @@ Requires Python 3.11+. From a checkout:
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e '.[dev]'
+.\.venv\Scripts\python.exe -m pip install -r requirements/e1.lock
+.\.venv\Scripts\python.exe -m pip install --no-build-isolation --no-deps -e '.[dev,e1]'
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m ruff check src tests
 .\.venv\Scripts\python.exe -m agrisight.kpi_fixture
@@ -72,7 +73,7 @@ py -3.11 -m venv .venv
 
 See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
 
-**Implemented:** package scaffold, six-row Python/SQL KPI fixture, basic non-mutating validator, optional seven-case framework comparison, tests and CI workflows. **Not implemented:** real survey ingestion, empirical findings, 55k generator, operational database, dashboards or deployment.
+**Implemented:** scaffold and synthetic counting/validation exercises; bounded real-data E1.1 Stata reader with independent sample-quality counts; pinned increment environment, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, 55k generator, operational database, dashboards or deployment. Restricted inputs are never required for CI.
 
 ## Repository navigation
 
