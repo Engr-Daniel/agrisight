@@ -1,0 +1,53 @@
+{
+  "manifest_version": "1.0",
+  "purpose": "REVIEWED LOCAL EVIDENCE",
+  "observed_date": "2026-10-29",
+  "artifacts": {
+    "nass01.json": {
+      "sha256": "55524d5313a9f0148a92f8fb9c9a83af05e48a479025bdddbea2232f33410f3e",
+      "expected": {
+        "indicator": "NASS-01",
+        "contract_version": "1.0",
+        "model_version": "1.0",
+        "source.archive_sha256": "a5c0544f8b17f7e1f0627928b82ad19559110886930bf5f2e447fdef1b205d02",
+        "provenance.python_model_sha256": "559dc5c4d8b7a4c5f5e3a123f408791ce9a0a5a1ff911568c36ec0eac237e39e",
+        "provenance.sql_sha256": "d3f17abd638aac9db1315d4a3f13b122fc28943f01a7234b229f7a9028168766",
+        "provenance.dependency_lock_sha256": "113aff71a432584d77b77c2272b72f413ef1ed3f7fb1c8931cead83bee0b148b"
+      }
+    },
+    "nass02.json": {
+      "sha256": "222d33cce613787ee7d61c0bc1164b32c6d42c6aa7423142d391afdc3929c9a4",
+      "expected": {
+        "indicator": "NASS-02",
+        "contract_version": "1.0",
+        "model_version": "1.0",
+        "source_sha256": "a5c0544f8b17f7e1f0627928b82ad19559110886930bf5f2e447fdef1b205d02",
+        "provenance.python_model_sha256": "aed56aa3ef824799a3e183711dda7ff90d946631d48e43f0acef89b4ab379696",
+        "provenance.sql_sha256": "f3bff4cc16d90ac18b93cc43fd523266d10733595571133a00c0d195eee40ea3",
+        "provenance.lock_sha256": "113aff71a432584d77b77c2272b72f413ef1ed3f7fb1c8931cead83bee0b148b"
+      }
+    },
+    "m3_04_evaluation.json": {
+      "sha256": "a45eafe5e95ed12aa83a74bc1e6be336779aa7ab0231d12bba8ee7ec789929b2",
+      "expected": {
+        "source": "SYNTHETIC DEMONSTRATION DATA",
+        "contract_version": "1.0",
+        "generator_version": "1.0",
+        "code_sha256": "19210828bf5b041fcc6b8fc4b2ec732d80a1e7e24305ef8b6f17e631f4cd9a78",
+        "protocol_sha256": "14793ef68b126b457adb978999aa5ae9c320ca3e1806d89c089478ba4e6ecb19",
+        "lock_sha256": "113aff71a432584d77b77c2272b72f413ef1ed3f7fb1c8931cead83bee0b148b"
+      }
+    },
+    "m3_05_benchmark.json": {
+      "sha256": "98d246544835a0274e96f19be6f06ff93c63db9606f17aafb23a5aaef3133a3a",
+      "expected": {
+        "source": "SYNTHETIC DEMONSTRATION DATA",
+        "version": "1.0",
+        "sha256.benchmark": "6ebf24da535b73ec341e0952ce1c6b6f8e5e681e824354f398be4db19ea22971",
+        "sha256.detector": "19210828bf5b041fcc6b8fc4b2ec732d80a1e7e24305ef8b6f17e631f4cd9a78",
+        "sha256.protocol": "cb6d4c0eff278a0a686d7aa8ffb6e385f2ede19f423e8e37ba1f336bf5237c23",
+        "sha256.lock": "113aff71a432584d77b77c2272b72f413ef1ed3f7fb1c8931cead83bee0b148b"
+      }
+    }
+  }
+}

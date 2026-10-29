@@ -61,3 +61,7 @@ Initial server is local loopback only; no multi-user roles/authentication, shari
 5. Complete an internal M4 review recording reproducible commands, observed outcomes and remaining gates before checking the prototype complete. No requirement to add Power BI, maps, hosting or another framework to close this scoped prototype.
 
 Learning checks: does changing from same-person to duplicate-role update the meaning and precision/recall denominators while preserving the same total pair universe? Can a reader distinguish55000 events from39363 true synthetic people? Can the reader explain why a zero-width missing-area bound does not certify physical measurement accuracy? These are interpretation checks, not completed stakeholder validation.
+
+## M4-02 implementation follow-up
+
+The [bundle schema](M4_BUNDLE_SCHEMA.md) now defines the exact record shape and trust boundary. [Adapter/dependency review](M4_ADAPTER_REVIEW.md) verifies the corresponding implementation and installed-wheel reproduction. The prospective specification above is preserved; its initial pending statements describe that earlier stage. UI, local server/usability checks and full M4 completion remain pending.

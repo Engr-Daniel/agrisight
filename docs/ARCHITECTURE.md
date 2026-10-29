@@ -42,4 +42,4 @@ Implemented M2 increment: [NASS-01 staging → eligibility → mart model](NASS0
 
 ## M4 presentation decision
 
-[ADR-004](adr/ADR-004-initial-reporting-platform.md) selects Streamlit for a local read-only prototype. The [reporting contract](M4_REPORTING_CONTRACT.md) limits it to validated aggregate artifacts with separate survey/synthetic views. No Streamlit dependency is installed by the decision; adapter/schema, locked installation and UI checks are next. Other component gates remain active.
+[ADR-004](adr/ADR-004-initial-reporting-platform.md) selects Streamlit for a local read-only prototype. The [reporting contract](M4_REPORTING_CONTRACT.md) limits it to validated aggregate artifacts with separate survey/synthetic views. The subsequent [M4-02 review](M4_ADAPTER_REVIEW.md) verifies locked installation, packaged manifest and pure aggregate adapter under the [bundle schema](M4_BUNDLE_SCHEMA.md); Streamlit views and UI checks are next. Other component gates remain active.

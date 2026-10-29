@@ -95,3 +95,33 @@ The [benchmark protocol](experiments/M3_05_PROTOCOL.md) fixes workload generatio
 The suite launches sequential fresh workers (120-second timeout each). Input generation, imports, hashing and process startup are outside reported batch time. Five repetitions measure time; three separate repetitions measure peak traced Python allocation after input generation, not total RAM or RSS. Avoid concurrent build/test work when seeking isolated comparisons; disclose shared-machine load. Do not compare profiler elapsed times with uninstrumented timings. Full suites are manual experiments, never speed assertions in CI.
 
 For a packaged smoke check, build/install the wheel using the instructions above and invoke the installed module's `--worker --size 55000 --mode timing`; compare input/truth/prediction hashes and counts with the suite reference, not machine-dependent elapsed time. Row-level tokens/truth remain in memory; only reviewed aggregates belong in Git. The pair-budget wrapper is scoped to this module and does not change direct M3-04 detector behaviour.
+
+## M4-02 reporting dependency and adapter environment
+
+`requirements/m4.lock` pins Streamlit1.66.1 and its resolved dependencies together with all unchanged analytical/test/build pins from `e1.lock`. Observed Windows Python3.11.9 only; lock pins do not include wheel hashes or guarantee another platform. The existing CI installs this lock, optional reporting extra and synthetic tests; do not claim a remote result before observing it.
+
+```powershell
+py -3.11 -m venv .venv-m4
+.\.venv-m4\Scripts\python.exe -m pip install -r requirements/m4.lock
+.\.venv-m4\Scripts\python.exe -m pip install --no-build-isolation --no-deps -e '.[dev,e1,reporting]'
+.\.venv-m4\Scripts\python.exe -m pip check
+.\.venv-m4\Scripts\python.exe -m pytest -q
+.\.venv-m4\Scripts\python.exe -m ruff check src tests
+.\.venv-m4\Scripts\python.exe -m agrisight.reporting_adapter --output reports/private/m4_bundle.json
+```
+
+The adapter reads only the four fixed reviewed aggregates, never raw microdata, and fails dependent panels on missing/mismatched inputs. The command writes current unavailable states and exits1 rather than retaining stale success. It refuses output outside ignored reports/private or over an evidence input. Review the [schema](M4_BUNDLE_SCHEMA.md) before changing the manifest; do not automatically re-sign altered artifacts. Test fixtures are explicitly labelled and require no actual evidence files.
+
+For clean package reproduction:
+
+```powershell
+py -3.11 -m venv .venv-m4-repro
+.\.venv-m4-repro\Scripts\python.exe -m pip install -r requirements/m4.lock
+.\.venv-m4\Scripts\python.exe -m pip wheel --no-build-isolation --no-deps . --wheel-dir reports/private/wheels
+.\.venv-m4-repro\Scripts\python.exe -m pip install --no-deps --force-reinstall reports/private/wheels/agrisight-0.0.1-py3-none-any.whl
+.\.venv-m4-repro\Scripts\python.exe -m pip check
+.\.venv-m4-repro\Scripts\python.exe -m pytest -q
+.\.venv-m4-repro\Scripts\python.exe -m agrisight.reporting_adapter --output reports/private/m4_bundle_reproduced.json
+```
+
+Compare installed dependency maps and all parsed bundle fields except genuine run-specific built_at_utc; validate both timestamps as UTC instead of fabricating a shared build time. The adapter/manifest are packaged resources. The existing .venv and E1 lock remain untouched. No dashboard launch command exists yet; M4-03 implements that interface after these checks.

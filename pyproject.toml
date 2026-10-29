@@ -14,12 +14,13 @@ dependencies = []
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.8,<1"]
 e1 = ["pandas==2.3.3"]
+reporting = ["streamlit==1.66.1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-agrisight = ["sql/*.sql"]
+agrisight = ["sql/*.sql", "reporting/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

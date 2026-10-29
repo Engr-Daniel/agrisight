@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M3 complete within scoped objectives; M4 reporting specified, implementation pending · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M3 complete within scoped objectives; M4 aggregate adapter verified; dashboard next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -45,7 +45,7 @@ Separate synthetic fixtures → controlled engineering evaluation
 
 The initial analytical tools may include Pandas, Pandera, DuckDB and Parquet as needed. Pandera is the working validation choice, based on a limited synthetic comparison; survey integration is not yet implemented. Choose and lock dependencies for the next increment.
 
-Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock and implementation remain pending. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
+Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock and aggregate adapter are verified, while the dashboard remains pending. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
 
 ## Roadmap
 
@@ -55,7 +55,7 @@ Streamlit is selected for the initial local, read-only evidence explorer; its de
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
 | M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
-| M4 | Verified aggregate reporting; geography separately gated | In progress: Streamlit decision/contract; implementation pending |
+| M4 | Verified aggregate reporting; geography separately gated | In progress: dependencies/aggregate adapter verified; UI pending |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
 
@@ -77,7 +77,7 @@ py -3.11 -m venv .venv
 
 See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
 
-**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database, dashboards or deployment. Restricted inputs are never required for CI.
+**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, validated aggregate reporting adapter, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database, dashboards or deployment. Restricted inputs are never required for CI.
 
 ## Repository navigation
 

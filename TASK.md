@@ -40,7 +40,7 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] Independently reconcile seven integer counts exactly and proportion/percentage at absolute tolerance 1e-12 in SQL/Python. Actual result 132859/143105 = 92.84022221445791%; 92.84% for display, pooled sample only.
 - [x] Deliver [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), versioned staging/eligibility/mart SQL, model/provenance documentation and tested commands. 52 tests and Ruff passed; installed wheel reproduces full JSON exactly. No new dependencies/services; PostgreSQL/dbt remain conditional.
 
-## M3 — E3 robustness and separate engineering studies (IN PROGRESS)
+## M3 - E3 robustness and separate engineering studies (COMPLETE: scoped experiments)
 
 - [x] M3-01: pre-specify and execute the limited NASS-01 readiness audit; distinguish genuine sensitivity from target changes or software checks. No missing responses means no response-exclusion variation. [Protocol/shortlist](docs/experiments/E3_PROTOCOL.md), [assessment](reports/E3_READINESS.md).
 - [x] M3-02: finalize [NASS-02 contract](docs/NASS02_INDICATOR_CONTRACT.md) after unit-label, plot-type and null checks. Measurement lineage remains unresolved; scope is explicitly the released field, not certified physical/GPS area. No companion-field backfill.
@@ -48,10 +48,10 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] M3-04: implement labelled synthetic ground truth, fixed B0/B1 baselines and independent SQL accuracy checks. Development and reserved-seed runs executed; 104 tests pass and installed wheel reproduces full JSON. Mixed B1 duplicate recall50%, precision87.72-90.91%; no automatic merging. [Findings/review](reports/M3_SYNTHETIC_QUALITY.md), [protocol](docs/experiments/M3_04_PROTOCOL.md), [contract](docs/SYNTHETIC_REGISTRATION_CONTRACT.md).
 - [x] M3-05: benchmark1000/10000/55000/100000 events with five timing and three separate traced-allocation repeats; independent correctness checks and installed-wheel55000-event smoke match. All123 tests pass. Collision guard rejects499500 potential pairs. [Protocol](docs/experiments/M3_05_PROTOCOL.md), [findings](reports/M3_WORKLOAD_BENCHMARK.md), [M3 review](docs/M3_REVIEW.md). Shared-machine batch scope, not total memory, SLA or agricultural findings.
 
-## M4 - Evidence-backed reporting (IN PROGRESS: specification)
+## M4 - Evidence-backed reporting (IN PROGRESS: adapter ready)
 
 - [x] M4-01: select Streamlit for one local read-only prototype and specify allowed metrics, source separation, valid selections, denominators, provenance/freshness and failure states. [ADR-004](docs/adr/ADR-004-initial-reporting-platform.md), [reporting contract](docs/M4_REPORTING_CONTRACT.md). No UI/dependency installation claimed.
-- [ ] M4-02: select/lock/reproduce presentation dependencies; implement and test aggregate-only adapter, reviewed artifact manifest and exact metric-record schema. Preserve analytical locks/results.
+- [x] M4-02: lock Streamlit 1.66.1 and 45 distributions while retaining all E1 pins; reproduce clean installation and packaged aggregate adapter/manifest. 45 new cases; 168 full tests pass in both M4 environments, Ruff/pip check pass. Actual bundles match except build UTC. [Schema](docs/M4_BUNDLE_SCHEMA.md), [review](docs/M4_ADAPTER_REVIEW.md). No dashboard or app-specific UI validation claimed.
 - [ ] M4-03: implement Streamlit views and AppTest checks for all supported selections, labels, counts/rates, undefined/rejected values and unavailable inputs. No raw-data loading or experiment reruns from UI.
 - [ ] M4-04: run locally against authorized aggregates; record real startup/interaction checks and internal review. Maps, geography/row-level drill-down and deployment remain separately gated and excluded from this initial prototype.
 
@@ -64,4 +64,4 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M4-02: presentation dependency lock/reproduction, strict aggregate adapter and reviewed artifact manifest under the reporting contract. M3 scientific limits remain active. No automatic maps, raw-data access, public deployment, second dashboard tool or additional infrastructure.
+**Immediate next:** M4-03: implement the local Streamlit views and AppTest selection/formatting/failure-state checks against the validated bundle schema. Then M4-04 local runtime/usability review. Scientific limits and source separation persist; no automatic maps, raw-data access, public deployment or second dashboard tool.
