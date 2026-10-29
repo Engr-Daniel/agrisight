@@ -1,5 +1,7 @@
 # E3 — Sensitivity readiness and next empirical question
 
+Execution follow-up (2026-10-29): the pre-specified released-field option is now implemented under the [NASS-02 contract](../NASS02_INDICATOR_CONTRACT.md); see [findings](../../reports/E3_PLOT_AREA_BOUNDS.md). Measurement lineage remains unresolved. The protocol below preserves the original prospective decisions.
+
 Specified 2026-10-29. **NASS-01 readiness audit only; substantive E3 execution not complete.** No new agricultural indicator is implemented by this document. All M1 inference, reference-period and access restrictions remain active.
 
 ## 1. What can change the existing result?

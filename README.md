@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M2 first sample workflow complete; M3 sensitivity readiness in progress · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M2 first sample workflow complete; M3 empirical bounds complete; synthetic studies pending · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -26,6 +26,8 @@ Analysts and programme managers need to understand agricultural patterns without
 Candidate questions concern geographic agricultural participation, input/service access and sensitivity to analytical assumptions. E1 now supports a narrowed first workflow: **main-season crop participation in the observed sample**. Population inference remains gated by design verification; a dry-season year conflict excludes cross-season comparison. See [observed E1 findings](reports/E1_REAL_DATA_PROFILING.md), [feasibility decisions](docs/RESEARCH_FEASIBILITY.md) and [M1 technical review](docs/M1_REVIEW.md).
 
 E2 independently reconciles that first indicator: **132859 / 143105 eligible released household records = 92.84%** reporting main-season crop growing. This is unweighted sample description, not national prevalence. See [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), [SQL model](src/agrisight/sql/nass01.sql) and [M2 review](docs/M2_REVIEW.md).
+
+E3 bounds the full released main-season plot-roster median at **6070.29 in the labelled square-metre units**. The 48 missing entries cannot shift that median under the nonnegative-value completion model because bounding ranks are tied. This does not establish measurement accuracy or national plot size. See [E3 findings](reports/E3_PLOT_AREA_BOUNDS.md) and [contract](docs/NASS02_INDICATOR_CONTRACT.md). Synthetic quality and scale studies remain pending.
 
 Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
 
@@ -52,7 +54,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
-| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | In progress; substantive E3 not executed |
+| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Empirical E3 complete within released-field scope; synthetic studies pending |
 | M4 | Verified interactive reporting and supported geography | Planned |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
@@ -75,7 +77,7 @@ py -3.11 -m venv .venv
 
 See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
 
-**Implemented:** scaffold and synthetic counting/validation exercises; bounded real-data E1.1 Stata reader with independent sample-quality counts; pinned increment environment, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, 55k generator, operational database, dashboards or deployment. Restricted inputs are never required for CI.
+**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, 55k generator, operational database, dashboards or deployment. Restricted inputs are never required for CI.
 
 ## Repository navigation
 

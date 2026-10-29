@@ -26,3 +26,7 @@ No coordinates or spatial transformations are used, so CRS/coordinate precision 
 ## Analytical limits
 
 Use only [NASS-01](../NASS_INDICATOR_CONTRACT.md) for the initial M2 sample indicator. Weight applicability, variance design, dry-period conflict and area/quantity exclusions are binding in the [design review](NASS_DESIGN_AND_PERIOD_REVIEW.md). No cleaning corrections have been made; future corrections must preserve raw inputs and record source hash, rule, transformation version and reason.
+
+## Scoped NASS-02 extension ? 2026-10-29
+
+The [NASS-02 contract](../NASS02_INDICATOR_CONTRACT.md) permits bounds for the released `s02_q16a` field as labelled, over all documented plot types. It does not certify GPS/physical measurement lineage or permit acres substitution, yields, farm totals or population inference. Other area/quantity gates remain active.

@@ -22,9 +22,9 @@ Compare question fit, variables, access conditions, unit/keys, weight and varian
 |---|---|---|---|
 | RQ1 | How does participation in selected agricultural activities vary across statistically supported geographic domains? | Activity participation, eligible universe, domain, appropriate weight/design | Narrowed to observed-sample main-season crop participation; population/geographic comparison deferred |
 | RQ2 | How does access to selected agricultural inputs or services differ across defined farming groups? | Access/use distinction, groups, eligibility, period, weight/design | Needs narrowing: infrastructure presence and input quantity are not equivalent to access |
-| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | E2 NASS-01 baseline now exists; E3 protocol and execution pending |
+| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | NASS-02 released-field missing-area bounds executed; measurement/population scope restricted |
 
-E3 update: [readiness protocol](experiments/E3_PROTOCOL.md) and [limited audit](../reports/E3_READINESS.md) establish that NASS-01 has no observed response-exclusion variation. A proposed full-roster median plot-area study has genuine missingness but remains conditional on units/measurement and eligibility verification. No substantive RQ3 robustness result or new indicator is claimed yet.
+E3 update: [readiness protocol](experiments/E3_PROTOCOL.md) and [limited audit](../reports/E3_READINESS.md) establish that NASS-01 has no observed response-exclusion variation. The subsequent [NASS-02 contract](NASS02_INDICATOR_CONTRACT.md) explicitly targets the released field after label/eligibility checks, retaining unresolved measurement lineage. [Executed bounds](../reports/E3_PLOT_AREA_BOUNDS.md) have width0 because bounding ranks are tied; this addresses missing values only, not measurement error or population uncertainty.
 
 ## Variable-to-question evidence matrix
 

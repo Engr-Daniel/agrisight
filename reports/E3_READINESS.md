@@ -1,5 +1,7 @@
 # E3 readiness assessment — no substantive robustness result yet
 
+Follow-up (2026-10-29): this historical readiness assessment is followed by the [executed NASS-02 study](E3_PLOT_AREA_BOUNDS.md) and [empirical review](../docs/M3_EMPIRICAL_REVIEW.md). Statements below about a proposed indicator describe the earlier readiness stage.
+
 Observed 2026-10-29. Source is the previously executed NASS-01 aggregate artifact, not modified or newly simulated survey records. See [pre-specified E3 protocol](../docs/experiments/E3_PROTOCOL.md).
 
 ## Limited NASS-01 result

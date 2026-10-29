@@ -61,3 +61,13 @@ E2 adds no dependency; reuse `requirements/e1.lock` and the selected extra above
 ```
 
 The second environment now runs the installed wheel, not its previous editable checkout. Source/SQL resources are packaged via `pyproject.toml`; verify complete parsed JSON equality between the two outputs, including provenance. Windows Python 3.11.9/Pandas 2.3.3/SQLite 3.45.1 were observed; a different platform may change provenance or float details and must be evaluated rather than claimed bit-identical. Wheels remain ignored private artifacts. Model/lock hashes identify the exact bytes used; do not report a successful run's old output as evidence after a failed rerun.
+
+## M3 NASS-02 empirical bounds
+
+Reuse the unchanged E1 lock. Run from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe -m agrisight.nass02 data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/nass02.json
+```
+
+Repeat the wheel build/install and checks above, then run the same module with `.venv-e1-repro` and output `reports/private/nass02_reproduced.json`. Compare complete parsed JSON, including provenance. Both environments passed77 tests and reproduced exactly on Windows/Python3.11.9. SQL is packaged; CI requires only synthetic fixtures. Outputs remain ignored; the source hash and field labels are guarded. See the [contract](NASS02_INDICATOR_CONTRACT.md) for support assumptions and fail-fast cases.
