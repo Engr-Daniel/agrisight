@@ -1,6 +1,6 @@
 # Architecture and introduction gates
 
-Updated: 2026-10-28. Staged implementation of existing engineering goals; no full platform is implemented.
+Updated: 2026-10-29. Staged implementation of existing engineering goals; no full platform is implemented.
 
 ## First analytical workflow
 
@@ -39,3 +39,7 @@ Implemented M2 increment: [NASS-01 staging → eligibility → mart model](NASS0
 - [ADR-002](adr/ADR-002-geography-and-privacy.md): geographic and privacy boundaries.
 - [ADR-003](adr/ADR-003-validation-choice.md): initial Pandera selection with limited comparison evidence.
 - [Review alignment](REVIEW_ALIGNMENT.md): rationale, benefit, trade-offs and verification.
+
+## M4 presentation decision
+
+[ADR-004](adr/ADR-004-initial-reporting-platform.md) selects Streamlit for a local read-only prototype. The [reporting contract](M4_REPORTING_CONTRACT.md) limits it to validated aggregate artifacts with separate survey/synthetic views. No Streamlit dependency is installed by the decision; adapter/schema, locked installation and UI checks are next. Other component gates remain active.

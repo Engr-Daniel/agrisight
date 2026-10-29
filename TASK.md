@@ -48,10 +48,12 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] M3-04: implement labelled synthetic ground truth, fixed B0/B1 baselines and independent SQL accuracy checks. Development and reserved-seed runs executed; 104 tests pass and installed wheel reproduces full JSON. Mixed B1 duplicate recall50%, precision87.72-90.91%; no automatic merging. [Findings/review](reports/M3_SYNTHETIC_QUALITY.md), [protocol](docs/experiments/M3_04_PROTOCOL.md), [contract](docs/SYNTHETIC_REGISTRATION_CONTRACT.md).
 - [x] M3-05: benchmark1000/10000/55000/100000 events with five timing and three separate traced-allocation repeats; independent correctness checks and installed-wheel55000-event smoke match. All123 tests pass. Collision guard rejects499500 potential pairs. [Protocol](docs/experiments/M3_05_PROTOCOL.md), [findings](reports/M3_WORKLOAD_BENCHMARK.md), [M3 review](docs/M3_REVIEW.md). Shared-machine batch scope, not total memory, SLA or agricultural findings.
 
-## M4 — Evidence-backed reporting (PLANNED)
+## M4 - Evidence-backed reporting (IN PROGRESS: specification)
 
-- [ ] Choose Power BI or Streamlit initially; build interactive reporting from checked findings. Add the second only for a distinct purpose.
-- [ ] Reconcile filters/denominators, expose provenance and uncertainty, and test licensed geography/disclosure safeguards before maps or drill-down.
+- [x] M4-01: select Streamlit for one local read-only prototype and specify allowed metrics, source separation, valid selections, denominators, provenance/freshness and failure states. [ADR-004](docs/adr/ADR-004-initial-reporting-platform.md), [reporting contract](docs/M4_REPORTING_CONTRACT.md). No UI/dependency installation claimed.
+- [ ] M4-02: select/lock/reproduce presentation dependencies; implement and test aggregate-only adapter, reviewed artifact manifest and exact metric-record schema. Preserve analytical locks/results.
+- [ ] M4-03: implement Streamlit views and AppTest checks for all supported selections, labels, counts/rates, undefined/rejected values and unavailable inputs. No raw-data loading or experiment reruns from UI.
+- [ ] M4-04: run locally against authorized aggregates; record real startup/interaction checks and internal review. Maps, geography/row-level drill-down and deployment remain separately gated and excluded from this initial prototype.
 
 ## M5 — Advanced analytics (OPTIONAL)
 
@@ -62,4 +64,4 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M4: select one reporting tool and define aggregate reporting inputs, denominators/provenance and separation of survey/synthetic views before implementation. M3 is complete within the [technical review scope](docs/M3_REVIEW.md). Population/domain inference, cross-season comparison, physical-area and quantity claims retain their gates. No automatic geographic drill-down, deployment or additional infrastructure.
+**Immediate next:** M4-02: presentation dependency lock/reproduction, strict aggregate adapter and reviewed artifact manifest under the reporting contract. M3 scientific limits remain active. No automatic maps, raw-data access, public deployment, second dashboard tool or additional infrastructure.
