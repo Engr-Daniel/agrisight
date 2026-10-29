@@ -18,6 +18,6 @@ jobs:
           python -m pip install --no-build-isolation --no-deps -e ".[dev,e1,reporting]"
           python -m pip check
       - name: Lint
-        run: python -m ruff check src tests streamlit_app.py
+        run: python -m ruff check src tests scripts/m4_browser_review.py streamlit_app.py
       - name: Smoke tests
         run: python -m pytest -q

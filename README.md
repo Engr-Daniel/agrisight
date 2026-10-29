@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M3 complete within scoped objectives; M4 local interface tested; browser/usability review pending · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 reproduction next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -55,7 +55,7 @@ Streamlit is selected for the initial local, read-only evidence explorer; its de
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
 | M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
-| M4 | Verified aggregate reporting; geography separately gated | In progress: local UI/automated checks verified; browser review pending |
+| M4 | Verified aggregate reporting; geography separately gated | Complete for local read-only prototype; internal browser review verified |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
 
@@ -71,7 +71,7 @@ After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkou
 .\.venv-m4\Scripts\python.exe -m streamlit run streamlit_app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
 ```
 
-Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [UI verification and limits](docs/M4_UI_REVIEW.md): automated interactions and local startup passed; browser layout/usability review is pending. No server is left running by the verification checkpoint.
+Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [Combined M4 review and limits](docs/M4_REVIEW.md): automated tests and internal Chrome desktop/narrow review passed; external user and broader browser validation remain open. No server is left running by the verification checkpoint.
 
 ## Quick start: foundation examples
 

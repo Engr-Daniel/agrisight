@@ -142,3 +142,7 @@ The launcher/config live in the checkout; the UI module is packaged. Open http:/
 Every widget interaction rebuilds the validated bundle; no session-state evidence fallback or artifact cache exists. AppTest uses patched offline fixture loading with TEST FIXTURE origins. It does not require actual authorized inputs in CI. Pure analytical environments without the optional Streamlit dependency skip the UI test module; use the M4 environment for the full reporting regression suite. Bare-mode ScriptRunContext warnings can appear in headless tests; check actual AppTest exceptions/results instead of inferring a browser session from logs.
 
 A local HTTP health check proves server availability, not browser rendering. See [M4-03 verification](M4_UI_REVIEW.md) for what was observed and remaining browser/usability work. Earlier M4-02 statements that no launch command existed describe that stage; the launcher is now implemented.
+
+## Internal browser review
+
+Run `.\.venv-m4\Scripts\python.exe scripts/m4_browser_review.py` with installed Chrome (or `--browser PATH`) and reviewed local aggregates. No new dependency is needed. The helper launches an isolated fresh profile, uses temporary loopback ports, records source fingerprints and 19 captures privately, and stops its own processes. Review screenshots separately. This is native Chrome rendering, distinct from AppTest; it is not a CI browser job or a physical-device/accessibility study. See the [combined review](M4_REVIEW.md) for observed results and limits.

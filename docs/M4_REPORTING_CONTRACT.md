@@ -69,3 +69,7 @@ The [bundle schema](M4_BUNDLE_SCHEMA.md) now defines the exact record shape and 
 ## M4-03 implementation follow-up
 
 [UI verification](M4_UI_REVIEW.md) records the now-implemented views and automated interactions. Local loopback health checks passed and the test server was stopped; actual browser/usability review and combined M4 closure remain pending. No scientific/data-release gate is waived.
+
+## M4-04 follow-up
+
+The [combined M4 review](M4_REVIEW.md) now closes the local prototype after actual Chrome desktop/narrow checks and internal visual inspection. Earlier pending statements describe their historical stage. Broader browser/user validation and release authorization remain outside this completion.

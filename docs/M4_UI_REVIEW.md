@@ -38,3 +38,7 @@ After the [M4 dependency setup](DEVELOPMENT.md), from the checkout root:
 Open `http://127.0.0.1:8501` locally and stop the process with Ctrl+C. The verification server was stopped; no live preview is left running by this checkpoint. Missing or changed inputs show unavailable panels; no production-looking fallback dataset is substituted.
 
 M4-04 must review layout/readability, source/limitation visibility, keyboard interaction, chart/table legibility and narrow-window behavior in an actual browser when tooling is available, then record the combined M4 handoff and any fixes. No browser screenshot, visual usability inspection or stakeholder review was performed in M4-03. Keep scientific/geography/access gates active even after eventual prototype closure.
+
+## M4-04 follow-up
+
+The [combined M4 review](M4_REVIEW.md) now closes the local prototype after actual Chrome desktop/narrow checks and internal visual inspection. Earlier pending statements describe their historical stage. Broader browser/user validation and release authorization remain outside this completion.

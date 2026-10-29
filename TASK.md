@@ -48,12 +48,12 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] M3-04: implement labelled synthetic ground truth, fixed B0/B1 baselines and independent SQL accuracy checks. Development and reserved-seed runs executed; 104 tests pass and installed wheel reproduces full JSON. Mixed B1 duplicate recall50%, precision87.72-90.91%; no automatic merging. [Findings/review](reports/M3_SYNTHETIC_QUALITY.md), [protocol](docs/experiments/M3_04_PROTOCOL.md), [contract](docs/SYNTHETIC_REGISTRATION_CONTRACT.md).
 - [x] M3-05: benchmark1000/10000/55000/100000 events with five timing and three separate traced-allocation repeats; independent correctness checks and installed-wheel55000-event smoke match. All123 tests pass. Collision guard rejects499500 potential pairs. [Protocol](docs/experiments/M3_05_PROTOCOL.md), [findings](reports/M3_WORKLOAD_BENCHMARK.md), [M3 review](docs/M3_REVIEW.md). Shared-machine batch scope, not total memory, SLA or agricultural findings.
 
-## M4 - Evidence-backed reporting (IN PROGRESS: UI tested)
+## M4 - Evidence-backed reporting (COMPLETE: local read-only prototype)
 
 - [x] M4-01: select Streamlit for one local read-only prototype and specify allowed metrics, source separation, valid selections, denominators, provenance/freshness and failure states. [ADR-004](docs/adr/ADR-004-initial-reporting-platform.md), [reporting contract](docs/M4_REPORTING_CONTRACT.md). No UI/dependency installation claimed.
 - [x] M4-02: lock Streamlit 1.66.1 and 45 distributions while retaining all E1 pins; reproduce clean installation and packaged aggregate adapter/manifest. 45 new cases; 168 full tests pass in both M4 environments, Ruff/pip check pass. Actual bundles match except build UTC. [Schema](docs/M4_BUNDLE_SCHEMA.md), [review](docs/M4_ADAPTER_REVIEW.md). No dashboard or app-specific UI validation claimed.
-- [x] M4-03: implement separate Streamlit views with 36 UI cases exercising all 126 quality cells, both survey indicators and 12 workload/measurement choices. All 204 tests pass in development/installed-wheel environments; actual aggregate headless displays and loopback startup/cleanup verified. [UI review](docs/M4_UI_REVIEW.md). Browser appearance/usability not yet reviewed; no raw-data loading or experiment reruns.
-- [ ] M4-04: complete actual browser/usability checks and combined M4 review. Local health/root startup and actual aggregate headless checks already passed in M4-03; these do not establish visual usability. Maps, geography/row-level drill-down and deployment remain gated and excluded.
+- [x] M4-03: implement separate Streamlit views with 36 UI cases exercising all 126 quality cells, both survey indicators and 12 workload/measurement choices. All 204 tests pass in development/installed-wheel environments; actual aggregate headless displays and loopback startup/cleanup verified. [UI review](docs/M4_UI_REVIEW.md). Browser review followed in M4-04 below; no raw-data loading or experiment reruns.
+- [x] M4-04: actual Chrome desktop/narrow rendering, keyboard navigation, source/limit visibility, charts/tables and provenance reviewed. Six browser checks passed across 19 captures; zero JavaScript exceptions and both temporary ports closed. All 204 tests pass in development/installed-wheel environments. [Combined review](docs/M4_REVIEW.md) records internal review scope and remaining coverage limits. Maps, geography/row-level drill-down and deployment remain gated and excluded.
 
 ## M5 — Advanced analytics (OPTIONAL)
 
@@ -64,4 +64,4 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M4-04: review the local prototype in a browser when tooling is available, fix observed usability issues and record the combined M4 review. Scientific limits and source separation persist; no public deployment, maps or second dashboard tool.
+**Immediate next:** M6: independent clean reproduction and release-readiness evidence. Begin with a reproducibility protocol and clean-checkout verification; public release/deployment still requires licence/privacy review and explicit owner authorization. M5 remains optional.

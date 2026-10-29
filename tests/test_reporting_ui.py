@@ -10,7 +10,13 @@ from streamlit.testing.v1 import AppTest
 from test_reporting_adapter import fixture_data, m, metrics, write_fixture
 
 from agrisight import reporting_adapter
-from agrisight.reporting_ui import COUNT_LABELS, decimal, integer, percentage
+from agrisight.reporting_ui import (
+    COUNT_LABELS,
+    build_time,
+    decimal,
+    integer,
+    percentage,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -77,6 +83,7 @@ def test_survey_choices_values_units_provenance_and_navigation(setup_ui):
     assert "2 yes / 3 valid household responses" in text(at)
     assert counts(at)["Missing responses"] == "1"
     assert "not national or current prevalence" in text(at)
+    assert not any("Area measurement" in item.value for item in at.warning)
     assert "April-October 2022" in text(at)
     assert "Bundle built (UTC)" in text(at)
     at.selectbox(key="indicator").select("NASS-02").run()
@@ -88,6 +95,8 @@ def test_survey_choices_values_units_provenance_and_navigation(setup_ui):
     assert "separate reference): 4.00" in text(at)
     assert "not confidence intervals" in text(at)
     assert "Measurement lineage is unverified" in text(at)
+    assert any("Area measurement" in item.value for item in at.warning)
+    assert any(item.value == "Source: TEST FIXTURE" for item in at.caption)
     assert evidence(at)["values"]["width_m2"] == 2
     assert set(evidence(at)["provenance"]) == {"nass01.json", "nass02.json"}
     at.sidebar.radio(key="view").set_value("Synthetic quality").run()
@@ -255,6 +264,7 @@ def test_precision_and_count_formatting_and_local_config():
     assert decimal(16.64679527282715, 2) == "16.65"
     assert decimal(None, 2) == "Not defined"
     assert decimal(None, 2, True) == "Unbounded"
+    assert build_time("2026-10-29T18:10:00.123456+00:00") == "2026-10-29 18:10:00"
     config = tomllib.loads((ROOT/".streamlit/config.toml").read_text())
     assert config["server"] == {"address": "127.0.0.1", "headless": True}
     assert config["browser"]["gatherUsageStats"] is False

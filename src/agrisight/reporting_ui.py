@@ -1,5 +1,6 @@
 """Read-only Streamlit views over freshly validated aggregate evidence."""
 
+from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
@@ -42,6 +43,10 @@ def decimal(value: float | None, places: int, unbounded: bool = False) -> str:
     return f"{value:,.{places}f}"
 
 
+def build_time(value: str) -> str:
+    return datetime.fromisoformat(value).strftime("%Y-%m-%d %H:%M:%S")
+
+
 def count_table(counts: dict) -> None:
     st.table([{"Measure": COUNT_LABELS.get(key, key.replace("_", " ").capitalize()),
                "Count": integer(value)}
@@ -61,6 +66,8 @@ def survey(panel: dict) -> None:
                           format_func=lambda v: {"NASS-01": "Main-season crop participation",
                                                  "NASS-02": "Released plot-area median bounds"}[v])
     row = next(r for r in panel["records"] if r["id"] == choice)
+    st.warning(" ".join(panel["limitations"] if choice == "NASS-02"
+                        else panel["limitations"][:1]))
     counts, values = row["counts"], row["values"]
     if choice == "NASS-01":
         st.subheader("Main-season crop participation")
@@ -96,6 +103,7 @@ def survey(panel: dict) -> None:
         elif counts["missing_areas"] and values["width_m2"] == 0:
             st.info("The bounds coincide under the nonnegative missing-value model. "
                     "This does not establish accuracy of known measurements.")
+    st.caption(f"Source: {panel['origin']}")
     count_table(counts)
     evidence(panel, row)
 
@@ -145,6 +153,7 @@ def quality(panel: dict) -> None:
     st.caption("TP = correctly flagged positives; FP = false flags; FN = missed positives; "
                "TN = correctly unflagged negatives. Actual positives = TP + FN; "
                "predicted positives = TP + FP. Synthetic accuracy does not establish field accuracy.")
+    st.caption(f"Source: {panel['origin']}")
     count_table({k: c[k] for k in reporting_adapter.METRIC_COUNTS})
     evidence(panel, row)
 
@@ -165,6 +174,7 @@ def workload(panel: dict) -> None:
                     horizontal=True)
     row = cells[selected]
     st.subheader(label(selected))
+    st.caption(f"Source: {panel['origin']}")
     count_table(row["counts"])
     st.caption("Events are submissions, not necessarily distinct people or intended roles. "
                "Collision diagnostics are separate from bounded-group scaling results. "
@@ -191,9 +201,11 @@ def workload(panel: dict) -> None:
                    f"{unit}. Every measured repetition retained; warm-up excluded.")
         st.table([{"Repetition": i, unit: decimal(value, places)}
                   for i, value in enumerate(summary["values"], 1)])
+        st.caption(f"Source: {panel['origin']} | Stored measured repetitions ({unit})")
         st.bar_chart({"Repetition": list(range(1, len(summary["values"])+1)),
                       unit: summary["values"]}, x="Repetition", y=unit, sort=False,
-                     x_label="Measured repetition", y_label=unit)
+                     x_label="Measured repetition", y_label=unit,
+                     alt=f"{panel['origin']}: recorded repetition values in {unit}.")
     else:
         st.error("Unsupported measurement status. Revalidate the evidence.")
     evidence(panel, row)
@@ -218,9 +230,10 @@ def run(root: Path) -> None:
     st.info(f"Source: {panel['origin']}")
     st.caption(f"Reference: {panel['reference_period']} | "
                f"Evidence observed: {panel['observed_date']} | "
-               f"Bundle built (UTC): {bundle['built_at_utc']}")
+               f"Bundle built (UTC): {build_time(bundle['built_at_utc'])}")
     st.caption("A new build time does not update the survey period or experiment evidence.")
-    st.warning(" ".join(panel["limitations"]))
+    if VIEWS[view] != "survey":
+        st.warning(" ".join(panel["limitations"]))
     if panel["status"] != "available":
         st.error("Evidence unavailable. Revalidate the reviewed aggregate artifacts. "
                  "Other independently valid views may remain available.")
