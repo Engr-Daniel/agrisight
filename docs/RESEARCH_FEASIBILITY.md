@@ -22,7 +22,7 @@ Compare question fit, variables, access conditions, unit/keys, weight and varian
 |---|---|---|---|
 | RQ1 | How does participation in selected agricultural activities vary across statistically supported geographic domains? | Activity participation, eligible universe, domain, appropriate weight/design | Narrowed to observed-sample main-season crop participation; population/geographic comparison deferred |
 | RQ2 | How does access to selected agricultural inputs or services differ across defined farming groups? | Access/use distinction, groups, eligibility, period, weight/design | Needs narrowing: infrastructure presence and input quantity are not equivalent to access |
-| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | Deferred until E1 and an E2 baseline exist |
+| RQ3 | How sensitive are those findings to missing data, eligibility rules and reasonable analytical assumptions? | Missing/skip codes, exclusions, defensible alternative definitions, E2 estimates | E2 NASS-01 baseline now exists; E3 protocol and execution pending |
 
 ## Variable-to-question evidence matrix
 

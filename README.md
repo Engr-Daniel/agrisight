@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M1 source suitability baseline complete; M2 sample-analysis workflow next · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M2 first sample-analysis workflow complete; M3 robustness planning next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -24,6 +24,8 @@ Analysts and programme managers need to understand agricultural patterns without
 ## Questions and dataset decision
 
 Candidate questions concern geographic agricultural participation, input/service access and sensitivity to analytical assumptions. E1 now supports a narrowed first workflow: **main-season crop participation in the observed sample**. Population inference remains gated by design verification; a dry-season year conflict excludes cross-season comparison. See [observed E1 findings](reports/E1_REAL_DATA_PROFILING.md), [feasibility decisions](docs/RESEARCH_FEASIBILITY.md) and [M1 technical review](docs/M1_REVIEW.md).
+
+E2 independently reconciles that first indicator: **132859 / 143105 eligible released household records = 92.84%** reporting main-season crop growing. This is unweighted sample description, not national prevalence. See [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), [SQL model](src/agrisight/sql/nass01.sql) and [M2 review](docs/M2_REVIEW.md).
 
 Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
 
@@ -49,7 +51,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 |---|---|---|
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
-| M2 | E2 agricultural findings and tested analytical models | Planned |
+| M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
 | M3 | E3 sensitivity; separate synthetic quality/scale investigations | Planned |
 | M4 | Verified interactive reporting and supported geography | Planned |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |

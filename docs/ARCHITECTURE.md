@@ -33,6 +33,8 @@ Keep raw events immutable and record corrections. Evaluate labelled duplicate ca
 
 ## Decision references
 
+Implemented M2 increment: [NASS-01 staging → eligibility → mart model](NASS01_MODEL.md) uses ephemeral SQLite with an independently checked Python reference. Packaged SQL is versioned; no persistent service is introduced. This is the current authoritative implementation of the first sample indicator, not competing definitions in a dashboard.
+
 - [ADR-001](adr/ADR-001-stack-and-grain.md): historical stack/grain baseline and current staging amendment.
 - [ADR-002](adr/ADR-002-geography-and-privacy.md): geographic and privacy boundaries.
 - [ADR-003](adr/ADR-003-validation-choice.md): initial Pandera selection with limited comparison evidence.

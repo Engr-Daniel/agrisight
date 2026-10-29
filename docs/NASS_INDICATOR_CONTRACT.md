@@ -25,3 +25,5 @@ Contract v1.0, 2026-10-29. Selected after E1 suitability review. Authoritative d
 E1 observed eligible counts: 132859 yes + 10246 no = 143105. Those are sample counts, not an implementation or interpretation of the M2 indicator. E2 must expose denominator, missingness, source version and scope on every output.
 
 Candidate RQ1 is **narrowed** to observed-sample participation; population/domain comparisons remain gated. RQ2 access/service inference is **deferred**; infrastructure presence and input quantity are not access measures. RQ3 robustness is **deferred** until an E2 baseline exists. No invented geography or causal effect fills those gaps.
+
+Implementation evidence (2026-10-29): [Python runner](../src/agrisight/nass01.py), packaged [SQL model](../src/agrisight/sql/nass01.sql), [model/lineage description](NASS01_MODEL.md) and [observed E2 report](../reports/E2_AGRICULTURAL_FINDINGS.md). Contract semantics remain v1.0; executed M2 arithmetic now produces the indicator, not merely the earlier E1 counts.

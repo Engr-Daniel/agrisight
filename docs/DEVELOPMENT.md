@@ -46,3 +46,18 @@ The base foundation keeps dependency ranges; use the increment lock above for E1
 4. Select a survey-statistical implementation only after checking actual design requirements and verifying its methods. Do not silently substitute ordinary standard errors.
 
 Do not preinstall PostgreSQL, dbt, spatial tools, both dashboard tools or a new framework for source documentation inspection. See MEMORY.md for results actually observed in this workspace.
+
+## M2 NASS-01 and package verification
+
+E2 adds no dependency; reuse `requirements/e1.lock` and the selected extra above. From the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe -m agrisight.nass01 data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/nass01.json
+.\.venv\Scripts\python.exe -m pip wheel --no-build-isolation --no-deps . --wheel-dir reports/private/wheels
+.\.venv-e1-repro\Scripts\python.exe -m pip install --no-deps --force-reinstall reports/private/wheels/agrisight-0.0.1-py3-none-any.whl
+.\.venv-e1-repro\Scripts\python.exe -m pip check
+.\.venv-e1-repro\Scripts\python.exe -m pytest -q
+.\.venv-e1-repro\Scripts\python.exe -m agrisight.nass01 data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/nass01_reproduced.json
+```
+
+The second environment now runs the installed wheel, not its previous editable checkout. Source/SQL resources are packaged via `pyproject.toml`; verify complete parsed JSON equality between the two outputs, including provenance. Windows Python 3.11.9/Pandas 2.3.3/SQLite 3.45.1 were observed; a different platform may change provenance or float details and must be evaluated rather than claimed bit-identical. Wheels remain ignored private artifacts. Model/lock hashes identify the exact bytes used; do not report a successful run's old output as evidence after a failed rerun.

@@ -32,11 +32,13 @@ Evidence and restrictions: [M1 technical review](docs/M1_REVIEW.md). This closes
 
 **Exit evidence:** [design/period review](docs/data_sources/NASS_DESIGN_AND_PERIOD_REVIEW.md), [indicator contract](docs/NASS_INDICATOR_CONTRACT.md), [findings](reports/E1_REAL_DATA_PROFILING.md) and [technical review](docs/M1_REVIEW.md). Technical review is not external user validation or public-release permission.
 
-## M2 — E2 agricultural findings and analytics engineering (PLANNED)
+## M2 — E2 agricultural findings and analytics engineering (COMPLETE: NASS-01 workflow)
 
-- [ ] Compute selected RQ1/RQ2 indicators with documented population, eligibility, denominator, period, missingness, applicable weights and verified uncertainty methods.
-- [ ] Independently reconcile results using SQL/Python, with tolerances for estimates; report supported geographic scope and sample counts.
-- [ ] Deliver reproducible agricultural findings. Introduce PostgreSQL/dbt only when persistence/model complexity justifies them, with contracts and tests.
+Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the M1-approved first workflow, not all candidate questions or national inference.
+
+- [x] Implement NASS-01 with source hash, unique/complete household keys, period guard, valid-response denominator and visible missing/invalid exclusions. Unweighted sample scope/no CI is explicit; RQ2 and population comparisons remain deferred.
+- [x] Independently reconcile seven integer counts exactly and proportion/percentage at absolute tolerance 1e-12 in SQL/Python. Actual result 132859/143105 = 92.84022221445791%; 92.84% for display, pooled sample only.
+- [x] Deliver [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), versioned staging/eligibility/mart SQL, model/provenance documentation and tested commands. 52 tests and Ruff passed; installed wheel reproduces full JSON exactly. No new dependencies/services; PostgreSQL/dbt remain conditional.
 
 ## M3 — E3 robustness and separate engineering studies (PLANNED)
 
@@ -58,4 +60,4 @@ Evidence and restrictions: [M1 technical review](docs/M1_REVIEW.md). This closes
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M2 implements NASS-01 and its reconciled analytical model. Population/domain inference, dry-season comparisons and area/quantity analyses remain gated as recorded in the M1 review. No automatic move to dashboards or additional infrastructure.
+**Immediate next:** M3 pre-specifies E3 sensitivity questions against the verified E2 baseline and reviews what further evidence would enable informative comparisons. Population/domain inference, dry-season comparisons and area/quantity analyses remain gated. No automatic move to dashboards or additional infrastructure.
