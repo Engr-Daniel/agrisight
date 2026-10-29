@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M3 complete within scoped objectives; M4 aggregate adapter verified; dashboard next · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M3 complete within scoped objectives; M4 local interface tested; browser/usability review pending · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -45,7 +45,7 @@ Separate synthetic fixtures → controlled engineering evaluation
 
 The initial analytical tools may include Pandas, Pandera, DuckDB and Parquet as needed. Pandera is the working validation choice, based on a limited synthetic comparison; survey integration is not yet implemented. Choose and lock dependencies for the next increment.
 
-Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock and aggregate adapter are verified, while the dashboard remains pending. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
+Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock, aggregate adapter and interface are verified by automated tests, while browser/usability review remains pending. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
 
 ## Roadmap
 
@@ -55,11 +55,23 @@ Streamlit is selected for the initial local, read-only evidence explorer; its de
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
 | M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
-| M4 | Verified aggregate reporting; geography separately gated | In progress: dependencies/aggregate adapter verified; UI pending |
+| M4 | Verified aggregate reporting; geography separately gated | In progress: local UI/automated checks verified; browser review pending |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
 
 See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md), [review rationale](docs/REVIEW_ALIGNMENT.md) and [data policy](docs/DATA_POLICY.md).
+
+## Local evidence explorer
+
+The prototype separates survey findings, synthetic matching/quality and workload measurements. It revalidates the reviewed aggregate inputs on each interaction; missing or changed evidence becomes unavailable. It has no raw-data upload, maps or experiment-rerun controls.
+
+After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkout root:
+
+```powershell
+.\.venv-m4\Scripts\python.exe -m streamlit run streamlit_app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
+```
+
+Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [UI verification and limits](docs/M4_UI_REVIEW.md): automated interactions and local startup passed; browser layout/usability review is pending. No server is left running by the verification checkpoint.
 
 ## Quick start: foundation examples
 
@@ -77,7 +89,7 @@ py -3.11 -m venv .venv
 
 See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
 
-**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, validated aggregate reporting adapter, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database, dashboards or deployment. Restricted inputs are never required for CI.
+**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, validated aggregate adapter and local Streamlit views, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database or deployment. Restricted inputs are never required for CI.
 
 ## Repository navigation
 

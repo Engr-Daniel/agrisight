@@ -65,3 +65,7 @@ Learning checks: does changing from same-person to duplicate-role update the mea
 ## M4-02 implementation follow-up
 
 The [bundle schema](M4_BUNDLE_SCHEMA.md) now defines the exact record shape and trust boundary. [Adapter/dependency review](M4_ADAPTER_REVIEW.md) verifies the corresponding implementation and installed-wheel reproduction. The prospective specification above is preserved; its initial pending statements describe that earlier stage. UI, local server/usability checks and full M4 completion remain pending.
+
+## M4-03 implementation follow-up
+
+[UI verification](M4_UI_REVIEW.md) records the now-implemented views and automated interactions. Local loopback health checks passed and the test server was stopped; actual browser/usability review and combined M4 closure remain pending. No scientific/data-release gate is waived.

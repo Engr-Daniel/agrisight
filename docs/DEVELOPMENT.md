@@ -125,3 +125,20 @@ py -3.11 -m venv .venv-m4-repro
 ```
 
 Compare installed dependency maps and all parsed bundle fields except genuine run-specific built_at_utc; validate both timestamps as UTC instead of fabricating a shared build time. The adapter/manifest are packaged resources. The existing .venv and E1 lock remain untouched. No dashboard launch command exists yet; M4-03 implements that interface after these checks.
+
+## M4-03 interface and interaction checks
+
+Use the M4 lock/extra above; no additional dependency is required. From the checkout root:
+
+```powershell
+.\.venv-m4\Scripts\python.exe -m pytest tests/test_reporting_ui.py -q
+.\.venv-m4\Scripts\python.exe -m pytest -q
+.\.venv-m4\Scripts\python.exe -m ruff check src tests streamlit_app.py
+.\.venv-m4\Scripts\python.exe -m streamlit run streamlit_app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
+```
+
+The launcher/config live in the checkout; the UI module is packaged. Open http://127.0.0.1:8501 on the same machine; stop with Ctrl+C. Explicit flags preserve local binding and disabled telemetry even if global settings differ. Do not remove those limits for sharing without a separate deployment/access review. The entrypoint derives its root from its own file, and never accepts browser root/manifest inputs.
+
+Every widget interaction rebuilds the validated bundle; no session-state evidence fallback or artifact cache exists. AppTest uses patched offline fixture loading with TEST FIXTURE origins. It does not require actual authorized inputs in CI. Pure analytical environments without the optional Streamlit dependency skip the UI test module; use the M4 environment for the full reporting regression suite. Bare-mode ScriptRunContext warnings can appear in headless tests; check actual AppTest exceptions/results instead of inferring a browser session from logs.
+
+A local HTTP health check proves server availability, not browser rendering. See [M4-03 verification](M4_UI_REVIEW.md) for what was observed and remaining browser/usability work. Earlier M4-02 statements that no launch command existed describe that stage; the launcher is now implemented.

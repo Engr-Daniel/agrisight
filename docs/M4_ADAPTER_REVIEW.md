@@ -23,3 +23,5 @@ Hash agreement ensures byte identity with this reviewed snapshot. It does not es
 Next implement Streamlit views, record formatting and selection-transition AppTest coverage under M4-03, then local startup/usability checks and M4 review under M4-04. No spatial filters, experimental reruns, raw-data uploads, public URL or automatic merging is introduced.
 
 Learning checkpoint: an undefined precision has no predicted-positive denominator; it is not0% accuracy. A new build timestamp does not update the2022 survey period. A trusted checksum does not turn an unsupported population claim into a valid one.
+
+Follow-up: [M4-03 UI verification](M4_UI_REVIEW.md) now records interface implementation and a local startup smoke check. The initial no-app statements below describe this earlier adapter checkpoint; browser/usability review remains pending.

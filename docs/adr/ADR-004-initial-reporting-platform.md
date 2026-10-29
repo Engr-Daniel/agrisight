@@ -32,3 +32,5 @@ No claim is made that one product is generally faster, cheaper or better. The de
 Revisit the platform if stakeholder requirements, distribution needs or maintainability evidence justify a change. Adding Power BI later requires a distinct purpose and reconciliation against the same reporting contract.
 
 Implementation follow-up: [M4-02 verification](../M4_ADAPTER_REVIEW.md) records Streamlit1.66.1 installation, lock reproduction, adapter/schema and SDK smoke. The gates above remain requirements for the UI, not claims that the interface is implemented.
+
+Implementation follow-up: [M4-03](../M4_UI_REVIEW.md) verifies local views, automated interactions and a stopped-after-check loopback server. This does not complete the pending browser/usability review.
