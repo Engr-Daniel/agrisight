@@ -45,7 +45,7 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] M3-01: pre-specify and execute the limited NASS-01 readiness audit; distinguish genuine sensitivity from target changes or software checks. No missing responses means no response-exclusion variation. [Protocol/shortlist](docs/experiments/E3_PROTOCOL.md), [assessment](reports/E3_READINESS.md).
 - [x] M3-02: finalize [NASS-02 contract](docs/NASS02_INDICATOR_CONTRACT.md) after unit-label, plot-type and null checks. Measurement lineage remains unresolved; scope is explicitly the released field, not certified physical/GPS area. No companion-field backfill.
 - [x] M3-03: execute same-target nonnegative missing-area bounds: 273887 plots, 48 missing areas, lower/upper median both6070.290058851242 in released labelled square metres. SQL/Python agree; 77 tests passed and installed wheel reproduces full JSON. [Findings](reports/E3_PLOT_AREA_BOUNDS.md), [empirical review](docs/M3_EMPIRICAL_REVIEW.md). Bounds are not population CIs or measurement-error bounds.
-- [ ] M3-04: separately implement labelled synthetic ground truth for defect/duplicate precision, recall and false positives.
+- [ ] M3-04: separately implement labelled synthetic ground truth for defect/duplicate precision, recall and false positives. [Protocol](docs/experiments/M3_04_PROTOCOL.md) and [contract](docs/SYNTHETIC_REGISTRATION_CONTRACT.md) specified; implementation/evaluation not yet executed.
 - [ ] M3-05: benchmark documented workload sizes, including 55k role entries, with hardware/repeats and observed results. Never present simulated counts as agricultural findings.
 
 ## M4 — Evidence-backed reporting (PLANNED)
@@ -62,4 +62,4 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M3-04: pre-specify labelled synthetic defect/duplicate ground truth and evaluation, then M3-05 measured workload benchmarks. Full M3 remains open. Population/domain inference, cross-season comparison, physical-area and quantity claims retain their gates. No automatic move to dashboards or additional infrastructure.
+**Immediate next:** implement M3-04 against the specified contract/protocol: manual fixtures, seeded generator, fixed baselines, independent SQL evaluation and held-out runs; then M3-05 measured workload benchmarks. Full M3 remains open. Population/domain inference, cross-season comparison, physical-area and quantity claims retain their gates. No automatic move to dashboards or additional infrastructure.
