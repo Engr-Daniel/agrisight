@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M2 first sample workflow complete; M3 empirical bounds and synthetic accuracy complete; benchmarks pending · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M3 complete within scoped objectives; M4 reporting next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -27,7 +27,7 @@ Candidate questions concern geographic agricultural participation, input/service
 
 E2 independently reconciles that first indicator: **132859 / 143105 eligible released household records = 92.84%** reporting main-season crop growing. This is unweighted sample description, not national prevalence. See [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), [SQL model](src/agrisight/sql/nass01.sql) and [M2 review](docs/M2_REVIEW.md).
 
-E3 bounds the full released main-season plot-roster median at **6070.29 in the labelled square-metre units**. The 48 missing entries cannot shift that median under the nonnegative-value completion model because bounding ranks are tied. This does not establish measurement accuracy or national plot size. See [E3 findings](reports/E3_PLOT_AREA_BOUNDS.md) and [contract](docs/NASS02_INDICATOR_CONTRACT.md). [Synthetic quality evaluation](reports/M3_SYNTHETIC_QUALITY.md) is now complete: normalization improves repeat detection but retains missed pairs and false links. Workload benchmarking remains pending.
+E3 bounds the full released main-season plot-roster median at **6070.29 in the labelled square-metre units**. The 48 missing entries cannot shift that median under the nonnegative-value completion model because bounding ranks are tied. This does not establish measurement accuracy or national plot size. See [E3 findings](reports/E3_PLOT_AREA_BOUNDS.md) and [contract](docs/NASS02_INDICATOR_CONTRACT.md). [Synthetic quality evaluation](reports/M3_SYNTHETIC_QUALITY.md) is now complete: normalization improves repeat detection but retains missed pairs and false links. [Workload measurements](reports/M3_WORKLOAD_BENCHMARK.md) now include55000 events: median1.07 seconds for the specified local batch, with16.65 MiB peak traced Python allocation (excluding existing inputs/native memory). Shared-machine timings and bounded-key inputs do not establish production capacity. See the [M3 review](docs/M3_REVIEW.md).
 
 Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
 
@@ -54,7 +54,7 @@ PostgreSQL/dbt, PostGIS/GeoPandas, Power BI and Streamlit/Plotly remain engineer
 | M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
 | M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
 | M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
-| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Empirical E3 and synthetic accuracy complete; workload benchmarks pending |
+| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
 | M4 | Verified interactive reporting and supported geography | Planned |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
 | M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
@@ -77,7 +77,7 @@ py -3.11 -m venv .venv
 
 See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
 
-**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, 55k generator, operational database, dashboards or deployment. Restricted inputs are never required for CI.
+**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database, dashboards or deployment. Restricted inputs are never required for CI.
 
 ## Repository navigation
 

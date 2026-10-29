@@ -1,5 +1,7 @@
 # M3 empirical component review — NASS-02
 
+Follow-up 2026-10-29: this review preserves the empirical-stage handoff. The later [combined M3 review](M3_REVIEW.md) closes the specified synthetic accuracy and workload experiments; scientific caveats below remain active.
+
 Date: 2026-10-29. **Empirical E3 component complete under the released-field contract; full M3 remains in progress.** Synthetic quality/matching and scale tasks are unexecuted.
 
 ## Acceptance and scope

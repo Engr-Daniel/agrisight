@@ -1,5 +1,7 @@
 # M3-04 synthetic quality and duplicate evaluation
 
+Follow-up 2026-10-29: the later [workload findings](M3_WORKLOAD_BENCHMARK.md) and [combined M3 review](../docs/M3_REVIEW.md) supersede this accuracy-stage benchmark handoff. Accuracy results and their frozen protocol are unchanged.
+
 Observed 2026-10-29. **SYNTHETIC DEMONSTRATION DATA.** M3-04 complete for the fixed baseline experiment; M3-05 benchmarking remains unexecuted. These are synthetic engineering results, not agricultural survey findings, enrollment counts or production accuracy estimates.
 
 ## Decision

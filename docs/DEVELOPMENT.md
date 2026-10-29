@@ -82,3 +82,16 @@ Reuse the current lock; no new dependencies. Run development seeds first and fre
 ```
 
 Build/install the wheel using the M2 commands above, then run the evaluation with `.venv-e1-repro` and output `reports/private/m3_04_reproduced.json`; complete parsed JSON should match in the observed pinned Windows environment. This regenerates fictional rows in memory, passes observation-only records to the detector, and writes only aggregate results and provenance. No survey input or external account is needed. The CLI output guard rejects paths outside ignored `reports/private`. `generate` has a deliberately fixed1000-person accuracy workload; performance scaling is a separately versioned M3-05 task.
+
+## M3-05 local workload measurements
+
+The [benchmark protocol](experiments/M3_05_PROTOCOL.md) fixes workload generation, timed scope, repeats, Python-allocation measurement and rejection handling before execution. Reuse the current lock; no new dependency. From the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/test_workload_benchmark.py -q
+.\.venv\Scripts\python.exe -m agrisight.workload_benchmark --output reports/private/m3_05_benchmark.json
+```
+
+The suite launches sequential fresh workers (120-second timeout each). Input generation, imports, hashing and process startup are outside reported batch time. Five repetitions measure time; three separate repetitions measure peak traced Python allocation after input generation, not total RAM or RSS. Avoid concurrent build/test work when seeking isolated comparisons; disclose shared-machine load. Do not compare profiler elapsed times with uninstrumented timings. Full suites are manual experiments, never speed assertions in CI.
+
+For a packaged smoke check, build/install the wheel using the instructions above and invoke the installed module's `--worker --size 55000 --mode timing`; compare input/truth/prediction hashes and counts with the suite reference, not machine-dependent elapsed time. Row-level tokens/truth remain in memory; only reviewed aggregates belong in Git. The pair-budget wrapper is scoped to this module and does not change direct M3-04 detector behaviour.
