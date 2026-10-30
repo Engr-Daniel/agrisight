@@ -154,3 +154,7 @@ See the [reproduction protocol](M6_REPRODUCTION_PROTOCOL.md) and [observed audit
 ## Versioned text and provenance
 
 The [policy](PROVENANCE_POLICY.md) and [migration review](M6_PROVENANCE_REVIEW.md) resolve the synthetic lane's raw-byte hash portability using .gitattributes. Keep that file in clean exports. Text uses LF; frozen locks and historical manifest v1 retain exact reviewed CRLF bytes. The active adapter loads snapshot v2; historical survey/workload entries have not been regenerated. Use the same commands above, retain ignored historical outputs and compare complete synthetic JSON. The M6-01 observed hash mismatch remains historical evidence, not the current synthetic status.
+
+## Authorized survey clean reproduction
+
+The [M6-03 protocol](M6_SURVEY_REPRODUCTION_PROTOCOL.md) and [observed review](M6_SURVEY_REPRODUCTION_REVIEW.md) add the real-input lane. Export the frozen commit from the repository root, build/install its wheel using the unchanged lock, and run agrisight.nass01 and agrisight.nass02 with an absolute path to the separately stored frozen authorized archive. Keep outputs beneath each checkout's reports/private. Verify complete parsed JSON and raw hashes, not only displayed rounded values. The observed outputs match the existing manifest v2, so no manifest change is required. CI remains fixture-only; its Linux success does not establish actual survey reproduction on Linux.
