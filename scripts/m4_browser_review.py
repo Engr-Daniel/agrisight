@@ -175,6 +175,27 @@ class Page:
         return {"screenshot": f"{name}.png", "layout": layout}
 
 
+def stop_processes(processes: list) -> list[str]:
+    """Attempt every owned process even if one process handle fails to settle."""
+    notes = []
+    for process in reversed(processes):
+        try:
+            if process.poll() is None:
+                if os.name == "nt":
+                    subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                                   capture_output=True, check=False, timeout=10)
+                else:
+                    process.terminate()
+            process.wait(timeout=5)
+        except (subprocess.TimeoutExpired, OSError):
+            try:
+                process.kill()
+                process.wait(timeout=5)
+            except (subprocess.TimeoutExpired, OSError):
+                notes.append(f"Process {process.pid}: exit could not be confirmed")
+    return notes
+
+
 def review(browser: Path) -> Path:
     output = ROOT/"reports/private/m4_browser_review"/datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
     output.mkdir(parents=True)
@@ -184,6 +205,9 @@ def review(browser: Path) -> Path:
              "captures": [], "checks": {}, "cleanup": {}}
     audit["source_sha256"] = {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                               for name in ("streamlit_app.py", "src/agrisight/reporting_ui.py",
+                                           "src/agrisight/reporting_brand.py",
+                                           "src/agrisight/assets/dashboard.css",
+                                           "src/agrisight/assets/agricultural-landscape-v1.webp",
                                            "src/agrisight/reporting_adapter.py",
                                            "src/agrisight/reporting/artifact_manifest_v2.json",
                                            ".streamlit/config.toml", "requirements/m4.lock",
@@ -221,6 +245,9 @@ def review(browser: Path) -> Path:
             page.resize(1440, 1000)
             page.call("Page.navigate", {"url": f"http://127.0.0.1:{app_port}"})
             wait_for(lambda: "Evidence & provenance" in page.text() and "92.84%" in page.text())
+            wait_for(lambda: page.js("(() => {const i=document.querySelector('.agri-hero img');"
+                                     "return i?.complete && i.naturalWidth > 0;})()"))
+            audit["checks"]["packaged_hero_image_loaded"] = True
             audit["captures"].append(page.capture(output, "desktop_survey"))
             audit["captures"].append(page.capture(output, "desktop_survey_table", True))
             page.choose_last("Indicator")
@@ -289,14 +316,7 @@ def review(browser: Path) -> Path:
             audit["status"] = "browser_checks_passed_visual_inspection_pending"
             print("Browser interactions and screenshots captured; visual inspection still required")
     finally:
-        for process in reversed(processes):
-            if process.poll() is None:
-                if os.name == "nt":
-                    subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
-                                   capture_output=True, check=False)
-                else:
-                    process.terminate()
-            process.wait(timeout=10)
+        audit["cleanup_notes"] = stop_processes(processes)
         for name, port in (("app", app_port), ("debugger", browser_port)):
             with socket.socket() as probe:
                 audit["cleanup"][name+"_port_closed"] = probe.connect_ex(("127.0.0.1", port)) != 0

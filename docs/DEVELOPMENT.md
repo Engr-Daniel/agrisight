@@ -158,3 +158,7 @@ The [policy](PROVENANCE_POLICY.md) and [migration review](M6_PROVENANCE_REVIEW.m
 ## Authorized survey clean reproduction
 
 The [M6-03 protocol](M6_SURVEY_REPRODUCTION_PROTOCOL.md) and [observed review](M6_SURVEY_REPRODUCTION_REVIEW.md) add the real-input lane. Export the frozen commit from the repository root, build/install its wheel using the unchanged lock, and run agrisight.nass01 and agrisight.nass02 with an absolute path to the separately stored frozen authorized archive. Keep outputs beneath each checkout's reports/private. Verify complete parsed JSON and raw hashes, not only displayed rounded values. The observed outputs match the existing manifest v2, so no manifest change is required. CI remains fixture-only; its Linux success does not establish actual survey reproduction on Linux.
+
+## Dashboard presentation assets
+
+The [visual refresh](DASHBOARD_VISUAL_REVIEW.md) packages assets/dashboard.css and assets/agricultural-landscape-v1.webp with the wheel. No asset CDN or font download is needed. Artwork generation/prompt is documented in [asset provenance](ILLUSTRATION_ASSETS.md). Only decorative resources are memoized; restart the development server after asset-only edits. Evidence validation remains uncached. Browser review now checks that the actual packaged image decodes and fingerprints the style/asset files. The audit helper attempts all owned process cleanups and records unconfirmed exits; existing owner-run previews are not its cleanup targets.

@@ -10,8 +10,8 @@ showErrorDetails = "none"
 toolbarMode = "minimal"
 
 [theme]
-primaryColor = "#23734B"
-backgroundColor = "#FAFCFA"
-secondaryBackgroundColor = "#EDF3EF"
-textColor = "#192F25"
+primaryColor = "#245F3B"
+backgroundColor = "#F7F8F2"
+secondaryBackgroundColor = "#EEF2E7"
+textColor = "#203C2D"
 font = "sans serif"

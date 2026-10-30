@@ -55,6 +55,8 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 - [x] M4-03: implement separate Streamlit views with 36 UI cases exercising all 126 quality cells, both survey indicators and 12 workload/measurement choices. All 204 tests pass in development/installed-wheel environments; actual aggregate headless displays and loopback startup/cleanup verified. [UI review](docs/M4_UI_REVIEW.md). Browser review followed in M4-04 below; no raw-data loading or experiment reruns.
 - [x] M4-04: actual Chrome desktop/narrow rendering, keyboard navigation, source/limit visibility, charts/tables and provenance reviewed. Six browser checks passed across 19 captures; zero JavaScript exceptions and both temporary ports closed. All 204 tests pass in development/installed-wheel environments. [Combined review](docs/M4_REVIEW.md) records internal review scope and remaining coverage limits. Maps, geography/row-level drill-down and deployment remain gated and excluded.
 
+- [x] M4-05: owner-requested agricultural visual refresh: packaged AI-generated landscape, responsive hero/navigation/cards/tables and preserved evidence context.212 installed-wheel tests pass; actual desktop/narrow Chrome review passes7 checks/19 captures, with cleanup regression coverage. [Visual review](docs/DASHBOARD_VISUAL_REVIEW.md), [asset/prompt record](docs/ILLUSTRATION_ASSETS.md). No metric/dependency/manifest change.
+
 ## M5 — Advanced analytics (OPTIONAL)
 
 - [ ] Evaluate advanced statistics or evidence-grounded AI only for a justified need with baseline comparisons and appropriate tests.

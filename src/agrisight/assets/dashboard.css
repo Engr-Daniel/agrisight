@@ -1,0 +1,72 @@
+:root { --agri-green: #174d36; --agri-ink: #203c2d; --agri-muted: #5e7165; }
+[data-testid="stAppViewContainer"] { background: #f7f8f2; }
+[data-testid="stMainBlockContainer"] { max-width: 1380px; padding: 4.5rem 3rem 4rem; }
+[data-testid="stHeader"] { background: rgba(247,248,242,.94); }
+[data-testid="stSidebar"] { background: #eef2e7; border-right: 1px solid #dce4d5; }
+[data-testid="stSidebarUserContent"] { padding-top: 2.2rem; }
+.agri-brand { font-size: 2rem; font-weight: 800; letter-spacing: -.045em; color: #174d36; }
+.agri-brand span { color: #66833d; }
+.agri-brand small { display: block; font-size: .59rem; letter-spacing: .17em; margin-top: .35rem; }
+.agri-nav-label { margin: 2.3rem 0 .75rem; font-size: .67rem; font-weight: 700;
+  letter-spacing: .14em; color: #65745c; text-transform: uppercase; }
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+  padding: .7rem .65rem; border-radius: 10px; margin-bottom: .35rem;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+  background: #dce8d2; color: #174d36; font-weight: 700;
+}
+.agri-masthead { display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; margin: 0 0 1.25rem; color: #526650; font-size: .7rem;
+  letter-spacing: .13em; text-transform: uppercase; font-weight: 650; }
+.agri-masthead .agri-dot { color: #397242; letter-spacing: .04em; }
+.agri-masthead span { color: #526650 !important; }
+.agri-hero { position: relative; isolation: isolate; overflow: hidden; border-radius: 20px;
+  background: #163e2d; min-height: 280px; padding: 2rem 2.6rem; color: #fffdf4; }
+.agri-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  object-position: center; z-index: -2; }
+.agri-hero::after { content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(13,47,30,.98) 0%, rgba(13,47,30,.91) 33%,
+  rgba(13,47,30,.28) 68%, rgba(13,47,30,.02) 100%); }
+.agri-hero .agri-eyebrow { color: #d2dfb7; font-size: .65rem; letter-spacing: .19em;
+  font-weight: 700; margin: 0 0 1rem; text-transform: uppercase; }
+.agri-hero h1 { color: #fffdf4; font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 500; font-size: clamp(2.1rem, 3.5vw, 3.35rem); line-height: 1.08;
+  letter-spacing: -.035em; padding: 0; margin: 0 0 1rem; max-width: 540px; }
+.agri-hero p { color: #e3ead9; font-size: .92rem; line-height: 1.65;
+  max-width: 390px; margin: 0; }
+.agri-art-note { color: #526650; font-size: .75rem; margin: .45rem 0 1rem; text-align: right; }
+.agri-section { border-bottom: 1px solid #dce3d4; padding: .55rem 0 .8rem;
+  margin-bottom: .4rem; display: flex; align-items: center; gap: .8rem; }
+.agri-section b { font-size: 1.35rem; font-weight: 650; color: #203c2d; }
+.agri-section span { font-size: .7rem; color: #6e805d; font-weight: 700; }
+[data-testid="stMetric"] { background: #fffef9; border: 1px solid #e0e6d8;
+  border-top: 3px solid #7e9b54; border-radius: 13px; padding: 1.15rem 1.2rem;
+  box-shadow: 0 4px 14px rgba(34,61,37,.035); height: 100%; }
+[data-testid="stMetricLabel"] { color: #526650; }
+[data-testid="stMetricValue"] { color: #174d36; font-weight: 650; letter-spacing: -.035em;
+  font-size: clamp(1.55rem, 2.5vw, 2.5rem); }
+[data-testid="stTable"] { background: #fffef9; border-radius: 12px; overflow: auto;
+  border: 1px solid #e0e6d8; }
+[data-testid="stTable"] th { background: #edf2e5; color: #324d32; }
+[data-testid="stTable"] td, [data-testid="stTable"] th { padding: .65rem .85rem; }
+[data-testid="stExpander"] { border-color: #dce3d4; border-radius: 12px; background: #fffef9; }
+[data-testid="stAlert"] { border-radius: 10px; }
+[data-testid="stCaptionContainer"] { color: #526650; }
+[data-testid="stCaptionContainer"] p { color: #526650; font-size: .8rem; line-height: 1.6; }
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+  background: #fffef9; border-color: #dce3d4; border-radius: 9px; }
+h2, h3 { color: #203c2d; letter-spacing: -.025em; }
+.agri-footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #dce3d4;
+  color: #5e7165; font-size: .72rem; line-height: 1.7; }
+@media (max-width: 700px) {
+  [data-testid="stMainBlockContainer"] { padding: 4rem 1rem 3rem; }
+  .agri-masthead { font-size: .58rem; letter-spacing: .06em; margin-bottom: .8rem; }
+  .agri-masthead .agri-dot { display: none; }
+  .agri-hero { padding: 1.6rem 1.35rem; min-height: 280px; border-radius: 14px; }
+  .agri-hero::after { background: linear-gradient(90deg, rgba(13,47,30,.96), rgba(13,47,30,.65)); }
+  .agri-hero h1 { font-size: 2.1rem; max-width: 290px; }
+  .agri-hero p { font-size: .86rem; }
+  .agri-art-note { text-align: left; font-size: .72rem; }
+  .agri-section b { font-size: 1.2rem; }
+  [data-testid="stMetric"] { padding: .85rem 1rem; }
+}

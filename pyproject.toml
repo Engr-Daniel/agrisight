@@ -20,7 +20,7 @@ reporting = ["streamlit==1.66.1"]
 where = ["src"]
 
 [tool.setuptools.package-data]
-agrisight = ["sql/*.sql", "reporting/*.json"]
+agrisight = ["sql/*.sql", "reporting/*.json", "assets/*.css", "assets/*.webp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

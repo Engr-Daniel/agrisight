@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from agrisight import reporting_adapter
+from agrisight import reporting_adapter, reporting_brand
 
 VIEWS = {"Survey findings": "survey", "Synthetic quality": "synthetic_quality",
          "Workload measurements": "synthetic_workload"}
@@ -212,12 +212,15 @@ def workload(panel: dict) -> None:
 
 
 def run(root: Path) -> None:
-    st.set_page_config(page_title="AgriSight evidence explorer", layout="wide")
-    st.title("AgriSight evidence explorer")
-    st.write("Read the findings, their denominators and their limits.")
-    st.sidebar.title("AgriSight")
-    st.sidebar.caption("Local, read-only prototype")
+    st.set_page_config(page_title="AgriSight | Agricultural intelligence",
+                       page_icon="\U0001f331", layout="wide")
+    reporting_brand.header()
+    reporting_brand.sidebar()
     view = st.sidebar.radio("Evidence view", tuple(VIEWS), key="view")
+    st.sidebar.divider()
+    st.sidebar.caption("READ-ONLY RESEARCH EXPLORER")
+    st.sidebar.caption("Survey evidence and synthetic experiments are kept separate.")
+    reporting_brand.section(view, tuple(VIEWS).index(view)+1)
     try:
         # Revalidate on every interaction; no session-state or cached evidence fallback.
         bundle = reporting_adapter.build_bundle(root)
@@ -240,3 +243,4 @@ def run(root: Path) -> None:
         return
     {"survey": survey, "synthetic_quality": quality,
      "synthetic_workload": workload}[VIEWS[view]](panel)
+    reporting_brand.footer()
