@@ -30,11 +30,12 @@ def choose_activity(page: Page, index: int, label: str = "Explore agricultural a
 
 
 def bar_values(page: Page) -> list:
-    return page.js("[...document.querySelectorAll('.agri-activity-chart:not(.agri-water-chart) strong')].map(e=>e.textContent)")
+    return page.js("[...document.querySelectorAll('.agri-activity-chart:not(.agri-water-chart):not(.agri-crop-chart) strong')].map(e=>e.textContent)")
 
 
-def water_unit(page: Page, label: str) -> None:
-    assert page.js("(() => {const e=[...document.querySelectorAll('.st-key-water_unit label')]"
+def water_unit(page: Page, label: str, key: str = "water_unit") -> None:
+    selector = json.dumps('.st-key-' + key + ' label')
+    assert page.js(f"(() => {{const e=[...document.querySelectorAll({selector})]"
                    f".find(e=>e.innerText.trim()==={json.dumps(label)});"
                    "const i=e?.querySelector('input');if(!i)return false;i.focus();return true;})()")
     page.key(" ", "Space", 32)
@@ -42,6 +43,10 @@ def water_unit(page: Page, label: str) -> None:
 
 def water_values(page: Page) -> list:
     return page.js("[...document.querySelectorAll('.agri-water-chart strong')].map(e=>e.textContent)")
+
+
+def crop_values(page: Page) -> list:
+    return page.js("[...document.querySelectorAll('.agri-crop-chart strong')].map(e=>e.textContent)")
 
 
 def review():
@@ -106,6 +111,24 @@ def review():
                         choose_activity(page, 0)
                         wait_for(lambda: len(bar_values(page)) == 4)
                         audit["checks"][mode + "_activity_keyboard_and_units"] = True
+                        choose_activity(page, 0, "Explore crop records")
+                        water_unit(page, "Percentages", "crop_unit")
+                        wait_for(lambda: crop_values(page)[:1] == ["61.53%"])
+                        assert "119,909" in page.text() and "12,950" in page.text()
+                        audit["captures"].append(page.capture(output, f"{mode}_crop_portfolio", anchor=".st-key-crop_portfolio"))
+                        water_unit(page, "Household counts", "crop_unit")
+                        wait_for(lambda: crop_values(page)[:1] == ["73,779"])
+                        audit["captures"].append(page.capture(output, f"{mode}_crop_counts", anchor=".st-key-crop_portfolio"))
+                        choose_activity(page, 1, "Explore crop records")
+                        wait_for(lambda: crop_values(page) == ["22,764", "32,799", "29,187", "18,350", "16,809"])
+                        audit["captures"].append(page.capture(output, f"{mode}_crop_diversity_counts", anchor=".st-key-crop_portfolio"))
+                        water_unit(page, "Percentages", "crop_unit")
+                        wait_for(lambda: crop_values(page) == ["18.98%", "27.35%", "24.34%", "15.30%", "14.02%"])
+                        assert "2.91" in page.text()
+                        audit["captures"].append(page.capture(output, f"{mode}_crop_diversity", anchor=".st-key-crop_portfolio"))
+                        choose_activity(page, 0, "Explore crop records")
+                        wait_for(lambda: len(crop_values(page)) == 10)
+                        audit["checks"][mode + "_crop_modes_units_scope"] = True
                         choose_activity(page, 0, "Explore water management")
                         water_unit(page, "Percentages")
                         wait_for(lambda: water_values(page) == ["4.11%", "95.89%"])

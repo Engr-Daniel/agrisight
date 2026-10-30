@@ -12,7 +12,8 @@ def rate(value: float | None) -> str:
     return "Undefined" if value is None else f"{100*value:.2f}%"
 
 
-def bars(rows: list[dict], denominator: int, unit: str) -> str:
+def bars(rows: list[dict], denominator: int, unit: str, css_class: str = "agri-water-chart",
+         count_unit: str = "plot responses") -> str:
     body = []
     for row in rows:
         label = rate(row["share"]) if unit == "Percentages" else f'{row["count"]:,}'
@@ -21,8 +22,8 @@ def bars(rows: list[dict], denominator: int, unit: str) -> str:
                     f'<span>{escape(row["label"])}</span><strong>{label}</strong></div>'
                     f'<div class="agri-activity-track"><div style="width:{width:.8f}%;'
                     'background:#357047"></div></div></li>')
-    maximum = "100%" if unit == "Percentages" else f"{denominator:,} plot responses"
-    return '<figure class="agri-activity-chart agri-water-chart"><ol>' + ''.join(body) + (
+    maximum = "100%" if unit == "Percentages" else f"{denominator:,} {escape(count_unit)}"
+    return f'<figure class="agri-activity-chart {escape(css_class)}"><ol>' + ''.join(body) + (
         f'</ol><figcaption>Common scale: 0 to {maximum}. Undefined shares have no bar.</figcaption></figure>')
 
 

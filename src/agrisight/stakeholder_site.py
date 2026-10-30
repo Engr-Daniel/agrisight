@@ -9,6 +9,8 @@ from agrisight import (
     activity_explorer,
     coverage_map,
     coverage_reporting,
+    crop_presentation,
+    crop_reporting,
     irrigation_reporting,
     stakeholder_reporting,
     water_management,
@@ -84,6 +86,9 @@ def insights(bundle: dict, root: Path) -> None:
     st.title("Agricultural insights")
     st.write("Understand the activities reported by households and the plots in the survey roster.")
     activity_story(bundle)
+    with st.container(key="crop_portfolio"):
+        crop_presentation.show(crop_reporting.build_bundle(root, bundle["activities"][0]["input_rows"],
+            bundle["plots"]["total"], bundle["activities"][0]["yes"]))
     with st.container(key="water_management"):
         water_management.show(irrigation_reporting.build_bundle(root, bundle["plots"]["total"]))
     st.subheader("Where crop and livestock reports overlap")
