@@ -5,7 +5,7 @@
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
-**Product direction:** the website is the agricultural intelligence deliverable for stakeholders. Learning objectives, milestones and engineering experiments belong in this repository. The [owner's presentation clarification](docs/PRODUCT_DIRECTION.md) supersedes the earlier two-layer approach as the target for future navigation; that refactor is not yet implemented.
+**Product direction:** the website is the agricultural intelligence deliverable for stakeholders. Learning objectives, milestones and engineering experiments belong in this repository. The [owner's presentation clarification](docs/PRODUCT_DIRECTION.md) supersedes the earlier two-layer approach. The stakeholder website and expanded survey analysis are now implemented; see the [phase 1 review](docs/STAKEHOLDER_PHASE1_REVIEW.md).
 
 It is not an operational farmer registry, a deployed client system or evidence of field enrollment. Official observations, derived indicators, synthetic records and mock-ups must always remain distinguishable.
 
@@ -67,9 +67,11 @@ See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/
 
 The [agricultural visual refresh](docs/DASHBOARD_VISUAL_REVIEW.md) adds an illustrated landscape hero, responsive navigation and metric cards, with locally packaged artwork and clear source context.
 
-The [two-layer experience](docs/TWO_LAYER_REVIEW.md) opens with a stakeholder overview: purpose, survey summaries and guided insights. **Evidence & methods** preserves the detailed technical explorer. Each finding links to its corresponding indicator or experiment; engineering summaries remain explicitly synthetic.
+The website presents **Overview, Agricultural insights, Data quality, Recommendations and About AgriSight**. It covers four household activities, crop/livestock co-reporting, plot types and real-data completeness. See the [stakeholder brief](docs/STAKEHOLDER_ANALYTICS_BRIEF.md) and [findings](reports/STAKEHOLDER_PHASE1_FINDINGS.md). Source, reference periods, denominators and unweighted-sample limits stay beside results.
 
-The prototype separates survey findings, synthetic matching/quality and workload measurements. It revalidates the reviewed aggregate inputs on each interaction; missing or changed evidence becomes unavailable. It has no raw-data upload, maps or experiment-rerun controls.
+The historical technical explorer is retained separately: run `research_explorer_app.py` instead of `streamlit_app.py` to inspect survey methods and explicitly synthetic engineering studies. It is not part of the stakeholder site's navigation.
+
+The product revalidates three reviewed survey aggregate inputs on each interaction; missing or changed evidence hides findings. It has no raw-data upload, maps or experiment-rerun controls. Raw inputs and aggregate JSON remain ignored; authorized owners must reproduce the files following the findings and historical NASS-01/NASS-02 instructions.
 
 After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkout root:
 
@@ -77,7 +79,7 @@ After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkou
 .\.venv-m4\Scripts\python.exe -m streamlit run streamlit_app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
 ```
 
-Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [Combined M4 review and limits](docs/M4_REVIEW.md): automated tests and internal Chrome desktop/narrow review passed; external user and broader browser validation remain open. No server is left running by the verification checkpoint.
+Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [Combined M4 review and limits](docs/M4_REVIEW.md): automated tests and internal Chrome desktop/narrow review passed; external user and broader browser validation remain open. The preview command runs locally; it does not publish the website.
 
 ## Quick start: foundation examples
 

@@ -41,3 +41,7 @@ Removing developer-facing copy does not authorize fabricated clients, operationa
 ## Handoff
 
 Define the stakeholder question and evidence-to-page mapping before the next navigation/copy refactor. Preserve historical two-layer specifications as history and link this superseding direction. Record actual implementation, tests and browser verification separately. M6 release-readiness and publication/deployment authorization gates remain open.
+
+## Implemented follow-through (2026-10-30)
+
+The approved direction is now implemented in the stakeholder website. Engineering and detailed methods remain in the separate repository launcher `research_explorer_app.py`. New agricultural questions, justified source checks and actual findings are documented in the [stakeholder brief](STAKEHOLDER_ANALYTICS_BRIEF.md), [findings](../reports/STAKEHOLDER_PHASE1_FINDINGS.md) and [implementation review](STAKEHOLDER_PHASE1_REVIEW.md). Earlier statements about current two-layer software describe the pre-refactor state. Release and inference gates remain open.

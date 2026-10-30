@@ -29,7 +29,7 @@ def html(at):
 
 
 def home():
-    at = AppTest.from_file(str(ROOT/"streamlit_app.py"), default_timeout=20).run()
+    at = AppTest.from_file(str(ROOT/"research_explorer_app.py"), default_timeout=20).run()
     assert not at.exception
     return at
 

@@ -2,6 +2,6 @@
 
 from pathlib import Path
 
-from agrisight.reporting_ui import run
+from agrisight.stakeholder_site import run
 
 run(Path(__file__).resolve().parent)

@@ -226,7 +226,7 @@ def review(browser: Path) -> Path:
     audit = {"started_at_utc": datetime.now(UTC).isoformat(), "status": "incomplete",
              "captures": [], "checks": {}, "cleanup": {}}
     audit["source_sha256"] = {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
-                              for name in ("streamlit_app.py", "src/agrisight/reporting_ui.py",
+                              for name in ("research_explorer_app.py", "src/agrisight/reporting_ui.py",
                                            "src/agrisight/reporting_brand.py",
                                            "src/agrisight/reporting_pages.py",
                                            "src/agrisight/assets/dashboard.css",
@@ -238,7 +238,7 @@ def review(browser: Path) -> Path:
     flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
     try:
         server = subprocess.Popen([str(Path(os.sys.executable)), "-m", "streamlit", "run",
-                                   "streamlit_app.py", "--server.address", "127.0.0.1",
+                                   "research_explorer_app.py", "--server.address", "127.0.0.1",
                                    "--server.port", str(app_port), "--server.headless", "true",
                                    "--browser.gatherUsageStats", "false"], cwd=ROOT,
                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,

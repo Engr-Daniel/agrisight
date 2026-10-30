@@ -1,0 +1,18 @@
+{
+  "purpose": "REVIEWED LOCAL EVIDENCE",
+  "observed_date": "2026-10-30",
+  "artifact": {
+    "sha256": "df50c7ae11ffc16755dff03080401eea89d0424d9050c1e108dba3be800de7d3",
+    "expected": {
+      "analysis_version": "1.0",
+      "source_sha256": "a5c0544f8b17f7e1f0627928b82ad19559110886930bf5f2e447fdef1b205d02",
+      "provenance.python": "3.11.9",
+      "provenance.pandas": "2.3.3",
+      "provenance.sqlite": "3.45.1",
+      "provenance.model_sha256": "14b4d8f79fccb510c2f6dd8ec49c18918fd9c1a861413406992cace272564e3b",
+      "provenance.sql_sha256": "61b65e129b7a2bafeb4f436db307ef10584df2dfe1871d84db40f30bc27d0061",
+      "provenance.contract_sha256": "8780234231cd1490e5cfbaf039b67da7cc80d6df1aab03449b85ccf113bc4df3",
+      "provenance.lock_sha256": "113aff71a432584d77b77c2272b72f413ef1ed3f7fb1c8931cead83bee0b148b"
+    }
+  }
+}
