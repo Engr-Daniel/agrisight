@@ -121,6 +121,14 @@ class Page:
                        "if(!input)return false;input.focus();return document.activeElement===input;})()")
         self.key(" ", "Space", 32)
 
+    def button(self, label: str) -> None:
+        assert self.js("(() => {const b=[...document.querySelectorAll('button')].find(e=>"
+                       f"e.innerText.trim()==={json.dumps(label)});"
+                       "if(!b)return false;b.scrollIntoView({block:'center'});b.focus();"
+                       "return document.activeElement===b;})()")
+        time.sleep(0.2)
+        self.key("Enter", "Enter", 13)
+
     def resize(self, width: int, height: int) -> None:
         self.call("Emulation.setDeviceMetricsOverride", {"width": width, "height": height,
                                                         "deviceScaleFactor": 1, "mobile": False})
@@ -131,6 +139,13 @@ class Page:
                   "?.getBoundingClientRect();return !!r && r.left>=0 && r.right>0;})()"
         if bool(self.js(visible)) == opened:
             return
+        if not opened:
+            # Focusing technical navigation can scroll a long mobile drawer.
+            # Return to its header before locating the native close control.
+            self.js("(() => {const s=document.querySelector('[data-testid=stSidebar]');"
+                    "if(s){s.scrollTop=0;s.querySelectorAll('*').forEach(e=>{"
+                    "if(e.scrollTop)e.scrollTop=0;});}})()")
+            time.sleep(0.2)
         scope = "document" if opened else "document.querySelector('[data-testid=stSidebar]')"
         max_x = 70 if opened else 390
         assert self.js("(() => {const scope="+scope+";const button=[...scope.querySelectorAll('button')]"
@@ -206,6 +221,7 @@ def review(browser: Path) -> Path:
     audit["source_sha256"] = {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                               for name in ("streamlit_app.py", "src/agrisight/reporting_ui.py",
                                            "src/agrisight/reporting_brand.py",
+                                           "src/agrisight/reporting_pages.py",
                                            "src/agrisight/assets/dashboard.css",
                                            "src/agrisight/assets/agricultural-landscape-v1.webp",
                                            "src/agrisight/reporting_adapter.py",
@@ -236,7 +252,8 @@ def review(browser: Path) -> Path:
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, creationflags=flags))
         target = wait_for(lambda: next((t for t in get_json(
             f"http://127.0.0.1:{browser_port}/json/list") if t["type"] == "page"), None))
-        with connect(target["webSocketDebuggerUrl"], proxy=None, max_size=16777216) as websocket:
+        with connect(target["webSocketDebuggerUrl"], proxy=None, max_size=16777216,
+                     ping_interval=None) as websocket:
             page = Page(websocket)
             page.output = output
             audit["browser"] = page.call("Browser.getVersion")["product"]
@@ -244,10 +261,33 @@ def review(browser: Path) -> Path:
                 page.call(method)
             page.resize(1440, 1000)
             page.call("Page.navigate", {"url": f"http://127.0.0.1:{app_port}"})
-            wait_for(lambda: "Evidence & provenance" in page.text() and "92.84%" in page.text())
+            wait_for(lambda: "The survey at a glance" in page.text() and "92.84%" in page.text())
             wait_for(lambda: page.js("(() => {const i=document.querySelector('.agri-hero img');"
                                      "return i?.complete && i.naturalWidth > 0;})()"))
             audit["checks"]["packaged_hero_image_loaded"] = True
+            assert "Evidence & provenance" not in page.text()
+            audit["captures"].append(page.capture(output, "desktop_overview"))
+            audit["captures"].append(page.capture(output, "desktop_overview_bottom", True))
+            page.button("Explore agricultural insights")
+            wait_for(lambda: "What missing plot areas can change" in page.text())
+            audit["captures"].append(page.capture(output, "desktop_insights"))
+            page.button("Inspect area evidence")
+            wait_for(lambda: "Known-area-only median" in page.text() and "6,070.29" in page.text())
+            audit["checks"]["stakeholder_area_link"] = True
+            page.view("Engineering studies")
+            wait_for(lambda: "Testing the analytical foundations" in page.text())
+            audit["captures"].append(page.capture(output, "desktop_engineering"))
+            page.button("Inspect matching evidence")
+            wait_for(lambda: "Evaluation seed" in page.text() and "90.91%" in page.text())
+            audit["checks"]["stakeholder_matching_link"] = True
+            page.view("About")
+            wait_for(lambda: "Who it is designed to support" in page.text())
+            audit["captures"].append(page.capture(output, "desktop_about"))
+            page.view("Agricultural insights")
+            wait_for(lambda: "Inspect participation evidence" in page.text())
+            page.button("Inspect participation evidence")
+            wait_for(lambda: "Valid household responses" in page.text() and "92.84%" in page.text())
+            audit["checks"]["stakeholder_participation_link"] = True
             audit["captures"].append(page.capture(output, "desktop_survey"))
             audit["captures"].append(page.capture(output, "desktop_survey_table", True))
             page.choose_last("Indicator")
@@ -277,9 +317,13 @@ def review(browser: Path) -> Path:
             page.resize(390, 844)
             audit["captures"].append(page.capture(output, "narrow_synthetic_rejection"))
             audit["captures"].append(page.capture(output, "narrow_synthetic_rejection_bottom", True))
-            # Reload at narrow width to test initial collapsed navigation and survey layout.
+            # A new session now lands in the stakeholder layer, including on narrow screens.
             page.call("Page.reload")
+            wait_for(lambda: "The survey at a glance" in page.text() and "92.84%" in page.text())
+            audit["captures"].append(page.capture(output, "narrow_default_overview"))
+            page.button("Open technical evidence")
             wait_for(lambda: "92.84%" in page.text() and "Evidence & provenance" in page.text())
+            audit["checks"]["reload_opens_stakeholder_overview"] = True
             audit["captures"].append(page.capture(output, "narrow_survey"))
             audit["captures"].append(page.capture(output, "narrow_survey_table", True))
             page.choose_last("Indicator")
@@ -309,6 +353,19 @@ def review(browser: Path) -> Path:
             wait_for(lambda: page.js("!!document.querySelector('details[open]')"))
             audit["captures"].append(page.capture(output, "narrow_synthetic_provenance", True))
             audit["checks"]["narrow_keyboard_navigation_and_provenance"] = True
+            page.sidebar(True)
+            page.view("Overview")
+            wait_for(lambda: "The survey at a glance" in page.text())
+            page.sidebar(False)
+            audit["captures"].append(page.capture(output, "narrow_overview"))
+            audit["captures"].append(page.capture(output, "narrow_overview_bottom", True))
+            page.button("Explore agricultural insights")
+            wait_for(lambda: "What missing plot areas can change" in page.text())
+            audit["captures"].append(page.capture(output, "narrow_insights"))
+            page.button("Inspect area evidence")
+            wait_for(lambda: "Known-area-only median" in page.text() and "6,070.29" in page.text())
+            audit["captures"].append(page.capture(output, "narrow_stakeholder_area_link"))
+            audit["checks"]["narrow_stakeholder_to_evidence"] = True
             audit["checks"]["narrow_no_page_horizontal_overflow"] = True
             audit["runtime_exception_count"] = len(page.exceptions)
             audit["request_hosts"] = sorted(page.hosts)

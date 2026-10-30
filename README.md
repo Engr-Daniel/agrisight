@@ -65,6 +65,8 @@ See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/
 
 The [agricultural visual refresh](docs/DASHBOARD_VISUAL_REVIEW.md) adds an illustrated landscape hero, responsive navigation and metric cards, with locally packaged artwork and clear source context.
 
+The [two-layer experience](docs/TWO_LAYER_REVIEW.md) opens with a stakeholder overview: purpose, survey summaries and guided insights. **Evidence & methods** preserves the detailed technical explorer. Each finding links to its corresponding indicator or experiment; engineering summaries remain explicitly synthetic.
+
 The prototype separates survey findings, synthetic matching/quality and workload measurements. It revalidates the reviewed aggregate inputs on each interaction; missing or changed evidence becomes unavailable. It has no raw-data upload, maps or experiment-rerun controls.
 
 After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkout root:

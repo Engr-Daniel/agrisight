@@ -162,3 +162,7 @@ The [M6-03 protocol](M6_SURVEY_REPRODUCTION_PROTOCOL.md) and [observed review](M
 ## Dashboard presentation assets
 
 The [visual refresh](DASHBOARD_VISUAL_REVIEW.md) packages assets/dashboard.css and assets/agricultural-landscape-v1.webp with the wheel. No asset CDN or font download is needed. Artwork generation/prompt is documented in [asset provenance](ILLUSTRATION_ASSETS.md). Only decorative resources are memoized; restart the development server after asset-only edits. Evidence validation remains uncached. Browser review now checks that the actual packaged image decodes and fingerprints the style/asset files. The audit helper attempts all owned process cleanups and records unconfirmed exits; existing owner-run previews are not its cleanup targets.
+
+## Two-layer navigation
+
+The app now defaults to the stakeholder Overview. Agricultural insights and Engineering studies link to exact Evidence & methods selections; About explains the prototype. See the [presentation contract](TWO_LAYER_PRESENTATION.md) and [verification](TWO_LAYER_REVIEW.md). State callbacks persist navigation only; summary figures always come from the freshly validated bundle. The browser helper tests both layers and expects a fresh reload to open Overview. Its narrow drawer handling scrolls back to the header before closing. Restart an existing preview after updating the app to ensure old sessions/modules do not mask the new default experience.

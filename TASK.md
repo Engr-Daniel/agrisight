@@ -57,6 +57,8 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 
 - [x] M4-05: owner-requested agricultural visual refresh: packaged AI-generated landscape, responsive hero/navigation/cards/tables and preserved evidence context.212 installed-wheel tests pass; actual desktop/narrow Chrome review passes7 checks/19 captures, with cleanup regression coverage. [Visual review](docs/DASHBOARD_VISUAL_REVIEW.md), [asset/prompt record](docs/ILLUSTRATION_ASSETS.md). No metric/dependency/manifest change.
 
+- [x] M4-06: accepted two-layer experience: default stakeholder Overview/insights/engineering/About and preserved Evidence & methods explorer. All223 tests pass in development/installed-wheel environments; actual desktop/narrow Chrome passes12 checks across29 captures. Exact evidence links, failure/edge states and local port8501 verified. [Contract](docs/TWO_LAYER_PRESENTATION.md), [review](docs/TWO_LAYER_REVIEW.md). M6 release gates remain open.
+
 ## M5 — Advanced analytics (OPTIONAL)
 
 - [ ] Evaluate advanced statistics or evidence-grounded AI only for a justified need with baseline comparisons and appropriate tests.

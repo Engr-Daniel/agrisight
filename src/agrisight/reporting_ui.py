@@ -211,22 +211,12 @@ def workload(panel: dict) -> None:
     evidence(panel, row)
 
 
-def run(root: Path) -> None:
-    st.set_page_config(page_title="AgriSight | Agricultural intelligence",
-                       page_icon="\U0001f331", layout="wide")
-    reporting_brand.header()
-    reporting_brand.sidebar()
+def technical(bundle: dict) -> None:
+    st.title("Evidence & methods")
+    st.caption("Technical layer: inspect definitions, denominators, limitations and provenance.")
+    st.sidebar.markdown("#### Technical explorer")
     view = st.sidebar.radio("Evidence view", tuple(VIEWS), key="view")
-    st.sidebar.divider()
-    st.sidebar.caption("READ-ONLY RESEARCH EXPLORER")
-    st.sidebar.caption("Survey evidence and synthetic experiments are kept separate.")
     reporting_brand.section(view, tuple(VIEWS).index(view)+1)
-    try:
-        # Revalidate on every interaction; no session-state or cached evidence fallback.
-        bundle = reporting_adapter.build_bundle(root)
-    except (OSError, ValueError, KeyError, TypeError):
-        st.error("Evidence unavailable. Restore the reviewed reporting inputs and try again.")
-        return
     for title, key in VIEWS.items():
         st.sidebar.caption(f"{title}: {bundle['panels'][key]['status']}")
     panel = bundle["panels"][VIEWS[view]]
@@ -243,4 +233,33 @@ def run(root: Path) -> None:
         return
     {"survey": survey, "synthetic_quality": quality,
      "synthetic_workload": workload}[VIEWS[view]](panel)
+
+
+PAGES = ("Overview", "Agricultural insights", "Engineering studies", "Evidence & methods", "About")
+
+
+def run(root: Path) -> None:
+    from agrisight import reporting_pages
+
+    st.set_page_config(page_title="AgriSight | Agricultural intelligence",
+                       page_icon="\U0001f331", layout="wide")
+    reporting_brand.sidebar()
+    page = st.sidebar.radio("Navigation", PAGES, key="page")
+    reporting_brand.header(hero=page == "Overview")
+    st.sidebar.divider()
+    st.sidebar.caption("RESEARCH & PORTFOLIO PROTOTYPE")
+    st.sidebar.caption("Survey findings and synthetic studies remain separate.")
+    if page == "About":
+        reporting_pages.about()
+        reporting_brand.footer()
+        return
+    try:
+        # Both layers revalidate on every interaction; state stores navigation only.
+        bundle = reporting_adapter.build_bundle(root)
+    except (OSError, ValueError, KeyError, TypeError):
+        st.error("Evidence unavailable. Restore the reviewed reporting inputs and try again.")
+        return
+    {"Overview": reporting_pages.overview, "Agricultural insights": reporting_pages.insights,
+     "Engineering studies": reporting_pages.engineering,
+     "Evidence & methods": technical}[page](bundle)
     reporting_brand.footer()

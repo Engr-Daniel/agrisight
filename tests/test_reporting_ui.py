@@ -54,6 +54,8 @@ def setup_ui(tmp_path, monkeypatch):
 def app():
     result = AppTest.from_file(str(ROOT/"streamlit_app.py"), default_timeout=20).run()
     assert not result.exception
+    result.sidebar.radio(key="page").set_value("Evidence & methods").run()
+    assert not result.exception
     return result
 
 

@@ -1,0 +1,11 @@
+# Two-layer presentation contract
+
+Specified 2026-10-30 before implementation, following the owner's accepted review. This is an information-architecture change within the existing Streamlit application, not a new deployment or a second frontend framework.
+
+Layer1 is the default stakeholder experience: Overview, Agricultural insights, Engineering studies and About. Explain purpose, intended audiences and findings in plain language with short essential cautions and real navigation actions. Layer2 is Evidence & methods: preserve the existing survey, synthetic quality and workload explorer, with full controls, counts, denominators, assumptions and provenance. Each finding must lead to its corresponding technical view/indicator rather than a generic or mismatched page.
+
+Both layers consume the same freshly validated reporting bundle. Only navigation state may persist; no metric snapshots, alternate constants or cached success. A missing survey panel hides survey numbers in both overview and insights while independent engineering panels may remain available. TEST FIXTURE origins remain visible in tests. Keep source/period/sample/measurement limits beside findings; move detailed fingerprints and diagnostics into the technical layer.
+
+Overview summary figures are survey-only: household records, plot records and participation with its valid-response denominator. Do not combine these with fictional people, roles or batch sizes. Engineering studies are explicitly synthetic, with selected scenario/seed/baseline and local workload limits visible. Handle undefined rates, empty or unbounded area results and rejected measurements without displaying invented zeros or broad narrative claims. No named clients, enrolled farmers, operational service, measured impact or nationally representative prevalence is implied.
+
+Acceptance: default entry has stakeholder narrative and verified summaries without technical selectors/JSON; working buttons reach insights and exact evidence; back navigation preserves correct selections; all old explorer semantics remain tested; unavailable/undefined fixtures behave honestly; actual Chrome desktop/narrow checks inspect both layers and keyboard links. Package resources and installed-wheel checks remain required. M6 release-readiness gates remain open.
