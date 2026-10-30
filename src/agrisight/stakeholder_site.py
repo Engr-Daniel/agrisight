@@ -5,7 +5,14 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from agrisight import activity_explorer, coverage_map, coverage_reporting, stakeholder_reporting
+from agrisight import (
+    activity_explorer,
+    coverage_map,
+    coverage_reporting,
+    irrigation_reporting,
+    stakeholder_reporting,
+    water_management,
+)
 from agrisight import reporting_brand as brand
 from agrisight import reporting_visuals as visuals
 
@@ -77,6 +84,8 @@ def insights(bundle: dict, root: Path) -> None:
     st.title("Agricultural insights")
     st.write("Understand the activities reported by households and the plots in the survey roster.")
     activity_story(bundle)
+    with st.container(key="water_management"):
+        water_management.show(irrigation_reporting.build_bundle(root, bundle["plots"]["total"]))
     st.subheader("Where crop and livestock reports overlap")
     overlap = bundle["overlap"]
     st.dataframe(pd.DataFrame([{

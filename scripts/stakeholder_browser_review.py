@@ -15,10 +15,11 @@ from websockets.sync.client import connect
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def choose_activity(page: Page, index: int) -> None:
-    selector = '[role="combobox"][aria-label="Explore agricultural activities"]'
+def choose_activity(page: Page, index: int, label: str = "Explore agricultural activities") -> None:
+    selector = f'[role="combobox"][aria-label="{label}"]'
     assert page.js(f"(() => {{const e=document.querySelector({json.dumps(selector)});"
                    "if(!e)return false;e.scrollIntoView({block:'center'});e.focus();return true;})()")
+    time.sleep(0.4)  # Finish scrolling to controls lower on the longer insights page.
     page.key("ArrowDown", "ArrowDown", 40)
     wait_for(lambda: page.js("!!document.querySelector('[role=listbox]')"))
     page.key("Home", "Home", 36)
@@ -29,7 +30,18 @@ def choose_activity(page: Page, index: int) -> None:
 
 
 def bar_values(page: Page) -> list:
-    return page.js("[...document.querySelectorAll('.agri-activity-chart strong')].map(e=>e.textContent)")
+    return page.js("[...document.querySelectorAll('.agri-activity-chart:not(.agri-water-chart) strong')].map(e=>e.textContent)")
+
+
+def water_unit(page: Page, label: str) -> None:
+    assert page.js("(() => {const e=[...document.querySelectorAll('.st-key-water_unit label')]"
+                   f".find(e=>e.innerText.trim()==={json.dumps(label)});"
+                   "const i=e?.querySelector('input');if(!i)return false;i.focus();return true;})()")
+    page.key(" ", "Space", 32)
+
+
+def water_values(page: Page) -> list:
+    return page.js("[...document.querySelectorAll('.agri-water-chart strong')].map(e=>e.textContent)")
 
 
 def review():
@@ -94,6 +106,23 @@ def review():
                         choose_activity(page, 0)
                         wait_for(lambda: len(bar_values(page)) == 4)
                         audit["checks"][mode + "_activity_keyboard_and_units"] = True
+                        choose_activity(page, 0, "Explore water management")
+                        water_unit(page, "Percentages")
+                        wait_for(lambda: water_values(page) == ["4.11%", "95.89%"])
+                        audit["captures"].append(page.capture(output, f"{mode}_water_infrastructure", anchor=".st-key-water_management"))
+                        for index, question, first in ((1, "methods", "76.47%"), (2, "sources", "56.03%")):
+                            choose_activity(page, index, "Explore water management")
+                            wait_for(lambda first=first: water_values(page)[0] == first)
+                            assert "11,268" in page.text() and "expected skips" in page.text()
+                            audit["captures"].append(page.capture(output, f"{mode}_water_{question}", anchor=".st-key-water_management"))
+                        water_unit(page, "Plot counts")
+                        wait_for(lambda: water_values(page)[0] == "6,313")
+                        audit["captures"].append(page.capture(output, f"{mode}_water_source_counts", anchor=".st-key-water_management"))
+                        choose_activity(page, 0, "Explore water management")
+                        wait_for(lambda: water_values(page) == ["11,268", "262,619"])
+                        water_unit(page, "Percentages")
+                        wait_for(lambda: water_values(page)[0] == "4.11%")
+                        audit["checks"][mode + "_water_questions_units_denominators"] = True
                         page.rendered_chart()
                         assert "coverage map is unavailable" not in page.text()
                         assert "143,105" in page.text() and "CC BY 4.0" in page.text()
