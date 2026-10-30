@@ -80,8 +80,8 @@ def text(at):
 def test_five_pages_activity_selection_and_source_context(monkeypatch):
     at = app(monkeypatch)
     assert not at.exception and not at.json
-    assert at.selectbox(key="activity").value == 0
-    for i in range(4):
+    assert at.selectbox(key="activity").value == "all"
+    for i in ("crops", "livestock", "fish_capture", "fish_farming", "all"):
         at.selectbox(key="activity").set_value(i).run()
         assert not at.exception
     for i in range(5):
@@ -98,6 +98,7 @@ def test_undefined_share_and_unavailable_about(monkeypatch):
     hh["s00_q15a"] = None
     data = {"analysis_version": "1.0", **model.calculate(hh, pp)}
     at = app(monkeypatch, data)
+    at.selectbox(key="activity").set_value("crops").run()
     assert not at.exception
     assert "Undefined" in [m.value for m in at.metric]
     monkeypatch.setattr(adapter, "build_bundle", lambda root: {"status": "unavailable"})

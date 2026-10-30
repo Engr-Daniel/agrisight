@@ -1,5 +1,20 @@
 :root { --agri-green: #174d36; --agri-leaf: #3f7d4a; --agri-ink: #203c2d;
   --agri-muted: #526650; --agri-line: #dfe6d6; --agri-card: #fffef9; --agri-wheat: #c79a3b; }
+.agri-activity-chart { margin: .5rem 0 1rem; background: #fffef9; border: 1px solid #dfe6d6;
+  border-radius: 16px; padding: 1.4rem; color: #203c2d; }
+.agri-activity-chart ol { list-style: none; padding: 0; margin: 0; }
+.agri-activity-row { margin: 0 0 1.3rem; }
+.agri-activity-label { display: flex; justify-content: space-between; align-items: baseline;
+  gap: 1rem; margin-bottom: .45rem; font-size: 1rem; }
+.agri-activity-label strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.agri-activity-track { background: #e9efdf; height: 24px; border-radius: 5px; overflow: hidden; }
+.agri-activity-track > div { height: 100%; min-width: 0; border-radius: 5px; }
+.agri-activity-row small, .agri-activity-chart figcaption { display: block; margin-top: .4rem;
+  color: #526650; font-size: .78rem; line-height: 1.5; }
+@media (max-width: 600px) {
+  .agri-activity-chart { padding: 1rem; }
+  .agri-activity-label { font-size: .9rem; gap: .5rem; }
+}
 [data-testid="stAppViewContainer"] { background: #f6f7f0; }
 [data-testid="stMainBlockContainer"] { max-width: 1240px; padding: 3.6rem 2.5rem 3rem; }
 [data-testid="stHeader"] { background: transparent; }

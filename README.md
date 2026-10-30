@@ -71,7 +71,7 @@ The website presents **Overview, Agricultural insights, Data quality, Recommenda
 
 The historical technical explorer is retained separately: run `research_explorer_app.py` instead of `streamlit_app.py` to inspect survey methods and explicitly synthetic engineering studies. It is not part of the stakeholder site's navigation.
 
-The product revalidates three reviewed survey aggregate inputs on each interaction; missing or changed evidence hides findings. It has no raw-data upload, maps or experiment-rerun controls. Raw inputs and aggregate JSON remain ignored; authorized owners must reproduce the files following the findings and historical NASS-01/NASS-02 instructions.
+The product revalidates three core survey aggregate inputs on each interaction and separately validates the optional coverage aggregate and packaged public boundaries; missing or changed evidence hides findings. Agricultural insights now defaults to a four-activity horizontal comparison with percentage/count controls and focused response breakdowns. An optional verified state/FCT map shows sample household coverage, with an accessible table; it is not a geographic prevalence estimate. It has no raw-data upload or experiment-rerun controls. See the [activity explorer and map review](docs/ACTIVITY_EXPLORER_REVIEW.md) and [boundary notices](THIRD_PARTY_NOTICES.md). Raw inputs and aggregate JSON remain ignored; authorized owners must reproduce the files following the findings and historical NASS-01/NASS-02 instructions.
 
 After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkout root:
 

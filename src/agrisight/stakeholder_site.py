@@ -5,9 +5,9 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from agrisight import activity_explorer, coverage_map, coverage_reporting, stakeholder_reporting
 from agrisight import reporting_brand as brand
 from agrisight import reporting_visuals as visuals
-from agrisight import stakeholder_reporting
 
 PAGES = ("Overview", "Agricultural insights", "Data quality", "Recommendations", "About AgriSight")
 SCOPE = ("NBS National Agricultural Sample Survey (NASS) 2023. Unweighted observed sample; "
@@ -23,27 +23,57 @@ def rate(value: float | None) -> str:
 
 
 def activity_story(bundle: dict) -> None:
+    st.subheader("Agricultural activity explorer")
     activities = bundle["activities"]
-    index = st.selectbox("Explore an agricultural activity", range(4),
-                         format_func=lambda i: activities[i]["label"], key="activity")
-    item = activities[index]
-    columns = st.columns(3)
-    columns[0].metric("Households reporting activity", f'{item["yes"]:,}')
-    columns[1].metric("Share of valid responses", rate(item["share"]))
-    columns[2].metric("Valid household responses", f'{item["denominator"]:,}')
-    st.caption(f'Period: {item["period"]}. Yes / (yes + no); '
-               f'{item["missing"]:,} missing and {item["invalid"]:,} invalid responses excluded.')
-    st.html(visuals.waffle(item["share"], "Reported activity", "Did not report activity"))
+    by_id = {a["id"]: a for a in activities}
+    selected = st.selectbox("Explore agricultural activities", ("all", *activity_explorer.ORDER),
+                            format_func=lambda key: "All activities" if key == "all" else by_id[key]["label"],
+                            key="activity")
+    unit = st.radio("Show activity values as", ("Percentages", "Household counts"),
+                    horizontal=True, key="activity_unit")
+    if selected == "all":
+        st.html(activity_explorer.chart(activities, unit))
+        st.write("Read the complete activity picture, then select an activity to examine its "
+                 "responses and interpretation. Participation measures reporting, not output or income.")
+    else:
+        item = by_id[selected]
+        visual, explanation = st.columns([1.3, 1], gap="large")
+        with visual:
+            st.html(activity_explorer.chart([item], unit))
+            st.html(visuals.waffle(item["share"], "Reported activity", "Did not report activity"))
+        with explanation:
+            st.metric("Share of valid responses", rate(item["share"]))
+            st.metric("Households reporting activity", f'{item["yes"]:,}')
+            st.metric("Valid household responses", f'{item["denominator"]:,}')
+            if item["share"] is None:
+                st.write("No valid yes/no responses are available; the percentage is undefined.")
+            else:
+                st.write(f'{rate(item["share"])} of valid household responses reported '
+                         f'{item["label"].lower()} during {item["period"]}. This describes '
+                         "the observed sample; it does not measure production, income or service need.")
+            st.dataframe(pd.DataFrame({"Response": ["Yes", "No", "Missing", "Invalid"],
+                "Households": [item[k] for k in ("yes", "no", "missing", "invalid")]}),
+                hide_index=True, width="stretch")
+        st.caption(f'Period: {item["period"]}. Percentage = yes / (yes + no). '
+                   f'{item["input_rows"]:,} input household records; '
+                   f'{item["missing"]:,} missing and {item["invalid"]:,} invalid responses excluded.')
     st.dataframe(pd.DataFrame([{
         "Activity": a["label"], "Reference period": a["period"],
         "Households: yes": a["yes"], "Valid responses": a["denominator"],
         "Share": rate(a["share"]),
     } for a in activities]), hide_index=True, width="stretch")
-    st.caption("Households may report several activities. Do not add activity counts to count "
-               "distinct households. Crop and annual activity questions cover different periods.")
+    denominators = {a["denominator"] for a in activities}
+    if len(denominators) == 1:
+        st.caption(f'Each activity uses {next(iter(denominators)):,} valid household responses '
+                   "as its percentage denominator.")
+    else:
+        st.caption("Percentage denominators differ by activity; see the valid responses in the table.")
+    st.caption("Responses can overlap: do not add activity counts to count distinct households. "
+               "Crops: April–October 2022; livestock and fish: 2022/2023 agricultural year. "
+               "Visual comparison is not a same-season comparison or a set of mutually exclusive categories.")
 
 
-def insights(bundle: dict) -> None:
+def insights(bundle: dict, root: Path) -> None:
     st.title("Agricultural insights")
     st.write("Understand the activities reported by households and the plots in the survey roster.")
     activity_story(bundle)
@@ -67,6 +97,8 @@ def insights(bundle: dict) -> None:
     st.caption(f'Denominator: all {bundle["plots"]["total"]:,} main-season roster plots, '
                "including temporarily fallow plots and kitchen gardens. Counts are plots, "
                "not people, households or cultivated acreage. Period: April–October 2022.")
+    with st.container(key="coverage_map"):
+        coverage_map.show(coverage_reporting.build_bundle(root, bundle["activities"][0]["input_rows"]))
 
 
 def quality(bundle: dict) -> None:
@@ -91,7 +123,7 @@ def quality(bundle: dict) -> None:
                "is unresolved. It cannot certify physical acreage. Usable survey variance design "
                "has not been established, so national estimates and confidence intervals are excluded.")
     st.info("Minor-season comparisons remain excluded because the reference calendar conflicts. "
-            "Geographic analysis awaits boundary, identifier and disclosure review.")
+            "The state map describes sample coverage only; geographic population comparisons remain excluded.")
 
 
 def recommendations(bundle: dict) -> None:
@@ -133,8 +165,9 @@ def about() -> None:
              "and livestock and fish activities in the 2022/2023 agricultural year. Historical "
              "survey responses do not describe current conditions.")
     st.write("Participation does not measure output, income or programme impact. No client "
-             "engagement, field enrolment or intervention outcome is claimed. National inference, "
-             "maps and minor-season comparisons require further source and methods review.")
+             "engagement, field enrolment or intervention outcome is claimed. National inference "
+             "and minor-season comparisons require further source and methods review. "
+             "The state map describes sample coverage; it does not estimate geographic agricultural prevalence.")
     st.markdown("[NBS source catalogue](https://microdata.nigerianstat.gov.ng/index.php/catalog/173)")
 
 
@@ -169,7 +202,7 @@ def run(root: Path) -> None:
                          "Check coverage and measurement limitations before acting on a finding.")
                 activity_story(bundle)
             elif page == "Agricultural insights":
-                insights(bundle)
+                insights(bundle, root)
             elif page == "Data quality":
                 quality(bundle)
             elif page == "Recommendations":

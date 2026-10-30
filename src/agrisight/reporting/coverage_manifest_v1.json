@@ -1,0 +1,16 @@
+{
+  "artifact": {
+    "sha256": "993933955e66198033e2e5348e04725a1d66389e7c16d6e2924355a0a15700d7",
+    "expected": {
+      "version": "1.0",
+      "source_sha256": "a5c0544f8b17f7e1f0627928b82ad19559110886930bf5f2e447fdef1b205d02",
+      "provenance.model_sha256": "be5c6e40a69d2871a242053c4a823d1fd08547376643164c19c4bde660967cb3",
+      "provenance.contract_sha256": "d5fb10418a82872e900c324553b9812a101892bdc152f5a49564b13a3baa7ff4",
+      "provenance.boundary_sha256": "1e8bb556d41ea214cc8d08109e7e9ef4158465319a7d23a477c70a9222b27974",
+      "provenance.python": "3.11.9",
+      "provenance.pandas": "2.3.3",
+      "provenance.sqlite": "3.45.1"
+    }
+  },
+  "boundary_sha256": "1e8bb556d41ea214cc8d08109e7e9ef4158465319a7d23a477c70a9222b27974"
+}
