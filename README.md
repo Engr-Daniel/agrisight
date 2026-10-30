@@ -5,6 +5,8 @@
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
+**Product direction:** the website is the agricultural intelligence deliverable for stakeholders. Learning objectives, milestones and engineering experiments belong in this repository. The [owner's presentation clarification](docs/PRODUCT_DIRECTION.md) supersedes the earlier two-layer approach as the target for future navigation; that refactor is not yet implemented.
+
 It is not an operational farmer registry, a deployed client system or evidence of field enrollment. Official observations, derived indicators, synthetic records and mock-ups must always remain distinguishable.
 
 ## Purpose and intended users

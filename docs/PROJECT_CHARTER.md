@@ -11,6 +11,8 @@ AgriSight combines two connected objectives:
 
 Research determines what the data support. Engineering makes those conclusions reproducible and useful. The first checked agricultural result is an initial complete workflow, not the full project's exit criterion.
 
+Owner clarification, 2026-10-30: learning governs development, while the website presents the stakeholder-facing agricultural intelligence outcome. Development milestones and synthetic experiments are repository material; product pages lead with agricultural questions, findings and supported implications. See [product direction](PRODUCT_DIRECTION.md), which supersedes the two-layer primary-navigation target while preserving the analytical work.
+
 ## Scope and evidence boundaries
 
 Real survey analysis is primary. Separate synthetic registration experiments provide known truth for counting, defect detection, duplicate evaluation and scale testing. The 55,000-role target is an engineering workload, not a real registry or population finding. Never pool these populations.
