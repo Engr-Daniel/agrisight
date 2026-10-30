@@ -98,11 +98,12 @@ def test_survey_choices_values_units_provenance_and_navigation(setup_ui):
     assert "not confidence intervals" in text(at)
     assert "Measurement lineage is unverified" in text(at)
     assert any("Area measurement" in item.value for item in at.warning)
-    assert any(item.value == "Source: TEST FIXTURE" for item in at.caption)
+    assert [item.value for item in at.info].count("Source: TEST FIXTURE") == 1
+    assert not any(item.value == "Source: TEST FIXTURE" for item in at.caption)
     assert evidence(at)["values"]["width_m2"] == 2
     assert set(evidence(at)["provenance"]) == {"nass01.json", "nass02.json"}
-    at.sidebar.radio(key="view").set_value("Synthetic quality").run()
-    at.sidebar.radio(key="view").set_value("Survey findings").run()
+    at.radio(key="view").set_value("Synthetic quality").run()
+    at.radio(key="view").set_value("Survey findings").run()
     assert not at.exception
     assert "TEST FIXTURE" in text(at)
     assert len(at.selectbox) == 1  # no geographic/unsupported filter controls
@@ -116,7 +117,7 @@ def test_every_quality_cell_and_selection_transition(setup_ui, seed, scenario, b
     run = next(r for r in data["m3_04_evaluation.json"]["runs"]
                if r["seed"] == seed and r["configuration"] == scenario)
     at = app()
-    at.sidebar.radio(key="view").set_value("Synthetic quality").run()
+    at.radio(key="view").set_value("Synthetic quality").run()
     at.selectbox(key="seed").select(seed)
     at.selectbox(key="scenario").select(scenario)
     at.selectbox(key="baseline").select(baseline).run()
@@ -155,7 +156,7 @@ def test_every_quality_cell_and_selection_transition(setup_ui, seed, scenario, b
                                            (100000, False), (300, True), (1000, True)])
 def test_every_workload_measure_and_rejection(setup_ui, size, collision):
     at = app()
-    at.sidebar.radio(key="view").set_value("Workload measurements").run()
+    at.radio(key="view").set_value("Workload measurements").run()
     at.selectbox(key="workload").select(f"{size}:{int(collision)}").run()
     for mode, unit, median, repetitions in (("timing", "seconds", "3.000", 5),
                                            ("traced_allocation", "MiB", "11.00", 3)):
@@ -183,7 +184,7 @@ def test_every_workload_measure_and_rejection(setup_ui, size, collision):
 
 def test_manual_default_and_method_relation_denominator_changes(setup_ui):
     at = app()
-    at.sidebar.radio(key="view").set_value("Synthetic quality").run()
+    at.radio(key="view").set_value("Synthetic quality").run()
     assert at.selectbox(key="scenario").value == "Mixed"
     assert at.selectbox(key="baseline").value == "B1"
     assert at.selectbox(key="relation").value == "duplicate_role"
@@ -235,7 +236,7 @@ def test_zero_valid_responses_and_live_unavailability(setup_ui):
     assert not at.exception and not at.metric
     assert "Evidence unavailable" in text(at)
     assert not at.selectbox
-    at.sidebar.radio(key="view").set_value("Synthetic quality").run()
+    at.radio(key="view").set_value("Synthetic quality").run()
     assert not at.exception and at.metric
     assert "TEST FIXTURE" in text(at)
 

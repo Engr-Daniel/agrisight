@@ -122,8 +122,10 @@ class Page:
         self.key(" ", "Space", 32)
 
     def button(self, label: str) -> None:
+        # Match the visible label only; icon glyph names are part of a button's innerText.
         assert self.js("(() => {const b=[...document.querySelectorAll('button')].find(e=>"
-                       f"e.innerText.trim()==={json.dumps(label)});"
+                       "(e.querySelector('[data-testid=stMarkdownContainer]')||e)"
+                       f".innerText.trim()==={json.dumps(label)});"
                        "if(!b)return false;b.scrollIntoView({block:'center'});b.focus();"
                        "return document.activeElement===b;})()")
         time.sleep(0.2)
@@ -173,11 +175,16 @@ class Page:
         wait_for(lambda: self.js("!!document.querySelector('[data-testid=stVegaLiteChart] canvas,"
                                  "[data-testid=stVegaLiteChart] svg')"))
 
-    def capture(self, output: Path, name: str, bottom: bool = False) -> dict:
+    def capture(self, output: Path, name: str, bottom: bool = False,
+                anchor: str | None = None) -> dict:
         wait_for(lambda: self.js("document.querySelector('[data-testid=stApp]')"
                                  "?.getAttribute('data-test-script-state') === 'notRunning'"))
         self.js("(() => {const m=document.querySelector('[data-testid=stMain]');"
                 f"if(m)m.scrollTop={'m.scrollHeight' if bottom else '0'};}})()")
+        if anchor:
+            assert self.js(f"(() => {{const e=document.querySelector({json.dumps(anchor)});"
+                           "if(!e)return false;e.scrollIntoView({block:'start'});"
+                           "return true;})()")
         time.sleep(0.4)
         image = self.call("Page.captureScreenshot", {"format": "png"})
         (output/f"{name}.png").write_bytes(base64.b64decode(image["data"]))
@@ -266,7 +273,14 @@ def review(browser: Path) -> Path:
                                      "return i?.complete && i.naturalWidth > 0;})()"))
             audit["checks"]["packaged_hero_image_loaded"] = True
             assert "Evidence & provenance" not in page.text()
+            assert "Where the evidence comes from" in page.text()
+            assert "AI-generated illustration ·" not in page.text()
             audit["captures"].append(page.capture(output, "desktop_overview"))
+            for name, anchor in (("stats", ".st-key-stat_households"),
+                                 ("story", ".st-key-story_participation"),
+                                 ("map", ".agri-map")):
+                audit["captures"].append(page.capture(output, f"desktop_overview_{name}",
+                                                      anchor=anchor))
             audit["captures"].append(page.capture(output, "desktop_overview_bottom", True))
             page.button("Explore agricultural insights")
             wait_for(lambda: "What missing plot areas can change" in page.text())
@@ -274,16 +288,16 @@ def review(browser: Path) -> Path:
             page.button("Inspect area evidence")
             wait_for(lambda: "Known-area-only median" in page.text() and "6,070.29" in page.text())
             audit["checks"]["stakeholder_area_link"] = True
-            page.view("Engineering studies")
+            page.button("Engineering studies")
             wait_for(lambda: "Testing the analytical foundations" in page.text())
             audit["captures"].append(page.capture(output, "desktop_engineering"))
             page.button("Inspect matching evidence")
             wait_for(lambda: "Evaluation seed" in page.text() and "90.91%" in page.text())
             audit["checks"]["stakeholder_matching_link"] = True
-            page.view("About")
+            page.button("About")
             wait_for(lambda: "Who it is designed to support" in page.text())
             audit["captures"].append(page.capture(output, "desktop_about"))
-            page.view("Agricultural insights")
+            page.button("Agricultural insights")
             wait_for(lambda: "Inspect participation evidence" in page.text())
             page.button("Inspect participation evidence")
             wait_for(lambda: "Valid household responses" in page.text() and "92.84%" in page.text())
@@ -330,16 +344,12 @@ def review(browser: Path) -> Path:
             wait_for(lambda: "6,070.29" in page.text() and "bounds coincide" in page.text())
             audit["captures"].append(page.capture(output, "narrow_area"))
             audit["captures"].append(page.capture(output, "narrow_area_table", True))
-            page.sidebar(True)
             page.view("Synthetic quality")
             wait_for(lambda: "90.91%" in page.text() and "50.00%" in page.text())
-            page.sidebar(False)
             audit["captures"].append(page.capture(output, "narrow_synthetic_quality"))
             audit["captures"].append(page.capture(output, "narrow_synthetic_quality_counts", True))
-            page.sidebar(True)
             page.view("Workload measurements")
             wait_for(lambda: "1.071" in page.text())
-            page.sidebar(False)
             page.rendered_chart()
             audit["captures"].append(page.capture(output, "narrow_synthetic_timing_chart", True))
             page.view("Traced allocation")
@@ -353,11 +363,17 @@ def review(browser: Path) -> Path:
             wait_for(lambda: page.js("!!document.querySelector('details[open]')"))
             audit["captures"].append(page.capture(output, "narrow_synthetic_provenance", True))
             audit["checks"]["narrow_keyboard_navigation_and_provenance"] = True
-            page.sidebar(True)
-            page.view("Overview")
+            page.button("Back to the stakeholder website")
+            wait_for(lambda: "What missing plot areas can change" in page.text())
+            audit["checks"]["narrow_back_to_website"] = True
+            page.button("Overview")
             wait_for(lambda: "The survey at a glance" in page.text())
-            page.sidebar(False)
             audit["captures"].append(page.capture(output, "narrow_overview"))
+            for name, anchor in (("stats", ".st-key-stat_households"),
+                                 ("story", ".st-key-story_participation"),
+                                 ("area", ".st-key-story_area")):
+                audit["captures"].append(page.capture(output, f"narrow_overview_{name}",
+                                                      anchor=anchor))
             audit["captures"].append(page.capture(output, "narrow_overview_bottom", True))
             page.button("Explore agricultural insights")
             wait_for(lambda: "What missing plot areas can change" in page.text())

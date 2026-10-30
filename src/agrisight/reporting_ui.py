@@ -103,18 +103,20 @@ def survey(panel: dict) -> None:
         elif counts["missing_areas"] and values["width_m2"] == 0:
             st.info("The bounds coincide under the nonnegative missing-value model. "
                     "This does not establish accuracy of known measurements.")
-    st.caption(f"Source: {panel['origin']}")
     count_table(counts)
     evidence(panel, row)
 
 
 def quality(panel: dict) -> None:
-    seed = st.selectbox("Evaluation seed", (303, 404, 505), key="seed")
-    config = st.selectbox("Scenario", ("Clean", "Exact-repeat", "Mixed"), index=2, key="scenario")
-    baseline = st.selectbox("Matching baseline", ("B0", "B1"), index=1, key="baseline")
-    mode = st.radio("Evaluation", ("Matching", "Field quality"), key="evaluation",
-                    horizontal=True)
-    measure = st.selectbox("Relation" if mode == "Matching" else "Quality rule",
+    top = st.columns(3)
+    seed = top[0].selectbox("Evaluation seed", (303, 404, 505), key="seed")
+    config = top[1].selectbox("Scenario", ("Clean", "Exact-repeat", "Mixed"), index=2,
+                              key="scenario")
+    baseline = top[2].selectbox("Matching baseline", ("B0", "B1"), index=1, key="baseline")
+    bottom = st.columns([1, 2], vertical_alignment="bottom")
+    mode = bottom[0].radio("Evaluation", ("Matching", "Field quality"), key="evaluation",
+                           horizontal=True)
+    measure = bottom[1].selectbox("Relation" if mode == "Matching" else "Quality rule",
                            ("same_person", "duplicate_role") if mode == "Matching"
                            else ("quality", *reporting_adapter.RULES),
                            index=1 if mode == "Matching" else 0,
@@ -153,7 +155,6 @@ def quality(panel: dict) -> None:
     st.caption("TP = correctly flagged positives; FP = false flags; FN = missed positives; "
                "TN = correctly unflagged negatives. Actual positives = TP + FN; "
                "predicted positives = TP + FP. Synthetic accuracy does not establish field accuracy.")
-    st.caption(f"Source: {panel['origin']}")
     count_table({k: c[k] for k in reporting_adapter.METRIC_COUNTS})
     evidence(panel, row)
 
@@ -174,7 +175,6 @@ def workload(panel: dict) -> None:
                     horizontal=True)
     row = cells[selected]
     st.subheader(label(selected))
-    st.caption(f"Source: {panel['origin']}")
     count_table(row["counts"])
     st.caption("Events are submissions, not necessarily distinct people or intended roles. "
                "Collision diagnostics are separate from bounded-group scaling results. "
@@ -212,13 +212,16 @@ def workload(panel: dict) -> None:
 
 
 def technical(bundle: dict) -> None:
+    from agrisight.reporting_pages import go
+
+    st.button("Back to the stakeholder website", key="back_to_site", type="tertiary",
+              icon=":material/arrow_back:", on_click=go, args=("Agricultural insights",))
     st.title("Evidence & methods")
-    st.caption("Technical layer: inspect definitions, denominators, limitations and provenance.")
-    st.sidebar.markdown("#### Technical explorer")
-    view = st.sidebar.radio("Evidence view", tuple(VIEWS), key="view")
+    st.caption("Technical layer: inspect definitions, denominators, limitations and provenance. "
+               "Panel status - " + "; ".join(
+                   f"{title}: {bundle['panels'][key]['status']}" for title, key in VIEWS.items()))
+    view = st.radio("Evidence view", tuple(VIEWS), key="view", horizontal=True)
     reporting_brand.section(view, tuple(VIEWS).index(view)+1)
-    for title, key in VIEWS.items():
-        st.sidebar.caption(f"{title}: {bundle['panels'][key]['status']}")
     panel = bundle["panels"][VIEWS[view]]
     st.info(f"Source: {panel['origin']}")
     st.caption(f"Reference: {panel['reference_period']} | "
@@ -242,10 +245,11 @@ def run(root: Path) -> None:
     from agrisight import reporting_pages
 
     st.set_page_config(page_title="AgriSight | Agricultural intelligence",
-                       page_icon="\U0001f331", layout="wide")
+                       page_icon="\U0001f331", layout="wide", initial_sidebar_state="collapsed")
+    reporting_brand.styles()
     reporting_brand.sidebar()
     page = st.sidebar.radio("Navigation", PAGES, key="page")
-    reporting_brand.header(hero=page == "Overview")
+    reporting_brand.navigation(PAGES, page, reporting_pages.go)
     st.sidebar.divider()
     st.sidebar.caption("RESEARCH & PORTFOLIO PROTOTYPE")
     st.sidebar.caption("Survey findings and synthetic studies remain separate.")
@@ -258,6 +262,7 @@ def run(root: Path) -> None:
         bundle = reporting_adapter.build_bundle(root)
     except (OSError, ValueError, KeyError, TypeError):
         st.error("Evidence unavailable. Restore the reviewed reporting inputs and try again.")
+        reporting_brand.footer()
         return
     {"Overview": reporting_pages.overview, "Agricultural insights": reporting_pages.insights,
      "Engineering studies": reporting_pages.engineering,

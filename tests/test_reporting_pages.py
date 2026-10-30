@@ -24,6 +24,10 @@ def fixture(tmp_path, monkeypatch):
     return data, manifest, tmp_path
 
 
+def html(at):
+    return "\n".join(item.value for item in at.get("html"))
+
+
 def home():
     at = AppTest.from_file(str(ROOT/"streamlit_app.py"), default_timeout=20).run()
     assert not at.exception
@@ -48,7 +52,8 @@ def test_insights_ctas_reach_the_corresponding_indicator(fixture):
     assert cards(at)["Crop participation"] == "66.67%"
     assert cards(at)["Missing area values"] == "1"
     assert cards(at)["Lower median bound (labelled m²)"] == "3.00"
-    assert len(at.get("vega_lite_chart")) == 1
+    assert html(at).count('class="agri-waffle"') == 1
+    assert "About 67 in every 100 grew main-season crops" in html(at)
     at.button(key="participation_evidence").click().run()
     assert at.sidebar.radio(key="page").value == "Evidence & methods"
     assert at.selectbox(key="indicator").value == "NASS-01"
@@ -88,7 +93,7 @@ def test_missing_survey_never_leaves_stale_home_numbers(fixture):
     at.run()
     assert not at.metric and "Survey findings are unavailable" in text(at)
     at.sidebar.radio(key="page").set_value("Agricultural insights").run()
-    assert not at.metric and not at.get("vega_lite_chart")
+    assert not at.metric and 'class="agri-waffle"' not in html(at)
     at.sidebar.radio(key="page").set_value("Engineering studies").run()
     assert cards(at)["Precision"] == "50.00%" and not at.exception
 
@@ -104,7 +109,7 @@ def test_undefined_participation_is_not_zero_or_a_positive_claim(fixture):
     at.sidebar.radio(key="page").set_value("Agricultural insights").run()
     assert cards(at)["Crop participation"] == "Not defined"
     assert "no valid responses" in text(at)
-    assert not at.get("vega_lite_chart")
+    assert 'class="agri-waffle"' not in html(at) and "Not defined: no valid responses" in html(at)
 
 
 def test_about_does_not_require_analytical_inputs(monkeypatch):
@@ -151,3 +156,25 @@ def test_engineering_panels_fail_independently(fixture, name, hidden):
     assert not at.exception and hidden not in cards(at)
     assert "Study evidence is unavailable" in text(at)
     assert "Submission events" in cards(at) if hidden == "Precision" else "Precision" in cards(at)
+
+
+def test_top_navigation_and_back_link_change_pages_only(fixture):
+    at = home()
+    assert at.button(key="nav_0").proto.type == "primary"  # Overview is current
+    at.button(key="nav_1").click().run()
+    assert at.sidebar.radio(key="page").value == "Agricultural insights"
+    at.button(key="participation_evidence").click().run()
+    assert at.radio(key="view").value == "Survey findings"
+    at.button(key="back_to_site").click().run()
+    assert not at.exception
+    assert at.sidebar.radio(key="page").value == "Agricultural insights"
+    assert cards(at)["Crop participation"] == "66.67%"
+
+
+def test_overview_story_and_map_slot_stay_within_evidence(fixture):
+    at = home()
+    body = html(at)
+    assert "About 67 in every 100 grew main-season crops" in body
+    assert 'class="agri-map"' in body and "no regional values" in body
+    assert "AI-generated" not in body.split('class="agri-footer"')[0]
+    assert "AI-generated illustration" in body  # credit kept in the footer
