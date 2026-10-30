@@ -185,7 +185,7 @@ def review(browser: Path) -> Path:
     audit["source_sha256"] = {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                               for name in ("streamlit_app.py", "src/agrisight/reporting_ui.py",
                                            "src/agrisight/reporting_adapter.py",
-                                           "src/agrisight/reporting/artifact_manifest_v1.json",
+                                           "src/agrisight/reporting/artifact_manifest_v2.json",
                                            ".streamlit/config.toml", "requirements/m4.lock",
                                            "scripts/m4_browser_review.py")}
     flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0

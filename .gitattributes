@@ -1,0 +1,6 @@
+# Provenance policy agrisight-text-lf-v1: stable text bytes across checkouts.
+* text=auto eol=lf
+# Frozen dependency pins retain their historical exact bytes.
+requirements/*.lock -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve the historical manifest snapshot byte-for-byte.
+src/agrisight/reporting/artifact_manifest_v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

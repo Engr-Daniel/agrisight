@@ -290,3 +290,33 @@ def test_cli_failure_does_not_emit_paths_or_tracebacks(tmp_path):
     assert "Reporting evidence unavailable" in result.stdout
     assert "Traceback" not in result.stdout+result.stderr
     assert str(tmp_path) not in result.stdout+result.stderr
+
+
+@pytest.mark.parametrize("policy", [None, "wrong-policy", "agrisight-text-lf-v1"])
+def test_policy_mismatch_blocks_only_quality_panel(tmp_path, policy):
+    data = fixture_data()
+    if policy is not None:
+        data["m3_04_evaluation.json"]["provenance_policy"] = policy
+    manifest = write_fixture(tmp_path, data)
+    manifest["artifacts"]["m3_04_evaluation.json"]["expected"]["provenance_policy"] = (
+        "agrisight-text-lf-v1")
+    result = adapter.build_bundle(tmp_path, manifest, NOW)
+    assert result["panels"]["synthetic_quality"]["status"] == (
+        "available" if policy == "agrisight-text-lf-v1" else "unavailable")
+    assert result["panels"]["survey"]["status"] == "available"
+    assert result["panels"]["synthetic_workload"]["status"] == "available"
+
+
+def test_packaged_snapshot_preserves_historical_entries():
+    from importlib.resources import files
+
+    old = json.loads(files("agrisight").joinpath(
+        "reporting/artifact_manifest_v1.json").read_bytes())
+    new = adapter.manifest_resource()
+    assert new["snapshot_revision"] == 2
+    assert new["manifest_version"] == old["manifest_version"] == "1.0"
+    for name in adapter.NAMES:
+        if name != "m3_04_evaluation.json":
+            assert new["artifacts"][name] == old["artifacts"][name]
+    assert new["artifacts"]["m3_04_evaluation.json"]["expected"]["provenance_policy"] == (
+        "agrisight-text-lf-v1")

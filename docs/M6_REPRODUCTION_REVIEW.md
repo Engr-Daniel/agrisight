@@ -62,3 +62,7 @@ Follow the protocol for distribution/import/resource checks and complete JSON co
 ## Next acceptance gate
 
 M6-02 must define a versioned line-ending/provenance policy, preserve historical evidence, regenerate affected outputs from committed bytes and explicitly review any new manifest version. Then verify the authorized raw-data reproduction lane and actual remote CI, and complete licence/privacy/disclosure/dependency/secrets review. Public release or deployment still needs explicit owner authorization. None of these remaining gates is marked complete by fixture success.
+
+## M6-02 clarification and follow-up
+
+The original audit correctly observed different exported bytes, but direct Git-blob inspection later clarified the cause: core.autocrlf=true affected Git archive conversion. The repository source blobs themselves were LF. See the [policy](PROVENANCE_POLICY.md) and [migration review](M6_PROVENANCE_REVIEW.md) for the explicit export rules and resolved synthetic provenance lane. This audit remains historical evidence; survey clean reproduction and release gates remain open.

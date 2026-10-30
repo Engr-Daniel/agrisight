@@ -150,3 +150,7 @@ Run `.\.venv-m4\Scripts\python.exe scripts/m4_browser_review.py` with installed 
 ## M6 clean-source audit
 
 See the [reproduction protocol](M6_REPRODUCTION_PROTOCOL.md) and [observed audit with commands](M6_REPRODUCTION_REVIEW.md). A fresh source export/environment passes all 204 tests but exposes line-ending-sensitive historical provenance. Keep raw-byte hashes truthful; do not normalize/re-sign old evidence silently.
+
+## Versioned text and provenance
+
+The [policy](PROVENANCE_POLICY.md) and [migration review](M6_PROVENANCE_REVIEW.md) resolve the synthetic lane's raw-byte hash portability using .gitattributes. Keep that file in clean exports. Text uses LF; frozen locks and historical manifest v1 retain exact reviewed CRLF bytes. The active adapter loads snapshot v2; historical survey/workload entries have not been regenerated. Use the same commands above, retain ignored historical outputs and compare complete synthetic JSON. The M6-01 observed hash mismatch remains historical evidence, not the current synthetic status.

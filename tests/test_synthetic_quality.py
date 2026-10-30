@@ -175,3 +175,26 @@ def test_cli_refuses_output_outside_private(monkeypatch, tmp_path):
     with pytest.raises(ValueError, match="reports/private"):
         main()
     assert not output.exists()
+
+
+def test_study_records_exact_policy_and_input_bytes(tmp_path, monkeypatch):
+    import hashlib
+    from pathlib import Path
+
+    import agrisight.synthetic_quality as module
+
+    monkeypatch.chdir(tmp_path)
+    protocol = tmp_path/"docs/experiments/M3_04_PROTOCOL.md"
+    protocol.parent.mkdir(parents=True)
+    protocol.write_bytes(b"policy fixture\n")
+    lock = tmp_path/"requirements/e1.lock"
+    lock.parent.mkdir()
+    lock.write_bytes(b"frozen lock\r\n")
+    result = module.study(())
+    assert result["provenance_policy"] == "agrisight-text-lf-v1"
+    assert result["protocol_sha256"] == hashlib.sha256(protocol.read_bytes()).hexdigest()
+    assert result["lock_sha256"] == hashlib.sha256(lock.read_bytes()).hexdigest()
+    assert result["code_sha256"] == hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
+    # Raw-byte provenance must distinguish CRLF from LF, never silently normalize.
+    protocol.write_bytes(b"policy fixture\r\n")
+    assert module.study(())["protocol_sha256"] != result["protocol_sha256"]

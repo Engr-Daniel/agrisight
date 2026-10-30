@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 clean-source audit completed; provenance portability work open · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 synthetic provenance verified; authorized-data reproduction next · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -57,7 +57,7 @@ Streamlit is selected for the initial local, read-only evidence explorer; its de
 | M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
 | M4 | Verified aggregate reporting; geography separately gated | Complete for local read-only prototype; internal browser review verified |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
-| M6 | Reproducibility, benchmarks and owner-authorized portfolio release | In progress: clean-source audit completed; provenance/release gates open |
+| M6 | Reproducibility, benchmarks and owner-authorized portfolio release | In progress: synthetic clean-source provenance verified; survey/release gates open |
 
 See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md), [review rationale](docs/REVIEW_ALIGNMENT.md) and [data policy](docs/DATA_POLICY.md).
 
@@ -108,4 +108,4 @@ Independent of confidential Petgrave.io/client work. No real PII, precise respon
 
 ## Clean-source reproduction
 
-The [M6 audit](docs/M6_REPRODUCTION_REVIEW.md) verifies 204 tests and matching synthetic run results in a fresh pinned environment built from committed source. Two historical provenance hashes differ because source/protocol line endings differ from earlier working copies; exact provenance portability remains open. Follow the [protocol](docs/M6_REPRODUCTION_PROTOCOL.md); private data are not needed for fixture checks. M6 and public-release gates remain open.
+The [M6 audit](docs/M6_REPRODUCTION_REVIEW.md) verifies 204 tests and matching synthetic run results in a fresh pinned environment built from committed source. The [versioned provenance migration](docs/M6_PROVENANCE_REVIEW.md) now gives identical complete synthetic JSON from working source and an exported installed wheel under explicit Git line-ending rules; all 209 regression tests pass. Historical evidence is preserved; current-source survey reproduction remains open. Follow the [protocol](docs/M6_REPRODUCTION_PROTOCOL.md); private data are not needed for fixture checks. M6 and public-release gates remain open.

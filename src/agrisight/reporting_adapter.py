@@ -80,7 +80,7 @@ def strict_json(raw: bytes) -> dict:
 
 def manifest_resource() -> dict:
     return strict_json(files("agrisight").joinpath(
-        "reporting/artifact_manifest_v1.json").read_bytes())
+        "reporting/artifact_manifest_v2.json").read_bytes())
 
 
 def record(identifier: str, selectors: dict, counts: dict, values: dict,

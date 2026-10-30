@@ -4,7 +4,7 @@ Implemented by [reporting_adapter.py](../src/agrisight/reporting_adapter.py), in
 
 ## Trust and lifecycle
 
-The packaged [manifest](../src/agrisight/reporting/artifact_manifest_v1.json) binds four previously reproduced aggregate artifacts to exact raw-byte SHA256 and reviewed indicator/version/provenance fields. It contains only checksums, experiment/model identifiers, labels and an observation date, not restricted rows or identifying coordinates. The CLI always loads this packaged manifest; it cannot mint a new trusted snapshot, accept a manifest upload or change source paths interactively.
+The active packaged [snapshot v2](../src/agrisight/reporting/artifact_manifest_v2.json) binds four previously reproduced aggregate artifacts to exact raw-byte SHA256 and reviewed indicator/version/provenance fields. It contains only checksums, experiment/model identifiers, labels and an observation date, not restricted rows or identifying coordinates. The CLI always loads this packaged manifest; it cannot mint a new trusted snapshot, accept a manifest upload or change source paths interactively.
 
 For a new snapshot, reproduce and review the analytical outputs first, verify source/model/contract/protocol/lock provenance and scientific permissions, then explicitly amend/version the manifest and relevant contracts in a reviewable change. Do not regenerate the manifest simply to silence a mismatch. Hashes identify reviewed bytes; they do not establish authenticity or statistical validity.
 
@@ -54,3 +54,7 @@ Count/status/rank identities are exact. Numeric comparisons use absolute1e-12 an
 ## M4-03 handoff
 
 The interface should consume these records and fixed context, not raw artifacts. Preserve source labels on selection changes, compute display formatting under the reporting contract, and explain null rates using the relevant denominator. A later UI must not accept an arbitrary edited bundle as trusted evidence or cache an old successful panel after validation fails. Bundle build timestamps legitimately differ between reproductions; all other fields matched in the observed paired package runs.
+
+## M6-02 snapshot migration
+
+The default now selects manifest snapshot2 (manifest schema remains1.0). Only synthetic quality is regenerated under [agrisight-text-lf-v1](PROVENANCE_POLICY.md); its expected provenance_policy field is required along with exact raw artifact/source/protocol/lock hashes. Survey/workload entries remain exactly the historical snapshot1 entries, not claims of current-source reruns. Snapshot1 remains packaged for historical inspection. The [migration review](M6_PROVENANCE_REVIEW.md) records prior/new artifact hashes and checks; the adapter still cannot mint trust or accept browser manifest changes.

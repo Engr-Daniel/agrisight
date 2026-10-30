@@ -271,7 +271,8 @@ def study(seeds: tuple[int, ...]) -> dict:
                                           for s in sorted({t.scenario for t in truth})},
                 "baselines": {b: evaluate(observations, truth, b) for b in ("B0", "B1")},
             })
-    return {"source": "SYNTHETIC DEMONSTRATION DATA", "contract_version": "1.0",
+    return {"source": "SYNTHETIC DEMONSTRATION DATA",
+            "provenance_policy": "agrisight-text-lf-v1", "contract_version": "1.0",
             "generator_version": "1.0", "protocol": "M3_04_PROTOCOL.md v1.0",
             "protocol_sha256": hashlib.sha256(
                 Path("docs/experiments/M3_04_PROTOCOL.md").read_bytes()).hexdigest(),

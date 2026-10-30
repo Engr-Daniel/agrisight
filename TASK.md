@@ -62,8 +62,8 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 ## M6 — Publication and reproducibility (IN PROGRESS)
 
 - [x] M6-01: clean committed-source audit in a new pinned environment; installed wheel, 204 tests, lint, deterministic synthetic run equality and missing-evidence failure behavior verified. [Protocol](docs/M6_REPRODUCTION_PROTOCOL.md), [review](docs/M6_REPRODUCTION_REVIEW.md). Full historical JSON differs in two line-ending-sensitive provenance hashes; exact reproduction is not complete.
-- [ ] M6-02: version the line-ending/provenance policy, preserve historical evidence and explicitly regenerate/review affected outputs and manifest.
+- [x] M6-02: explicit LF text/raw-byte provenance policy; preserved historical inputs and manifest v1; regenerated synthetic evaluation and reviewed snapshot v2. Both autocrlf exports match, complete synthetic JSON and bundles reproduce, all 209 tests pass in development/installed-wheel environments. [Policy](docs/PROVENANCE_POLICY.md), [migration review](docs/M6_PROVENANCE_REVIEW.md). Survey/workload evidence remains historical.
 - [ ] M6-03: verify authorized-input clean reproduction and actual remote CI; retain measured performance limits and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M6-02: resolve committed-versus-working line-ending provenance with a versioned policy and reviewed regeneration. Numerical synthetic reproduction passed; exact historical provenance did not. Public release/deployment remains gated; M5 remains optional.
+**Immediate next:** M6-03: authorized-input clean reproduction from policy-controlled committed bytes and actual remote CI inspection. Synthetic provenance portability is verified for the tested Windows/Git settings; survey, release and broader platform gates remain open. M5 remains optional.
