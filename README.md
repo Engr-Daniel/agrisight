@@ -1,7 +1,7 @@
 # AgriSight
 ### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 reproduction next · **Repository:** private · **Owner:** Oyewale Daniel
+**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 clean-source audit completed; provenance portability work open · **Repository:** private · **Owner:** Oyewale Daniel
 
 AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
 
@@ -45,7 +45,7 @@ Separate synthetic fixtures → controlled engineering evaluation
 
 The initial analytical tools may include Pandas, Pandera, DuckDB and Parquet as needed. Pandera is the working validation choice, based on a limited synthetic comparison; survey integration is not yet implemented. Choose and lock dependencies for the next increment.
 
-Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock, aggregate adapter and interface are verified by automated tests, while browser/usability review remains pending. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
+Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock, aggregate adapter and interface are verified by automated tests and internal Chrome desktop/narrow review. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
 
 ## Roadmap
 
@@ -57,7 +57,7 @@ Streamlit is selected for the initial local, read-only evidence explorer; its de
 | M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
 | M4 | Verified aggregate reporting; geography separately gated | Complete for local read-only prototype; internal browser review verified |
 | M5 | Justified advanced analytics / optional grounded AI | Optional |
-| M6 | Reproducibility, benchmarks and owner-authorized portfolio release | Planned |
+| M6 | Reproducibility, benchmarks and owner-authorized portfolio release | In progress: clean-source audit completed; provenance/release gates open |
 
 See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md), [review rationale](docs/REVIEW_ALIGNMENT.md) and [data policy](docs/DATA_POLICY.md).
 
@@ -105,3 +105,7 @@ See [development setup](docs/DEVELOPMENT.md) for other platforms and the analyti
 Independent of confidential Petgrave.io/client work. No real PII, precise respondent locations, credentials or restricted downloads in Git. Private visibility is not a substitute for permission or data protection. Preserve source versions and label all outputs. Public code, data or deployment release requires explicit owner authorization; dataset licences may differ from the software licence.
 
 **Author:** [Oyewale Daniel](https://github.com/Engr-Daniel).
+
+## Clean-source reproduction
+
+The [M6 audit](docs/M6_REPRODUCTION_REVIEW.md) verifies 204 tests and matching synthetic run results in a fresh pinned environment built from committed source. Two historical provenance hashes differ because source/protocol line endings differ from earlier working copies; exact provenance portability remains open. Follow the [protocol](docs/M6_REPRODUCTION_PROTOCOL.md); private data are not needed for fixture checks. M6 and public-release gates remain open.

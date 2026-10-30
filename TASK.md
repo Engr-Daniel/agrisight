@@ -1,6 +1,6 @@
 # TASK.md — AgriSight roadmap
 
-Updated: 2026-10-29. Checkboxes record observed evidence, not planned outputs.
+Updated: 2026-10-30. Checkboxes record observed evidence, not planned outputs.
 
 ## M0 — Engineering research foundation (COMPLETE)
 
@@ -59,9 +59,11 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 
 - [ ] Evaluate advanced statistics or evidence-grounded AI only for a justified need with baseline comparisons and appropriate tests.
 
-## M6 — Publication and reproducibility (PLANNED)
+## M6 — Publication and reproducibility (IN PROGRESS)
 
-- [ ] Independent clean reproduction, existing CI checks, measured performance and learning documentation.
+- [x] M6-01: clean committed-source audit in a new pinned environment; installed wheel, 204 tests, lint, deterministic synthetic run equality and missing-evidence failure behavior verified. [Protocol](docs/M6_REPRODUCTION_PROTOCOL.md), [review](docs/M6_REPRODUCTION_REVIEW.md). Full historical JSON differs in two line-ending-sensitive provenance hashes; exact reproduction is not complete.
+- [ ] M6-02: version the line-ending/provenance policy, preserve historical evidence and explicitly regenerate/review affected outputs and manifest.
+- [ ] M6-03: verify authorized-input clean reproduction and actual remote CI; retain measured performance limits and learning documentation.
 - [ ] Licence/privacy/disclosure review and explicit owner authorization before public release or deployment.
 
-**Immediate next:** M6: independent clean reproduction and release-readiness evidence. Begin with a reproducibility protocol and clean-checkout verification; public release/deployment still requires licence/privacy review and explicit owner authorization. M5 remains optional.
+**Immediate next:** M6-02: resolve committed-versus-working line-ending provenance with a versioned policy and reviewed regeneration. Numerical synthetic reproduction passed; exact historical provenance did not. Public release/deployment remains gated; M5 remains optional.

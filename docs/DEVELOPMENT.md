@@ -146,3 +146,7 @@ A local HTTP health check proves server availability, not browser rendering. See
 ## Internal browser review
 
 Run `.\.venv-m4\Scripts\python.exe scripts/m4_browser_review.py` with installed Chrome (or `--browser PATH`) and reviewed local aggregates. No new dependency is needed. The helper launches an isolated fresh profile, uses temporary loopback ports, records source fingerprints and 19 captures privately, and stops its own processes. Review screenshots separately. This is native Chrome rendering, distinct from AppTest; it is not a CI browser job or a physical-device/accessibility study. See the [combined review](M4_REVIEW.md) for observed results and limits.
+
+## M6 clean-source audit
+
+See the [reproduction protocol](M6_REPRODUCTION_PROTOCOL.md) and [observed audit with commands](M6_REPRODUCTION_REVIEW.md). A fresh source export/environment passes all 204 tests but exposes line-ending-sensitive historical provenance. Keep raw-byte hashes truthful; do not normalize/re-sign old evidence silently.
