@@ -136,7 +136,12 @@ def test_ui_modes_units_coverage_warning_and_optional_failure(monkeypatch):
     monkeypatch.setattr(adapter, "build_bundle", lambda *args: copy.deepcopy(bundle))
     at = app(monkeypatch)
     at.button(key="nav_1").click().run()
-    assert not at.exception and "coverage differs" in text(at)
+    assert not at.exception and "households with recorded temporary crops" in text(at)
+    assert not any("Crop-roster coverage differs" in w.value for w in at.warning)
+    at.button(key="nav_2").click().run()
+    assert "Crop portfolio coverage" in [h.value for h in at.subheader]
+    assert "without an eligible temporary-crop record" in text(at)
+    at.button(key="nav_1").click().run()
     assert at.selectbox(key="crop_view").value == "Crop portfolio"
     for mode in ("Recorded diversity", "Crop portfolio"):
         at.selectbox(key="crop_view").set_value(mode).run()

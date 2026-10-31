@@ -7,8 +7,7 @@ from importlib.resources import files
 
 import streamlit as st
 
-IMAGE_CREDIT = ("Landscape artwork is an AI-generated illustration of West African farmland, "
-                "not a photograph of surveyed farms.")
+IMAGE_CREDIT = "Illustration: AI-generated agricultural artwork."
 
 
 @lru_cache(maxsize=1)

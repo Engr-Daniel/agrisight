@@ -15,7 +15,7 @@ def test_default_all_four_bars_and_both_units(monkeypatch):
     assert at.radio(key="activity_unit").value == "Percentages"
     assert html(at).count('class="agri-activity-row"') == 4
     assert "66.67%" in html(at) and "100% of valid responses" in html(at)
-    assert "denominators differ" in text(at) and "Responses can overlap" in text(at)
+    assert "denominators differ" in text(at) and "Households may report multiple activities" in text(at)
     assert "same-season" in text(at)
     at.radio(key="activity_unit").set_value("Household counts").run()
     assert not at.exception

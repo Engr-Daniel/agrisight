@@ -303,5 +303,8 @@ def review(fc_only: bool = False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--fc-only", action="store_true", help="Review the four FC1 topics only")
-    review(parser.parse_args().fc_only)
+    parser.add_argument("--fc-only", action="store_true", help="Compatibility flag; current grouped review covers all topics")
+    parser.parse_args()
+    from grouped_browser_review import review as grouped_review
+
+    grouped_review()

@@ -5,6 +5,8 @@ from html import escape
 import pandas as pd
 import streamlit as st
 
+from agrisight.data_context import show as data_context
+
 OPTIONS = ("Infrastructure presence", "Irrigation methods", "Water sources")
 
 
@@ -72,9 +74,8 @@ def show(bundle: dict) -> None:
                        "It describes one main response per eligible plot, not water availability, efficiency "
                        "or investment priority.")
     eligibility = "all main-season roster plots" if selection == OPTIONS[0] else "infrastructure-yes plots only"
-    st.caption(f'Percentage denominator: {denominator:,} valid responses from {eligible:,} eligible '
-               f'plot records ({eligibility}). Source: NBS NASS 2023; April–October 2022. '
-               "Unweighted observed sample, not a national estimate.")
+    data_context("April–October 2022", f'{denominator:,} valid plot responses from '
+                 f'{eligible:,} eligible records ({eligibility}).')
     left, right = st.columns([1.4, 1], gap="large")
     with left:
         st.html(bars(rows, denominator, unit))
@@ -82,14 +83,14 @@ def show(bundle: dict) -> None:
         st.metric("Eligible plot records", f"{eligible:,}")
         st.metric("Valid response denominator", f"{denominator:,}")
         st.write(observation)
+        st.caption("Infrastructure presence is not a measure of water reliability or actual irrigation use.")
+    with st.expander("Understanding these figures — water management"):
         st.write(implication)
-    st.caption(f'{selected["missing"]:,} missing and {selected["invalid"]:,} invalid responses '
-               "excluded from this percentage denominator.")
-    if selection != OPTIONS[0]:
-        st.caption(f'Only the {presence["yes"]:,} infrastructure-yes plots are eligible for this question. '
-                   "Missing fields outside that subset are expected skips, not ordinary incompleteness.")
+        st.caption(f'{selected["missing"]:,} missing and {selected["invalid"]:,} invalid responses '
+                   "excluded from this percentage denominator.")
+        if selection != OPTIONS[0]:
+            st.caption(f'Only the {presence["yes"]:,} infrastructure-yes plots are eligible for this question. '
+                       "Missing fields outside that subset are expected skips, not ordinary incompleteness.")
     st.dataframe(pd.DataFrame([{"Response": r["label"], "Plots": r["count"], "Share": rate(r["share"])}
                                for r in rows]), hide_index=True, width="stretch")
-    st.caption("Source: NBS NASS 2023; main season April–October 2022. Unweighted observed plot records, "
-               "including cultivated plots, temporarily fallow conventional plots and kitchen gardens. "
-               "These are plots, not unique households or farmers; no national estimate or confidence interval.")
+    st.caption("Counting unit: plot records ? Main season: April?October 2022 ? NBS NASS 2023")

@@ -69,6 +69,13 @@ The [agricultural visual refresh](docs/DASHBOARD_VISUAL_REVIEW.md) adds an illus
 
 The website presents **Overview, Agricultural insights, Data quality, Recommendations and About AgriSight**. It covers four household activities, crop/livestock co-reporting, plot types and real-data completeness. See the [stakeholder brief](docs/STAKEHOLDER_ANALYTICS_BRIEF.md) and [findings](reports/STAKEHOLDER_PHASE1_FINDINGS.md). Source, reference periods, denominators and unweighted-sample limits stay beside results.
 
+Agricultural Insights is grouped into **Activities**, **Crops & seeds**, **Water & land**
+and **Harvest & markets**, with subject tabs inside each group. Compact data context
+stays beside findings; longer explanations are expandable. Crop-coverage differences
+and input-quantity completeness appear on Data Quality. See the
+[presentation review](docs/STAKEHOLDER_PRESENTATION_REVIEW.md). Existing analytical
+artifacts and their reviewed hashes are unchanged.
+
 Agricultural Insights also includes **Water Management**: verified infrastructure presence, main irrigation methods and water sources, with eligible plot denominators and percentage/count controls. See the [irrigation findings](reports/IRRIGATION_FINDINGS.md) and [delivery review](docs/IRRIGATION_REVIEW.md).
 
 The **Farming conditions, harvest and input records** explorer adds four question-led

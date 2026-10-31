@@ -6,8 +6,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-SOURCE = ("Source: NBS NASS 2023 released main-season records; April–October 2022 context. "
-          "Unweighted observed sample, not national estimates or current conditions.")
+SOURCE = "Data context: NBS NASS 2023 · April–October 2022 context."
 
 
 def rate(value: float | None) -> str:
@@ -73,12 +72,13 @@ def land(bundle: dict, counts: bool) -> None:
     else:
         st.altair_chart(chart_style(dots(dot_rows(summary), counts)), width="stretch")
     if key == "travel":
-        st.write("Travel bands stay in their questionnaire order. The open-ended final band prevents a reliable average-minute calculation. "
-                 "These are journeys from dwellings to plots, not to markets or agricultural services.")
+        with st.expander("Understanding these figures - travel time"):
+            st.write("Travel bands stay in their questionnaire order. The open-ended final band prevents a reliable average-minute calculation. "
+                     "These are journeys from dwellings to plots, not to markets or agricultural services.")
         st.caption(f'{data["on_dwelling"]:,} on-dwelling plots skip travel; {data["unknown_transport"]:,} plots have unknown transport eligibility. '
                    f'{data["outside_travel_answers"]:,} travel entries outside the eligible subset are excluded.')
     table(summary)
-    st.caption(SOURCE + " Grain: plot records, not unique farmers. All roster plot types included.")
+    st.caption(SOURCE + " Counting unit: plot records; all roster plot types included.")
 
 
 def difficulties(bundle: dict, counts: bool) -> None:
@@ -88,7 +88,9 @@ def difficulties(bundle: dict, counts: bool) -> None:
         format_func=lambda v: "Non-vegetable recorded branch" if v == "nonvegetable" else "Vegetable recorded branch", key="fc_branch")
     branch = next(b for b in data["branches"] if b["name"] == branch_name)
     question = st.selectbox("Explore harvest difficulties", ("Harvest reported", "No-harvest reasons", "Unharvested area due to shocks", "Shock reasons"), key="fc_difficulty")
-    st.caption(f'{data["temporary_records"]:,} temporary crop-plot records; {data["excluded_permanent"]:,} permanent records excluded. '
+    st.caption("Counting unit: temporary crop-plot responses in the selected branch.")
+    with st.expander("Harvest response coverage"):
+        st.caption(f'{data["temporary_records"]:,} temporary crop-plot records; {data["excluded_permanent"]:,} permanent records excluded. '
                f'{data["unassigned"]:,} temporary records have neither harvest branch; {data["ambiguous"]:,} have both and are excluded. '
                "Branch membership follows recorded responses, not an inferred crop classification.")
     if question in ("Harvest reported", "Unharvested area due to shocks"):
@@ -114,9 +116,11 @@ def difficulties(bundle: dict, counts: bool) -> None:
     if question in ("Unharvested area due to shocks", "Shock reasons"):
         st.caption(f'Eligible only after harvest=yes and completion=no. {branch["outside_shock_answers"]:,} shock entries outside this subset are excluded. '
                    f'Completion has {branch["completion"]["missing"]:,} missing and {branch["completion"]["invalid"]:,} invalid responses among harvested branch records.')
-    st.write("No harvest can reflect timing or a deferred harvest; it does not automatically mean crop failure. "
-             "Reported drought, flood or pests frame questions for investigation, rather than establish causes or measured damage.")
-    st.caption(SOURCE + " Grain: branch-recorded temporary crop-plot responses. Broad loss reports appear in Sales & storage; no loss tonnage is estimated.")
+    st.caption("No harvest can reflect timing or deferral; it does not automatically mean crop failure.")
+    with st.expander("Understanding these figures - harvest responses"):
+        st.write("No harvest can reflect timing or a deferred harvest; it does not automatically mean crop failure. "
+                 "Reported drought, flood or pests frame questions for investigation, rather than establish causes or measured damage.")
+    st.caption(SOURCE + " Counting unit: temporary crop-plot responses. Broad loss reports appear in Sales & storage.")
 
 
 def destinations(bundle: dict, counts: bool) -> None:
@@ -157,8 +161,9 @@ def destinations(bundle: dict, counts: bool) -> None:
         table(data["losses"])
         st.write("This question covers losses during or after harvest, including post-harvest activities, transport and storage. "
                  "It is a report of any loss, not the proportion of output lost or a post-harvest-only loss rate.")
-    st.write("Sales reports describe participation since harvest; storage describes unprocessed crop retained at interview. "
-             "Neither establishes profitability, market access or sufficient storage capacity.")
+    with st.expander("Understanding these figures - sales and storage"):
+        st.write("Sales reports describe participation since harvest; storage describes unprocessed crop retained at interview. "
+                 "Neither establishes profitability, market access or sufficient storage capacity.")
     with st.expander("Read all-crop response denominators"):
         for key in ("sales", "storage", "losses"):
             st.markdown(f"**{key.title()}**")
@@ -195,9 +200,11 @@ def inputs(bundle: dict) -> None:
     st.caption("Each row sums to 100% of that input's recorded household–input rows. Colour shows quantity-status share, not amount used. Hover for figures.")
     st.dataframe(pd.DataFrame([{"Input": unescape(r["label"]), "Recorded rows": r["records"],
         **{s["label"]: s["count"] for s in r["statuses"]}} for r in bundle["inputs"]]), hide_index=True, width="stretch")
-    st.write("Missing quantities are information gaps, not zero use. Absent input records do not prove non-use. "
-             "The release lacks a matching quantity-unit field, so amounts are not added or compared across inputs.")
-    st.caption(SOURCE + " Questionnaire: rainy-season input use, auto-populated from crop responses. Grain: household–input records, not adoption rates.")
+    st.caption("Missing quantity is not zero use. Amounts are not compared across input types.")
+    with st.expander("Understanding these figures - input quantities"):
+        st.write("Missing quantities are information gaps, not zero use. Absent input records do not prove non-use. "
+                 "The release lacks a matching quantity-unit field, so amounts are not added or compared across inputs.")
+    st.caption(SOURCE + " Counting unit: household–input records. Rainy-season input reporting.")
 
 
 def show(bundle: dict) -> None:
@@ -214,3 +221,18 @@ def show(bundle: dict) -> None:
             render(bundle, counts)
     with tabs[3]:
         inputs(bundle)
+
+
+def show_topic(bundle: dict, topic: str) -> None:
+    """Render one subject inside the site's grouped navigation."""
+    if bundle["status"] != "available":
+        st.info("Reviewed farming-condition evidence is unavailable. These findings are hidden until their aggregate is verified.")
+        return
+    if bundle["origin"] == "TEST FIXTURE":
+        st.warning("TEST FIXTURE — illustrative records, not survey findings.")
+    if topic == "inputs":
+        inputs(bundle)
+    else:
+        counts = st.radio("Chart values", ("Percentages", "Record counts"), horizontal=True,
+                          key=f"fc_{topic}_unit") == "Record counts"
+        {"land": land, "harvest": difficulties, "markets": destinations}[topic](bundle, counts)

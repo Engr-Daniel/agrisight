@@ -177,4 +177,4 @@ def test_overview_story_and_map_slot_stay_within_evidence(fixture):
     assert "About 67 in every 100 grew main-season crops" in body
     assert 'class="agri-map"' in body and "no regional values" in body
     assert "AI-generated" not in body.split('class="agri-footer"')[0]
-    assert "AI-generated illustration" in body  # credit kept in the footer
+    assert "Illustration: AI-generated agricultural artwork" in body  # footer credit
