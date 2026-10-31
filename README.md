@@ -69,8 +69,13 @@ The [agricultural visual refresh](docs/DASHBOARD_VISUAL_REVIEW.md) adds an illus
 
 The website presents **Overview, Agricultural insights, Data quality, Recommendations and About AgriSight**. It covers four household activities, crop/livestock co-reporting, plot types and real-data completeness. See the [stakeholder brief](docs/STAKEHOLDER_ANALYTICS_BRIEF.md) and [findings](reports/STAKEHOLDER_PHASE1_FINDINGS.md). Source, reference periods, denominators and unweighted-sample limits stay beside results.
 
-Agricultural Insights is grouped into **Activities**, **Crops & seeds**, **Water & land**
-and **Harvest & markets**, with subject tabs inside each group. Compact data context
+The [professional website design](docs/WEBSITE_DESIGN_REVIEW.md) adds original vector
+scenes, a crossfading Overview hero, key figures, illustrated activity cards, an area-true
+crop × livestock mosaic and illustrated page banners. Bar values are always visible.
+
+Agricultural Insights offers nine subjects as one row of chips (mouse, touch or keyboard),
+each labelled with its topic: **Activities**, **Crops & seeds**, **Water & land** and
+**Harvest & markets**. Overview topic cards link straight to a subject. Compact data context
 stays beside findings; longer explanations are expandable. Crop-coverage differences
 and input-quantity completeness appear on Data Quality. See the
 [presentation review](docs/STAKEHOLDER_PRESENTATION_REVIEW.md). Existing analytical
@@ -78,12 +83,12 @@ artifacts and their reviewed hashes are unchanged.
 
 Agricultural Insights also includes **Water Management**: verified infrastructure presence, main irrigation methods and water sources, with eligible plot denominators and percentage/count controls. See the [irrigation findings](reports/IRRIGATION_FINDINGS.md) and [delivery review](docs/IRRIGATION_REVIEW.md).
 
-The **Farming conditions, harvest and input records** explorer adds four question-led
-tabs: land tenure and dwelling-to-plot travel; branch-specific harvest difficulties;
+The **Farming conditions, harvest and input records** findings add four question-led
+subjects: land tenure and dwelling-to-plot travel; branch-specific harvest difficulties;
 harvested-crop sales, retained storage and broad loss reports; and recorded-input
 quantity completeness. Composition rings, ordered/paired dot plots and heatmaps
-complement the earlier bars. Exact tables and denominators remain available, with
-mark figures on hover. These are historical unweighted records at different grains,
+complement the earlier bars. Exact tables and denominators remain available; chart
+marks show figures on hover. These are historical unweighted records at different grains,
 not unique-farmer rates. See the [FC1 contract](docs/FARMING_CONDITIONS_CONTRACT.md),
 [findings](reports/FARMING_CONDITIONS_FINDINGS.md) and [review](docs/FARMING_CONDITIONS_REVIEW.md).
 
