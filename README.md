@@ -1,158 +1,110 @@
 # AgriSight
-### Agricultural Data Intelligence & Decision Support Platform
 
-**Status:** M0-M4 complete within scoped objectives; local prototype browser-reviewed; M6 survey/synthetic reproduction and remote CI verified; release review open · **Repository:** public (visibility verified 2026-10-30) · **Owner:** Oyewale Daniel
+### Agricultural Data Intelligence & Decision Support
 
-AgriSight is an independent, learning-oriented portfolio project combining **empirical agricultural intelligence** with **trustworthy analytics delivery**. Research establishes what authorized agricultural data support; engineering makes those findings reproducible and useful through validated pipelines, SQL models and reporting.
+AgriSight turns agricultural survey results into interactive findings about farming
+activities, crops, inputs and marketing. It helps stakeholders explore what was
+reported, understand the counting context and identify questions worth investigating.
 
-**Product direction:** the website is the agricultural intelligence deliverable for stakeholders. Learning objectives, milestones and engineering experiments belong in this repository. The [owner's presentation clarification](docs/PRODUCT_DIRECTION.md) supersedes the earlier two-layer approach. The stakeholder website and expanded survey analysis are now implemented; see the [phase 1 review](docs/STAKEHOLDER_PHASE1_REVIEW.md).
+**[Explore the live demo](https://agrisight-demo.streamlit.app/)** | [Repository](https://github.com/Engr-Daniel/agrisight) | [Hosting review](docs/PUBLIC_HOSTING_REVIEW.md)
 
-It is not an operational farmer registry, a deployed client system or evidence of field enrollment. Official observations, derived indicators, synthetic records and mock-ups must always remain distinguishable.
+![AgriSight agricultural intelligence website](docs/images/agrisight-website-preview.png)
 
-## Purpose and intended users
+*Overview captured from the public-mode application using its published aggregate bundle.*
 
-Analysts and programme managers need to understand agricultural patterns without hiding missing data, uncertain estimates or geographic limitations. Data administrators need traceable transformations and quality checks; governance reviewers need privacy-aware reporting. These are proposed personas, not completed user interviews. Synthetic operational demonstrations additionally support supervisor and registration-review use cases.
+## Explore the findings
 
-## Goals
+- **Overview:** key figures, agricultural illustrations and routes into the evidence.
+- **Agricultural Insights:** activities, crop portfolios, seed sources, irrigation,
+  land arrangements, travel, harvest difficulties, sales, storage and input records.
+- **Data Quality:** crop coverage, missing quantities and measurement limitations.
+- **Recommendations:** evidence-supported questions for stakeholder follow-up.
+- **About:** purpose, analytical scope and source citation.
 
-1. Select authorized real agricultural data against explicit research questions and documented feasibility.
-2. Produce defensible agricultural indicators with clear units, denominators, reference periods, weights, uncertainty and limitations.
-3. Build reproducible ingestion, SQL transformations, validation and independent numerical checks.
-4. Deliver evidence-backed reporting and supported geographic analysis.
-5. Evaluate robustness to missing information and reasonable analytical choices.
-6. Separately test error detection, identity handling and scale with seeded synthetic data, including a **55,000-role-entry workload** (illustratively 50,000 farmer roles and 5,000 processor roles; not necessarily 55,000 people).
-7. Document reproducibility and measured engineering performance; evaluate advanced analytics or a read-only AI analyst only if justified.
+Select a subject, switch between supported comparisons and inspect chart values.
+Exact tables and expandable context explain denominators, eligibility and periods.
+Explore which crops appear in the sample, where seed comes from, how sales and
+retained storage overlap, and which input quantities are missing.
 
-## Questions and dataset decision
+## Data and interpretation
 
-Candidate questions concern geographic agricultural participation, input/service access and sensitivity to analytical assumptions. E1 now supports a narrowed first workflow: **main-season crop participation in the observed sample**. Population inference remains gated by design verification; a dry-season year conflict excludes cross-season comparison. See [observed E1 findings](reports/E1_REAL_DATA_PROFILING.md), [feasibility decisions](docs/RESEARCH_FEASIBILITY.md) and [M1 technical review](docs/M1_REVIEW.md).
+The website presents AgriSight's analysis of historical **Nigeria National
+Agricultural Sample Survey (NASS) 2023** results. It is **not an official NBS
+publication**. Source:
 
-E2 independently reconciles that first indicator: **132859 / 143105 eligible released household records = 92.84%** reporting main-season crop growing. This is unweighted sample description, not national prevalence. See [E2 findings](reports/E2_AGRICULTURAL_FINDINGS.md), [SQL model](src/agrisight/sql/nass01.sql) and [M2 review](docs/M2_REVIEW.md).
+> National Bureau of Statistics (NBS), Nigeria. *Nigeria - National Agricultural
+> Sample Survey 2023 (NGA-NBS-NASS-2023-V01).* [NBS Microdata Catalogue](https://microdata.nigerianstat.gov.ng/index.php/catalog/173).
 
-E3 bounds the full released main-season plot-roster median at **6070.29 in the labelled square-metre units**. The 48 missing entries cannot shift that median under the nonnegative-value completion model because bounding ranks are tied. This does not establish measurement accuracy or national plot size. See [E3 findings](reports/E3_PLOT_AREA_BOUNDS.md) and [contract](docs/NASS02_INDICATOR_CONTRACT.md). [Synthetic quality evaluation](reports/M3_SYNTHETIC_QUALITY.md) is now complete: normalization improves repeat detection but retains missed pairs and false links. [Workload measurements](reports/M3_WORKLOAD_BENCHMARK.md) now include55000 events: median1.07 seconds for the specified local batch, with16.65 MiB peak traced Python allocation (excluding existing inputs/native memory). Shared-machine timings and bounded-key inputs do not establish production capacity. See the [M3 review](docs/M3_REVIEW.md).
+These are **unweighted sample findings, not national population estimates**.
+Households, plots, crop records and input records are different counting units.
+Crop results generally refer to April-October 2022; annual activity questions use
+2022/2023. The map shows sample coverage, not agricultural prevalence or farm locations.
 
-Inspect NASS 2023 first. GHS Panel 2023–24 remains a genuine alternative if it better supports the selected question; it is not automatically an extra dataset. Select one source for the first complete analysis after checking variables, access, design, reference periods and geographic support. Never pool survey respondents with synthetic registrations.
+## Public release scope
 
-## Staged architecture
+The hosted entry point reads only a reviewed **display aggregate bundle** in
+`public/`. It does not need or redistribute survey microdata, respondent IDs,
+household coordinates, private intermediate files or synthetic research outputs.
+Public administrative boundary geometry is separately attributed.
 
-```text
-Authorized survey files (ignored, immutable local inputs)
-    → Python inspection and documented validation
-    → versioned analytical transformations / SQL
-    → independently checked indicators and uncertainty
-    → reproducible report → one initial dashboard
+Public-results hosting is owner-authorized. The review records permission evidence,
+disclosure decisions, dependency notices and remaining owner follow-up; it is not
+a blanket legal certification. See the [hosting review](docs/PUBLIC_HOSTING_REVIEW.md)
+and [third-party notices](THIRD_PARTY_NOTICES.md).
 
-Separate synthetic fixtures → controlled engineering evaluation
+## Run locally
+
+Requires Python 3.11+. Create and activate a virtual environment from the checkout
+(`.venv\Scripts\Activate.ps1` on Windows; `source .venv/bin/activate` on Linux/macOS):
+
+```sh
+python -m venv .venv
+# Activate the environment, then:
+python -m pip install -r requirements/m4.lock
+python -m pip install --no-build-isolation --no-deps .
+python -m streamlit run public_app.py
 ```
 
-The initial analytical tools may include Pandas, Pandera, DuckDB and Parquet as needed. Pandera is the working validation choice, based on a limited synthetic comparison; survey integration is not yet implemented. Choose and lock dependencies for the next increment.
+Public mode works with the committed display bundle; no microdata download is
+required. Open the local URL printed by Streamlit.
 
-Streamlit is selected for the initial local, read-only evidence explorer; its dependency lock, aggregate adapter and interface are verified by automated tests and internal Chrome desktop/narrow review. The [platform decision](docs/adr/ADR-004-initial-reporting-platform.md) and [reporting contract](docs/M4_REPORTING_CONTRACT.md) define separate survey/synthetic views and only supported aggregate selections. PostgreSQL/dbt, spatial tools and a second dashboard tool retain [demonstrated-need gates](docs/ARCHITECTURE.md); no deployment is included.
+For authorized analysis with separately reproduced private evidence, use
+`streamlit_app.py`. The technical explorer is `research_explorer_app.py`.
+See [development instructions](docs/DEVELOPMENT.md) and the
+[project charter](docs/PROJECT_CHARTER.md) for research and learning context.
 
-## Roadmap
+## Repository guide
 
-| Milestone | Focus | Status |
-|---|---|---|
-| M0 | Design foundation, evidence boundaries, counting and validation fixtures | Complete as foundation only |
-| M1 | Source feasibility, acquisition, E1 profiling and suitability decision | Complete for scoped baseline; M2 restrictions documented |
-| M2 | NASS-01 sample finding and tested analytical model | Complete for first approved workflow; inference gates retained |
-| M3 | E3 readiness and conditional next-indicator study; separate synthetic investigations | Complete for empirical bounds, synthetic accuracy and scoped workload studies |
-| M4 | Verified aggregate reporting; geography separately gated | Complete for local read-only prototype; internal browser review verified |
-| M5 | Justified advanced analytics / optional grounded AI | Optional |
-| M6 | Reproducibility, benchmarks and owner-authorized portfolio release | In progress: Survey/synthetic reproduction and remote CI verified; release review open |
+| Path | Purpose |
+|---|---|
+| `public_app.py` | Hosted public-results entry point |
+| `public/` | Reviewed display-only evidence bundle |
+| `src/agrisight/` | Python models, SQL, validation and interface |
+| `tests/` | Analytical, privacy, failure-state and UI checks |
+| `reports/` | Documented findings |
+| `docs/` | Contracts, decisions, reproduction and release reviews |
+| `TASK.md` / `MEMORY.md` | Actionable state and confirmed decisions |
 
-See [TASK.md](TASK.md), [charter](docs/PROJECT_CHARTER.md), [E1–E3 plan](docs/M1_EXPERIMENT_PLAN.md), [review rationale](docs/REVIEW_ALIGNMENT.md) and [data policy](docs/DATA_POLICY.md).
+Python, Streamlit, Pandas, Altair and SQLite power the application; Pytest, Ruff and
+GitHub Actions support verification. To check a development checkout:
 
-## Local evidence explorer
-
-The [agricultural visual refresh](docs/DASHBOARD_VISUAL_REVIEW.md) adds an illustrated landscape hero, responsive navigation and metric cards, with locally packaged artwork and clear source context.
-
-The website presents **Overview, Agricultural insights, Data quality, Recommendations and About AgriSight**. It covers four household activities, crop/livestock co-reporting, plot types and real-data completeness. See the [stakeholder brief](docs/STAKEHOLDER_ANALYTICS_BRIEF.md) and [findings](reports/STAKEHOLDER_PHASE1_FINDINGS.md). Source, reference periods, denominators and unweighted-sample limits stay beside results.
-
-The [professional website design](docs/WEBSITE_DESIGN_REVIEW.md) adds original vector
-scenes, a crossfading Overview hero, key figures, illustrated activity cards, an area-true
-crop × livestock mosaic and illustrated page banners. Bar values are always visible.
-
-Agricultural Insights offers nine subjects as one row of chips (mouse, touch or keyboard),
-each labelled with its topic: **Activities**, **Crops & seeds**, **Water & land** and
-**Harvest & markets**. Overview topic cards link straight to a subject. Compact data context
-stays beside findings; longer explanations are expandable. Crop-coverage differences
-and input-quantity completeness appear on Data Quality. See the
-[presentation review](docs/STAKEHOLDER_PRESENTATION_REVIEW.md). Existing analytical
-artifacts and their reviewed hashes are unchanged.
-
-Agricultural Insights also includes **Water Management**: verified infrastructure presence, main irrigation methods and water sources, with eligible plot denominators and percentage/count controls. See the [irrigation findings](reports/IRRIGATION_FINDINGS.md) and [delivery review](docs/IRRIGATION_REVIEW.md).
-
-The **Farming conditions, harvest and input records** findings add four question-led
-subjects: land tenure and dwelling-to-plot travel; branch-specific harvest difficulties;
-harvested-crop sales, retained storage and broad loss reports; and recorded-input
-quantity completeness. Composition rings, ordered/paired dot plots and heatmaps
-complement the earlier bars. Exact tables and denominators remain available; chart
-marks show figures on hover. These are historical unweighted records at different grains,
-not unique-farmer rates. See the [FC1 contract](docs/FARMING_CONDITIONS_CONTRACT.md),
-[findings](reports/FARMING_CONDITIONS_FINDINGS.md) and [review](docs/FARMING_CONDITIONS_REVIEW.md).
-
-**Public website:** https://agrisight-demo.streamlit.app/
-
-**Public hosting.** `public_app.py` serves the website from `public/agrisight_public_v1.json`, which holds only display aggregates (no NBS microdata or private files). Rebuild it from verified private evidence with `python -m agrisight.public_evidence`. See [public hosting review](docs/PUBLIC_HOSTING_REVIEW.md).
-
-Authorized owners can reproduce the additional private aggregate with:
-
-```powershell
-.\.venv-m4\Scripts\python.exe -m agrisight.farming_conditions data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/farming_conditions_fc1.json
+```sh
+python -m pytest -q
+python -m ruff check src tests scripts public_app.py streamlit_app.py research_explorer_app.py
 ```
 
-Raw data and aggregate JSON remain ignored. The optional FC1 panel hides findings
-when the aggregate fails its reviewed hash, schema, accounting or origin checks.
-Input quantity units and stage-specific loss measurements are not sufficiently
-verified for quantity comparisons; seed variety/certification interpretation also
-remains gated.
+## Status and next steps
 
-The historical technical explorer is retained separately: run `research_explorer_app.py` instead of `streamlit_app.py` to inspect survey methods and explicitly synthetic engineering studies. It is not part of the stakeholder site's navigation.
+The public demo is deployed; the current aggregate-only hosting review is complete
+within its documented scope. Follow-up includes the archive publication-copy
+obligation, screen-reader testing and future product refinement. Unsupported
+variety, quantity and population-inference extensions remain gated; see [TASK.md](TASK.md).
 
-The product revalidates three core survey aggregate inputs on each interaction and separately validates the optional coverage aggregate and packaged public boundaries; missing or changed evidence hides findings. Agricultural insights now defaults to a four-activity horizontal comparison with percentage/count controls and focused response breakdowns. An optional verified state/FCT map shows sample household coverage, with an accessible table; it is not a geographic prevalence estimate. It has no raw-data upload or experiment-rerun controls. See the [activity explorer and map review](docs/ACTIVITY_EXPLORER_REVIEW.md) and [boundary notices](THIRD_PARTY_NOTICES.md). Raw inputs and aggregate JSON remain ignored; authorized owners must reproduce the files following the findings and historical NASS-01/NASS-02 instructions.
+## Author and licence
 
-After installing the [M4 environment](docs/DEVELOPMENT.md), run from the checkout root:
+**Oyewale Daniel** | [GitHub](https://github.com/Engr-Daniel)
 
-```powershell
-.\.venv-m4\Scripts\python.exe -m streamlit run streamlit_app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
-```
-
-Open `http://127.0.0.1:8501` locally; Ctrl+C stops the server. Actual aggregates remain ignored and must match the reviewed manifest. [Combined M4 review and limits](docs/M4_REVIEW.md): automated tests and internal Chrome desktop/narrow review passed; external user and broader browser validation remain open. The preview command runs locally; it does not publish the website.
-
-## Quick start: foundation examples
-
-Requires Python 3.11+. From a checkout:
-
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements/e1.lock
-.\.venv\Scripts\python.exe -m pip install --no-build-isolation --no-deps -e '.[dev,e1]'
-.\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe -m ruff check src tests
-.\.venv\Scripts\python.exe -m agrisight.kpi_fixture
-.\.venv\Scripts\python.exe -m agrisight.quality_baseline
-```
-
-See [development setup](docs/DEVELOPMENT.md) for other platforms and the analytical dependency-locking gate. These examples use synthetic data; SQL reconciliation uses in-memory SQLite, not an implemented PostgreSQL database.
-
-**Implemented:** synthetic counting/validation exercises; bounded E1 source profiling; independently reconciled Python/SQL NASS-01 participation and NASS-02 missing-area median bounds; pinned environment, packaged models, measured synthetic batch workloads, validated aggregate adapter and local Streamlit views, tests and existing CI. **Not implemented:** full ingestion/analytics pipeline, population estimates, operational database or deployment. Restricted inputs are never required for CI.
-
-## Repository navigation
-
-- `AGENTS.md`: collaboration and evidence rules.
-- `TASK.md`: actionable state; `MEMORY.md`: confirmed decisions, results and caveats.
-- `docs/`: specifications, research plan, review decisions and historical M0 evidence.
-- `src/agrisight/`: scaffold and small executable experiments.
-- `tests/`: scaffold, KPI and validation checks.
-- `data/README.md`: ignored local storage convention; no acquired dataset is included.
-
-## Ethics and reuse
-
-Independent of confidential Petgrave.io/client work. No real PII, precise respondent locations, credentials or restricted downloads in Git. Private visibility is not a substitute for permission or data protection. Preserve source versions and label all outputs. Public code, data or deployment release requires explicit owner authorization; dataset licences may differ from the software licence.
-
-**Author:** [Oyewale Daniel](https://github.com/Engr-Daniel).
-
-## Clean-source reproduction
-
-The [M6 audit](docs/M6_REPRODUCTION_REVIEW.md) verifies 204 tests and matching synthetic run results in a fresh pinned environment built from committed source. The [versioned provenance migration](docs/M6_PROVENANCE_REVIEW.md) now gives identical complete synthetic JSON from working source and an exported installed wheel under explicit Git line-ending rules; all 209 regression tests pass. Historical evidence is preserved. [Authorized survey reproduction and actual GitHub CI](docs/M6_SURVEY_REPRODUCTION_REVIEW.md) now also pass: both indicator artifacts reproduce byte-for-byte, and Ubuntu fixture CI reports 209 tests passed. Follow the [protocol](docs/M6_REPRODUCTION_PROTOCOL.md); private data are not needed for fixture checks. M6 and public-release gates remain open.
+Application code is [MIT licensed](LICENSE). NBS source conditions, published-result
+attribution, dependency licences and CC BY 4.0 boundary terms remain separate;
+MIT does not grant redistribution rights over survey microdata. See the
+[dependency review](docs/DEPENDENCY_LICENSE_REVIEW.md).

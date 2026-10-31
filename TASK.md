@@ -65,12 +65,12 @@ Evidence and limits: [M2 technical review](docs/M2_REVIEW.md). Completion is the
 
 - [ ] Evaluate advanced statistics or evidence-grounded AI only for a justified need with baseline comparisons and appropriate tests.
 
-## M6 — Publication and reproducibility (IN PROGRESS)
+## M6 — Publication and reproducibility (COMPLETE for current aggregate-only demo)
 
 - [x] M6-01: clean committed-source audit in a new pinned environment; installed wheel, 204 tests, lint, deterministic synthetic run equality and missing-evidence failure behavior verified. [Protocol](docs/M6_REPRODUCTION_PROTOCOL.md), [review](docs/M6_REPRODUCTION_REVIEW.md). Full historical JSON differs in two line-ending-sensitive provenance hashes; exact reproduction is not complete.
 - [x] M6-02: explicit LF text/raw-byte provenance policy; preserved historical inputs and manifest v1; regenerated synthetic evaluation and reviewed snapshot v2. Both autocrlf exports match, complete synthetic JSON and bundles reproduce, all 209 tests pass in development/installed-wheel environments. [Policy](docs/PROVENANCE_POLICY.md), [migration review](docs/M6_PROVENANCE_REVIEW.md). Survey/workload evidence remains historical.
 - [x] M6-03: frozen authorized archive and committed-source wheel reproduce NASS-01/NASS-02 complete JSON and raw hashes exactly; all panels verified with unchanged manifest v2. Actual Ubuntu/Python3.11.17 GitHub CI:209 passed, lint/pip check success. [Protocol](docs/M6_SURVEY_REPRODUCTION_PROTOCOL.md), [review](docs/M6_SURVEY_REPRODUCTION_REVIEW.md). Benchmark limits retained; no new timing claim.
-- [ ] M6-04: complete licence/privacy/disclosure/dependency/secrets and release-readiness review; explicit owner authorization before any new release or deployment. Existing GitHub repository is observed public; no visibility change is authorized or performed here.
+- [x] M6-04: current aggregate-only public-hosting review closed: owner-confirmed results permission; saved NBS access conditions independently read; licence/disclosure/identifier and scoped secret-pattern checks recorded; all45 pinned dependencies reviewed. Existing MIT licence retained. [Closure and limits](docs/PUBLIC_HOSTING_REVIEW.md), [dependency review](docs/DEPENDENCY_LICENSE_REVIEW.md). This does not authorize microdata redistribution or a materially different release.
 
 - [x] Presentation alignment: define stakeholder questions before calculation; validate four activity summaries, crop/livestock co-reporting, plot types and completeness with independent SQL/Python counts. Implement Overview, Agricultural insights, Data quality, Recommendations and About AgriSight; retain the research explorer separately. Reviewed manifest, fail-closed survey adapter, fixtures and actual Chrome desktop/narrow checks support delivery. [Brief](docs/STAKEHOLDER_ANALYTICS_BRIEF.md), [findings](reports/STAKEHOLDER_PHASE1_FINDINGS.md), [implementation review](docs/STAKEHOLDER_PHASE1_REVIEW.md). 275 tests pass in development and installed-wheel environments; complete new aggregate JSON reproduces byte-for-byte.
 
@@ -99,8 +99,12 @@ FC1 verification: independently reconciled SQL/Python counts; canonical complete
 
 - [x] Website review follow-up: always-visible bar values (detail on hover/focus/tap), Chrome-verified keyboard chip selection (Tab, arrows, Space/Enter, visible focus), compact subject banners. 433 tests; Chrome 26 checks, 0 JS exceptions. [Review](docs/WEBSITE_DESIGN_REVIEW.md).
 
-- [x] M6-04 (public-results scope): owner-confirmed NBS permission to publish referenced aggregate results without releasing data; display-only public bundle with identifier guard and disclosure review; citation on every page; secrets scan clean; hosted entry `public_app.py`. 443 tests. [Review](docs/PUBLIC_HOSTING_REVIEW.md). Dependency licences and an independent reading of the NBS access text remain open under M6-04.
+- [x] M6-04 (public-results scope): owner-confirmed NBS permission to publish referenced aggregate results without releasing data; display-only public bundle with identifier guard and disclosure review; citation on every page; defined secret-pattern scan clean; hosted entry `public_app.py`. Original443-test verification; closure adds dependency review and independent reading of the saved NBS conditions. [Review](docs/PUBLIC_HOSTING_REVIEW.md).
 
 - [x] Public website deployed by owner and observed working: https://agrisight-demo.streamlit.app/ (Chrome desktop/phone, real figures and citation, 0 JS exceptions).
 
-**Immediate next:** screen-reader check of the subject chips; remaining M6-04 items (dependency licences, independent reading of NBS access text). M6-04 release-readiness and permission/disclosure/security review remain open. Seed variety/certification, stage-specific loss amounts, input quantity-unit comparisons and geographic prevalence require further source/method verification; presentation work does not mark those extensions complete.
+- [x] Public repository polish: product-first README, existing live-demo link, actual public-mode Overview screenshot, scoped release conclusion and dependency notices. Research history remains in documentation and Git history; no fabricated blanket regulatory approval.
+- [ ] Owner publication-copy follow-up: send the archive an electronic copy/link as required by the saved NBS conditions, then record private receipt. [Prepared handoff](docs/NBS_PUBLICATION_HANDOFF.md); nothing has been sent.
+- [ ] Screen-reader check of the subject chips (keyboard operation is already verified).
+
+**Immediate next:** owner publication-copy follow-up and screen-reader validation; further product refinement or optional Power BI exploration should remain separate work. The current aggregate-only hosting review is closed within its recorded scope. Seed variety/certification, stage-specific loss amounts, input quantity-unit comparisons and geographic prevalence still require source/method verification.

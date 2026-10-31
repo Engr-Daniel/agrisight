@@ -7,8 +7,9 @@ public-results scope of M6-04; it is not a release of survey data.
 
 - **Owner-confirmed (2026-10-31):** NBS does not object to sharing the dashboard
   results publicly when they are properly referenced, provided the downloaded data
-  are not released. The NBS portal's Access conditions text did not load without a
-  login during this review, so it was not independently read here.
+  are not released. The live NBS Access conditions page did not load without a
+  login in the initial review. Independent reading of the owner's saved PDF is
+  recorded in the closure checks below.
 - Reference used on every page footer and in About: *National Bureau of Statistics
   (NBS), Nigeria. Nigeria - National Agricultural Sample Survey 2023
   (NGA-NBS-NASS-2023-V01). NBS Microdata Catalogue,
@@ -27,9 +28,11 @@ conditions, coverage). Each passed its adapter's hash pinning, validation, pooli
 and suppression. `python -m agrisight.public_evidence` regenerates it and refuses
 fixture, unavailable or identifying content.
 
-Not published: NBS microdata, `data/`, `reports/private/` aggregate files (including
-exact rare seed-source combinations, which the display pools), and the research
-explorer's synthetic studies.
+Not served by the public application: NBS microdata, raw inputs under `data/`,
+`reports/private/` files (including exact rare seed-source combinations, which the
+display pools), or the research explorer's synthetic studies. The repository
+separately retains synthetic research reports and a `data/README.md` storage guide;
+those do not constitute survey microdata or public-app evidence.
 
 ## Disclosure assessment
 
@@ -74,6 +77,46 @@ not prevent hosting). Observed 2026-10-31 in headless Chrome 156: health endpoin
 Water management and About render the real figures and citation at 1440 px and
 390 px; 0 JavaScript exceptions; no horizontal overflow.
 
-## Still open in M6-04
+## Completed closure checks — 2026-10-31
 
-Dependency licence review; independent reading of the NBS Access conditions text.
+- Independently read page2 of the owner-supplied saved NBS get-microdata PDF.
+  Its access conditions permit statistical/scientific aggregate reporting, restrict
+  redistribution of supplied data/materials, prohibit reidentification and
+  identifying linkage, require citation and copies of publications, and disclaim
+  the provider's responsibility for users' interpretations. This verifies the
+  saved snapshot, not the currently authenticated portal or a broader legal ruling.
+  The PDF and its account details remain outside version control.
+- Owner-confirmed public-results permission recorded above remains the basis for
+  this specific deployment. The application does not release the downloaded files.
+- Reviewed all45 pinned packages against installed metadata and available shipped
+  licence/notice text. See [dependency review](DEPENDENCY_LICENSE_REVIEW.md),
+  including composite terms and Streamlit's missing installed notice-file caveat.
+  No dependency sources or wheels are vendored or modified by this change.
+- Rechecked199 tracked files for defined private-key/token patterns: no matches.
+  No raw/private paths are tracked; the public-bundle forbidden-field guard passes.
+  This bounded pattern scan is not a guarantee about every possible secret, all
+  repository history, or the hosting account's settings.
+- Public bundle hash remains the value above. README preview is an actual local
+  capture of `public_app.py` using that bundle, at1440×1100, with no JavaScript
+  exceptions. It is not a generated mock-up or a claim of a new deployment.
+- Existing MIT application licence retained. It does not replace NBS conditions,
+  boundary attribution or dependency licences.
+- Closure regression check:443 tests passed in205.45 seconds; Ruff and changed
+  document-link/diff checks passed. No runtime, dependency pin or result-bundle
+  change was needed for this documentation/review update.
+
+## Final release decision
+
+**Closed / complete for the current owner-authorized, aggregate-only public demo.**
+The reviewed public-results separation, attribution, disclosure, dependency and
+source-pattern checks support this bounded hosting scope. No blocking issue was
+identified within those checks. This is not an independent declaration that no
+regulatory issue can exist, nor approval to redistribute microdata, publish a new
+dataset or remove existing analytical restrictions.
+
+Owner follow-up: send an electronic copy/link of the resulting publication to the
+National Data Archive as required by the saved conditions. No message has been
+sent by the assistant. [Prepared handoff](NBS_PUBLICATION_HANDOFF.md).
+Reopen the review for new data, finer geography, identifying combinations,
+changed permission, modified/vendored dependencies or a materially different
+deployment. Screen-reader validation remains a separate product-quality task.
