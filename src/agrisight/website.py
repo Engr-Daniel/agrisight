@@ -7,6 +7,7 @@ hard-coded. Pictures are original artwork (site_art) and never encode a value.
 from html import escape
 
 from agrisight import site_art
+from agrisight.public_evidence import CITATION
 from agrisight.reporting_visuals import _image, svg
 
 # Hero slideshow: the activities the survey asks about, in the order of its questions.
@@ -130,7 +131,9 @@ def steps(items: list[tuple[str, str]]) -> str:
 def footer(scope: str) -> str:
     return ('<footer class="agri-footer2"><div><div class="agri-wordmark">Agri<span>Sight</span></div>'
             '<p>Agricultural data intelligence and decision support.</p></div>'
-            f'<div><b>Data source</b><p>{escape(scope)}</p>'
+            f'<div><b>Data source</b><p>{escape(scope)}</p><p>{escape(CITATION)}</p>'
             '<p><a href="https://microdata.nigerianstat.gov.ng/index.php/catalog/173" target="_blank" '
             'rel="noopener">NBS microdata catalogue</a></p></div>'
-            '<div><b>Artwork</b><p>Illustrations are original AgriSight artwork.</p></div></footer>')
+            '<div><b>About this site</b><p>Analysis and presentation by AgriSight; not an official NBS '
+            'publication. NBS survey microdata are not redistributed.</p>'
+            '<p>Illustrations are original AgriSight artwork.</p></div></footer>')

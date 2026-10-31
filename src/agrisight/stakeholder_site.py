@@ -8,20 +8,15 @@ import streamlit as st
 from agrisight import (
     activity_explorer,
     conditions_presentation,
-    conditions_reporting,
     coverage_map,
-    coverage_reporting,
     crop_presentation,
-    crop_reporting,
-    irrigation_reporting,
     seed_presentation,
-    seed_reporting,
-    stakeholder_reporting,
     water_management,
     website,
 )
 from agrisight import reporting_brand as brand
 from agrisight import reporting_visuals as visuals
+from agrisight.public_evidence import CITATION, Evidence
 
 PAGES = ("Overview", "Agricultural insights", "Data quality", "Recommendations", "About AgriSight")
 SCOPE = ("NBS NASS 2023 · Figures count surveyed households and plots without survey weights; "
@@ -138,7 +133,7 @@ def activity_story(bundle: dict) -> None:
                  "These are not same-season measurements. Participation does not measure production, income or service need.")
 
 
-def insights(bundle: dict, root: Path) -> None:
+def insights(bundle: dict, ev: Evidence) -> None:
     # Widget state is dropped while another page is shown; restore the last subject.
     st.session_state.setdefault("subject", st.session_state.get("subject_last", "Activities"))
     keep_subject()
@@ -150,23 +145,21 @@ def insights(bundle: dict, root: Path) -> None:
                  format_func=lambda name: f"{SUBJECTS[name][2]} {name}")
     st.session_state["subject_last"] = subject
     scope()
-    households, plots = bundle["activities"][0]["input_rows"], bundle["plots"]["total"]
-    crop_yes = bundle["activities"][0]["yes"]
     if subject == "Activities":
         activity_story(bundle)
         with st.expander("Crop and livestock overlap"):
             activity_overlap(bundle)
         with st.expander("Where the survey sample is represented"), st.container(key="coverage_map"):
-            coverage_map.show(coverage_reporting.build_bundle(root, households))
+            coverage_map.show(ev.get("coverage"))
     elif subject == "Crop portfolio":
         with st.container(key="crop_portfolio"):
-            crop_presentation.show(crop_reporting.build_bundle(root, households, plots, crop_yes))
+            crop_presentation.show(ev.get("crop"))
     elif subject == "Seed sources":
         with st.container(key="seed_sources"):
-            seed_presentation.show(seed_reporting.build_bundle(root, households, crop_yes))
+            seed_presentation.show(ev.get("seed"))
     elif subject == "Water management":
         with st.container(key="water_management"):
-            water_management.show(irrigation_reporting.build_bundle(root, plots))
+            water_management.show(ev.get("irrigation"))
     elif subject == "Plot types":
         plot_types(bundle)
     else:
@@ -174,7 +167,7 @@ def insights(bundle: dict, root: Path) -> None:
                      "Land & travel": ("land_travel", "land"),
                      "Harvest difficulties": ("harvest_difficulties", "harvest"),
                      "Sales & storage": ("crop_destinations", "markets")}[subject]
-        fc = conditions_reporting.build_bundle(root, households, plots, bundle["origin"])
+        fc = ev.get("conditions")
         with st.container(key=key):
             conditions_presentation.show_topic(fc, name)
 
@@ -207,13 +200,12 @@ def plot_types(bundle: dict) -> None:
                "not people, households or cultivated acreage. Period: April–October 2022.")
 
 
-def quality(bundle: dict, root: Path) -> None:
+def quality(bundle: dict, ev: Evidence) -> None:
     st.html(website.banner("Data quality", "Know what the data can carry",
                            "Check what was recorded, what is missing and which comparisons are held "
                            "back before deciding how to use a finding.", "survey"))
     scope()
-    crop = crop_reporting.build_bundle(root, bundle["activities"][0]["input_rows"],
-                                       bundle["plots"]["total"], bundle["activities"][0]["yes"])
+    crop = ev.get("crop")
     st.subheader("Crop portfolio coverage")
     if crop["status"] == "available":
         c = crop["counts"]
@@ -226,8 +218,7 @@ def quality(bundle: dict, root: Path) -> None:
                        f'{c["excluded_permanent_rows"]:,} permanent crop records are outside the portfolio.')
     else:
         st.info("Reviewed crop portfolio evidence is unavailable; coverage details are hidden.")
-    fc = conditions_reporting.build_bundle(root, bundle["activities"][0]["input_rows"],
-                                           bundle["plots"]["total"], bundle["origin"])
+    fc = ev.get("conditions")
     st.subheader("Input quantity completeness")
     if fc["status"] == "available":
         st.caption("Recorded household–input rows; missing quantity is not zero use.")
@@ -315,30 +306,34 @@ def about() -> None:
         st.write("Participation does not measure output, income or programme impact. National inference "
                  "and minor-season comparisons require further source and methods review. "
                  "The state map describes sample coverage, not geographic agricultural prevalence.")
+    st.subheader("Data reference")
+    st.write(CITATION)
+    st.caption("Analysis and presentation by AgriSight; interpretations are not those of NBS. "
+               "Only aggregate results are shown; NBS survey microdata are not redistributed.")
     st.markdown("[NBS source catalogue](https://microdata.nigerianstat.gov.ng/index.php/catalog/173)")
     st.html(website.heading("Reading the evidence", "How to read a finding"))
     st.html(website.steps(READING))
 
 
-def key_figures(bundle: dict, root: Path) -> list[tuple[str, str, str]]:
+def key_figures(bundle: dict, ev: Evidence) -> list[tuple[str, str, str]]:
     """Headline counts; optional evidence that cannot be verified is left out, never filled in."""
     households, plots = bundle["activities"][0]["input_rows"], bundle["plots"]["total"]
     items = [(f"{households:,}", "Households surveyed", "Released household records"),
              (f"{plots:,}", "Farm plots recorded", "Main season, April–October 2022")]
-    crop = crop_reporting.build_bundle(root, households, plots, bundle["activities"][0]["yes"])
+    crop = ev.get("crop")
     if crop["status"] == "available":
         items.append((f'{len(crop["portfolio"]):,}', "Temporary crop types",
                       "Recorded in household crop lists"))
-    coverage = coverage_reporting.build_bundle(root, households)
+    coverage = ev.get("coverage")
     if coverage["status"] == "available" and not coverage["suppressed"]:
         areas = sum(1 for s in coverage["states"] if s["households"])
         items.append((f"{areas:,}", "States and FCT represented", "Areas with sampled households"))
     return items
 
 
-def overview(bundle: dict, root: Path) -> None:
+def overview(bundle: dict, ev: Evidence) -> None:
     activities = sorted(bundle["activities"], key=lambda a: activity_explorer.ORDER.index(a["id"]))
-    st.html(website.figures(key_figures(bundle, root)))
+    st.html(website.figures(key_figures(bundle, ev)))
     st.html(website.heading("What households do", "Most households grow crops; many also keep livestock",
                             "The share of surveyed households reporting each activity. Households "
                             "can report several activities, so the shares do not add up to 100%."))
@@ -370,7 +365,8 @@ def overview(bundle: dict, root: Path) -> None:
     st.html(website.steps(READING))
 
 
-def run(root: Path) -> None:
+def run(root: Path, hosted: bool = False) -> None:
+    """Render the site; hosted=True reads the public display file instead of private evidence."""
     st.set_page_config(page_title="AgriSight | Agricultural intelligence", layout="wide",
                        initial_sidebar_state="collapsed")
     brand.styles()
@@ -382,7 +378,8 @@ def run(root: Path) -> None:
     if page == "About AgriSight":
         about()
     else:
-        bundle = stakeholder_reporting.build_bundle(root)
+        ev = Evidence(root, hosted)
+        bundle = ev.get("core")
         available = bundle["status"] == "available"
         if page == "Overview":
             st.html(website.hero(bundle["activities"][0]["input_rows"] if available else None))
@@ -399,11 +396,11 @@ def run(root: Path) -> None:
                 st.warning("TEST FIXTURE — illustrative test records, not survey findings.")
             if page == "Overview":
                 scope()
-                overview(bundle, root)
+                overview(bundle, ev)
             elif page == "Agricultural insights":
-                insights(bundle, root)
+                insights(bundle, ev)
             elif page == "Data quality":
-                quality(bundle, root)
+                quality(bundle, ev)
             elif page == "Recommendations":
                 recommendations(bundle)
     st.html(website.footer(SCOPE))

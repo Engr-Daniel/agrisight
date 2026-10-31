@@ -1,0 +1,4 @@
+# Hosted runtime (Streamlit Community Cloud, main file public_app.py).
+# Same pins as the verified M4 environment, plus this package from the repository.
+-r requirements/m4.lock
+.
