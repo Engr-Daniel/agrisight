@@ -18,7 +18,7 @@ def chart(activities: list[dict], unit: str) -> str:
         width = value / maximum * 100 if value is not None and maximum else 0
         detail = (f'{item["yes"]:,} yes / {item["denominator"]:,} valid responses; '
                   f'{item["period"]}')
-        rows.append('<li class="agri-activity-row"><div class="agri-activity-label">'
+        rows.append('<li class="agri-activity-row" tabindex="0"><div class="agri-activity-label">'
                     f'<span>{escape(item["label"])}</span><strong>{label}</strong></div>'
                     f'<div class="agri-activity-track"><div style="width:{width:.8f}%;'
                     f'background:{COLOURS[item["id"]]}"></div></div>'
@@ -26,4 +26,5 @@ def chart(activities: list[dict], unit: str) -> str:
     scale = "100% of valid responses" if unit == "Percentages" else f"{maximum:,} household records"
     return ('<figure class="agri-activity-chart" aria-label="Reported agricultural activities">'
             '<ol>' + ''.join(rows) + '</ol><figcaption>Common scale: 0 to ' + scale +
-            '. Undefined percentages have no bar.</figcaption></figure>')
+            '. Hover over or focus a bar to see its figures. '
+            'Undefined percentages have no bar.</figcaption></figure>')

@@ -53,6 +53,32 @@ def seed_values(page: Page) -> list:
     return page.js("[...document.querySelectorAll('.agri-seed-chart strong')].map(e=>e.textContent)")
 
 
+def check_hover_figures(page: Page) -> int:
+    """Exercise actual pointer entry/exit and keyboard focus, not just DOM text."""
+    count = page.js("document.querySelectorAll('.agri-activity-chart').length")
+    assert count == 4
+    for index in range(count):
+        row = f"document.querySelectorAll('.agri-activity-chart')[{index}].querySelector('li')"
+        page.js(f"{row}.scrollIntoView({{block:'center',behavior:'instant'}})")
+        page.js("document.activeElement.blur()")
+        page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": 0, "y": 0})
+        opacity = f"getComputedStyle({row}.querySelector('strong')).opacity"
+        assert page.js(opacity) == "0"
+        before = page.js(f"{row}.getBoundingClientRect().height")
+        point = page.js(f"(() => {{const r={row}.getBoundingClientRect();"
+                        "return {x:r.x+r.width/2,y:r.y+r.height/2};})()")
+        page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", **point})
+        assert page.js(opacity) == "1"
+        assert page.js(f"{row}.getBoundingClientRect().height") == before
+        page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": 0, "y": 0})
+        assert page.js(opacity) == "0"
+        page.js(f"{row}.focus()")
+        assert page.js(opacity) == "1"
+        page.key("Tab", "Tab", 9)
+        assert page.js(opacity) == "0"
+    return count
+
+
 def review():
     output = ROOT / "reports/private" / datetime.now(UTC).strftime("stakeholder-browser-%Y%m%dT%H%M%SZ")
     output.mkdir(parents=True)
@@ -169,6 +195,7 @@ def review():
                         water_unit(page, "Percentages")
                         wait_for(lambda: water_values(page)[0] == "4.11%")
                         audit["checks"][mode + "_water_questions_units_denominators"] = True
+                        audit["checks"][mode + "_hover_focus_exit_stable_layout"] = check_hover_figures(page)
                         page.rendered_chart()
                         assert "coverage map is unavailable" not in page.text()
                         assert "143,105" in page.text() and "CC BY 4.0" in page.text()

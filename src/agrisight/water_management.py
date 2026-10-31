@@ -21,13 +21,14 @@ def bars(rows: list[dict], denominator: int, unit: str, css_class: str = "agri-w
             width = 100*row["share"] if row["share"] is not None else 0
         else:
             width = 100*row["count"]/denominator if denominator else 0
-        body.append('<li class="agri-activity-row"><div class="agri-activity-label">'
+        body.append('<li class="agri-activity-row" tabindex="0"><div class="agri-activity-label">'
                     f'<span>{escape(row["label"])}</span><strong>{label}</strong></div>'
                     f'<div class="agri-activity-track"><div style="width:{width:.8f}%;'
                     'background:#357047"></div></div></li>')
     maximum = "100%" if unit == "Percentages" else f"{denominator:,} {escape(count_unit)}"
     return f'<figure class="agri-activity-chart {escape(css_class)}"><ol>' + ''.join(body) + (
-        f'</ol><figcaption>Common scale: 0 to {maximum}. Undefined shares have no bar.</figcaption></figure>')
+        f'</ol><figcaption>Common scale: 0 to {maximum}. '
+        'Hover over or focus a bar to see its figures. Undefined shares have no bar.</figcaption></figure>')
 
 
 def show(bundle: dict) -> None:
