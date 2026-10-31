@@ -65,7 +65,15 @@ reads, malformed or missing file fails closed, fixture refusal, committed file v
 and cited, every page rendered from the public file). Ruff clean. A local preview of
 `public_app.py` was inspected: real figures, citation in footer and About.
 
+## Deployment observed
+
+Owner deployed on Streamlit Community Cloud: https://agrisight-demo.streamlit.app/
+(main file `public_app.py`, branch `master`; the default `127.0.0.1` local config did
+not prevent hosting). Observed 2026-10-31 in headless Chrome 156: health endpoint
+`ok`; public visitors reach the app without signing in; Overview, Seed sources,
+Water management and About render the real figures and citation at 1440 px and
+390 px; 0 JavaScript exceptions; no horizontal overflow.
+
 ## Still open in M6-04
 
-Dependency licence review; independent reading of the NBS Access conditions text;
-no deployment result is claimed until the hosted URL is observed working.
+Dependency licence review; independent reading of the NBS Access conditions text.

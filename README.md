@@ -92,6 +92,8 @@ marks show figures on hover. These are historical unweighted records at differen
 not unique-farmer rates. See the [FC1 contract](docs/FARMING_CONDITIONS_CONTRACT.md),
 [findings](reports/FARMING_CONDITIONS_FINDINGS.md) and [review](docs/FARMING_CONDITIONS_REVIEW.md).
 
+**Public website:** https://agrisight-demo.streamlit.app/
+
 **Public hosting.** `public_app.py` serves the website from `public/agrisight_public_v1.json`, which holds only display aggregates (no NBS microdata or private files). Rebuild it from verified private evidence with `python -m agrisight.public_evidence`. See [public hosting review](docs/PUBLIC_HOSTING_REVIEW.md).
 
 Authorized owners can reproduce the additional private aggregate with:

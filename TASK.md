@@ -101,4 +101,6 @@ FC1 verification: independently reconciled SQL/Python counts; canonical complete
 
 - [x] M6-04 (public-results scope): owner-confirmed NBS permission to publish referenced aggregate results without releasing data; display-only public bundle with identifier guard and disclosure review; citation on every page; secrets scan clean; hosted entry `public_app.py`. 443 tests. [Review](docs/PUBLIC_HOSTING_REVIEW.md). Dependency licences and an independent reading of the NBS access text remain open under M6-04.
 
-**Immediate next:** owner deploys `public_app.py` on Streamlit Community Cloud and shares the observed URL; screen-reader check of the subject chips. M6-04 release-readiness and permission/disclosure/security review remain open. Seed variety/certification, stage-specific loss amounts, input quantity-unit comparisons and geographic prevalence require further source/method verification; presentation work does not mark those extensions complete.
+- [x] Public website deployed by owner and observed working: https://agrisight-demo.streamlit.app/ (Chrome desktop/phone, real figures and citation, 0 JS exceptions).
+
+**Immediate next:** screen-reader check of the subject chips; remaining M6-04 items (dependency licences, independent reading of NBS access text). M6-04 release-readiness and permission/disclosure/security review remain open. Seed variety/certification, stage-specific loss amounts, input quantity-unit comparisons and geographic prevalence require further source/method verification; presentation work does not mark those extensions complete.
