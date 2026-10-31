@@ -7,6 +7,8 @@ import streamlit as st
 
 from agrisight import (
     activity_explorer,
+    conditions_presentation,
+    conditions_reporting,
     coverage_map,
     coverage_reporting,
     crop_presentation,
@@ -96,6 +98,9 @@ def insights(bundle: dict, root: Path) -> None:
             bundle["activities"][0]["yes"]))
     with st.container(key="water_management"):
         water_management.show(irrigation_reporting.build_bundle(root, bundle["plots"]["total"]))
+    with st.container(key="farming_conditions"):
+        conditions_presentation.show(conditions_reporting.build_bundle(
+            root, bundle["activities"][0]["input_rows"], bundle["plots"]["total"], bundle["origin"]))
     st.subheader("Where crop and livestock reports overlap")
     overlap = bundle["overlap"]
     st.dataframe(pd.DataFrame([{

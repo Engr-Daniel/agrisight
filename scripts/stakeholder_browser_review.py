@@ -1,5 +1,6 @@
 """Actual local Chrome review of the stakeholder product, with private captures."""
 
+import argparse
 import json
 import os
 import socket
@@ -17,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def choose_activity(page: Page, index: int, label: str = "Explore agricultural activities") -> None:
     selector = f'[role="combobox"][aria-label="{label}"]'
+    wait_for(lambda: page.js(f"!!document.querySelector({json.dumps(selector)})"))
     assert page.js(f"(() => {{const e=document.querySelector({json.dumps(selector)});"
                    "if(!e)return false;e.scrollIntoView({block:'center'});e.focus();return true;})()")
     time.sleep(0.4)  # Finish scrolling to controls lower on the longer insights page.
@@ -79,7 +81,69 @@ def check_hover_figures(page: Page) -> int:
     return count
 
 
-def review():
+def check_farming_conditions(page: Page, output: Path, mode: str, audit: dict) -> None:
+    """Visit every FC1 question and check real rendered chart types and hover."""
+    wait_for(lambda: page.js("document.querySelector('[data-testid=stApp]')?.getAttribute('data-test-script-state')==='notRunning'"))
+    wait_for(lambda: page.js("[...document.querySelectorAll('[role=tab]')].some(e=>e.textContent.trim()==='Land & travel')"))
+    def tab(label):
+        # Streamlit 1.66 uses React Aria tab divs, not button elements.
+        assert page.js("(() => {const e=[...document.querySelectorAll('[role=tab]')].find(e=>"
+                       f"e.textContent.trim()==={json.dumps(label)});"
+                       "if(!e)return false;e.scrollIntoView({block:'center'});e.focus();return true;})()")
+        page.key("Enter", "Enter", 13)
+        wait_for(lambda: page.js("[...document.querySelectorAll('[role=tab]')].some(e=>"
+                                 f"e.textContent.trim()==={json.dumps(label)} && e.getAttribute('aria-selected')==='true')"))
+    tab("Land & travel")
+    wait_for(lambda: page.js("!!document.querySelector('.st-key-farming_conditions [role=combobox]')"))
+    for index, name in ((0, "tenure"), (1, "travel"), (2, "transport")):
+        choose_activity(page, index, "Explore land and travel")
+        mark = "arc" if index == 0 else "symbol"
+        wait_for(lambda mark=mark: page.js(f"!!document.querySelector('.st-key-farming_conditions svg .mark-{mark} path')"))
+        if index == 1:
+            wait_for(lambda: "268,052" in page.text() and "5,835" in page.text())
+        audit["captures"].append(page.capture(output, f"{mode}_fc_{name}", anchor=".st-key-farming_conditions"))
+        audit["checks"][mode + "_fc_" + name] = True
+    tab("Harvest difficulties")
+    wait_for(lambda: page.js("!!document.querySelector('[aria-label=\"Explore harvest response branch\"]')"))
+    for branch in (0, 1):
+        choose_activity(page, branch, "Explore harvest response branch")
+        for question in range(4):
+            choose_activity(page, question, "Explore harvest difficulties")
+            assert "crop failure" in page.text()
+        audit["captures"].append(page.capture(output, f"{mode}_fc_harvest_{branch}", anchor=".st-key-farming_conditions"))
+        audit["checks"][f"{mode}_fc_harvest_branch_{branch}_all_questions"] = True
+    tab("Sales & storage")
+    wait_for(lambda: page.js("!!document.querySelector('[aria-label=\"Explore crop destinations\"]')"))
+    for index, name in ((0, "destinations"), (1, "overlap"), (2, "losses")):
+        choose_activity(page, index, "Explore crop destinations")
+        if index == 0:
+            choose_activity(page, 1, "Focus harvested crop")
+            choose_activity(page, 0, "Focus harvested crop")
+        audit["captures"].append(page.capture(output, f"{mode}_fc_{name}", anchor=".st-key-farming_conditions"))
+        audit["checks"][mode + "_fc_" + name] = True
+    wait_for(lambda: "334,133" in page.text() and "post-harvest-only loss rate" in page.text())
+    tab("Input records")
+    water_unit(page, "Record counts", "fc_unit")
+    water_unit(page, "Percentages", "fc_unit")
+    wait_for(lambda: "15,409" in page.text())
+    audit["captures"].append(page.capture(output, f"{mode}_fc_inputs", anchor=".st-key-farming_conditions"))
+    cells = ".st-key-farming_conditions svg [role=graphics-symbol][aria-label*=\"Status:\"]"
+    wait_for(lambda: page.js(f"document.querySelectorAll({json.dumps(cells)}).length===84"))
+    assert page.js(f"new Set([...document.querySelectorAll({json.dumps(cells)})].map(e=>Math.round(e.getBoundingClientRect().y*1000))).size") == 21
+    point = page.js("(() => {const e=[...document.querySelectorAll('.st-key-farming_conditions svg [role=graphics-symbol]')]"
+                    ".find(e=>(e.getAttribute('aria-label')||'').includes('Status: Missing'));"
+                    "if(!e)return null;e.scrollIntoView({block:'center',behavior:'instant'});const r=e.getBoundingClientRect();"
+                    "return {x:r.x+r.width/2,y:r.y+r.height/2};})()")
+    assert point
+    page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", **point})
+    tip = wait_for(lambda: page.js("(() => {const e=document.querySelector('#vg-tooltip-element');"
+                                  "return e?.classList.contains('visible')?e.innerText:'';})()"))
+    assert "Missing" in tip and "Denominator" in tip
+    audit["checks"][mode + "_fc_four_topics_controls_hover"] = True
+    audit["captures"].append(page.capture(output, f"{mode}_fc_inputs_table", anchor=".st-key-farming_conditions [data-testid=stDataFrame]"))
+
+
+def review(fc_only: bool = False):
     output = ROOT / "reports/private" / datetime.now(UTC).strftime("stakeholder-browser-%Y%m%dT%H%M%SZ")
     output.mkdir(parents=True)
     app_port, browser_port = free_port(), free_port()
@@ -112,6 +176,11 @@ def review():
             wait_for(lambda: "92.84%" in page.text())
             for mode, width, height in (("desktop", 1440, 1000), ("narrow", 390, 844)):
                 page.resize(width, height)
+                if fc_only:
+                    page.button("Agricultural insights")
+                    wait_for(lambda: "Farming conditions, harvest and input records" in page.text())
+                    check_farming_conditions(page, output, mode, audit)
+                    continue
                 for name, anchor in (("Overview", "Understand agricultural activity"),
                                      ("Agricultural insights", "Where crop and livestock"),
                                      ("Data quality", "Plot-area coverage"),
@@ -216,6 +285,7 @@ def review():
                         wait_for(lambda: page.js("!!document.querySelector('details[open]')"))
                         audit["captures"].append(page.capture(output, f"{mode}_coverage_table", True))
                         audit["checks"][mode + "_map_and_accessible_table"] = True
+                        check_farming_conditions(page, output, mode, audit)
                     audit["checks"][mode + "_" + name] = True
             audit["runtime_exception_count"] = len(page.exceptions)
             audit["request_hosts"] = sorted(page.hosts)
@@ -232,4 +302,6 @@ def review():
 
 
 if __name__ == "__main__":
-    review()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--fc-only", action="store_true", help="Review the four FC1 topics only")
+    review(parser.parse_args().fc_only)

@@ -1,0 +1,639 @@
+{
+  "3_Plot_mainSeason.dta": {
+    "labels": {
+      "hhid": "Household ID",
+      "s02_plotRoster__id": "plot ID",
+      "s02_q04": "What is the tenure modality of this [PLOT]?",
+      "s02_q05": "What mode of transportation do you usually use to reach [PLOT] from the dwelling",
+      "s02_q06": "How long does it take to reach this [PLOT] from the dwelling?"
+    },
+    "value_labels": {
+      "s02_q04": {
+        "1": "Owned by a member of the HH",
+        "2": "Rented from somebody else (out of the HH)",
+        "3": "OTHER (SPECIFY)",
+        "4": "Family land used for free (not owned by a member of the HH)",
+        "5": "Community land used for free (not owned by a member of the HH)",
+        "6": "Other land used for free (not owned by a member of HH)"
+      },
+      "s02_q05": {
+        "1": "FOOT",
+        "2": "BICYCLE",
+        "3": "MOTOR VEHICLE",
+        "4": "MOTOR CYCLE/TRICYCLE",
+        "5": "OTHER",
+        "6": "ON DWELLING"
+      },
+      "s02_q06": {
+        "1": "LESS THAN 30 MINUTES",
+        "2": "30 MINUTES-1 HOUR",
+        "3": "1-2 HOURS",
+        "4": "2-3 HOURS",
+        "5": "MORE THAN 3 HOURS"
+      }
+    }
+  },
+  "4_Crop_mainSeason.dta": {
+    "labels": {
+      "hhid": "Household ID",
+      "s02_plotRoster__id": "Plot id",
+      "s03_cropRoster__id": "Crop ID",
+      "s03_cropsType": "Crop Type",
+      "s01a_q07": "Did your holding harvest any of the [CROP] planted on this [PLOT]...",
+      "s01a_q11": "Has your holding completed harvest of [CROP] from [PLOT]?",
+      "s01a_q16": "Is there a portion of the area that wasn't harvested due to damages/shocks",
+      "s01h_q08": "Did your holding harvest any of the [CROP] planted on this [PLOT]",
+      "s01h_q16": "Has your holding completed harvest of [CROP] from [PLOT]",
+      "s01h_q21": "Is there a portion of the area that wasn't harvested due to damages/shocks",
+      "s01a_q08__1": "Reason for not harvesting: TOO LITTLE RAIN/DROUGHT",
+      "s01a_q08__2": "Reason for not harvesting: TOO MUCH RAIN/FLOOD",
+      "s01a_q08__3": "Reason for not harvesting: RAIN CAME TOO EARLY",
+      "s01a_q08__4": "Reason for not harvesting: RAIN CAME TOO LATE",
+      "s01a_q08__5": "Reason for not harvesting: ERRATIC/IRREGULAR RAINFALL",
+      "s01a_q08__6": "Reason for not harvesting: HAIL",
+      "s01a_q08__7": "Reason for not harvesting: FROST",
+      "s01a_q08__8": "Reason for not harvesting: TOO MUCH WIND",
+      "s01a_q08__9": "Reason for not harvesting: PEST/DISEASE",
+      "s01a_q08__10": "Reason for not harvesting: FIRE",
+      "s01a_q08__11": "Reason for not harvesting: DISAGREEMENT ON LAND OWNERSHIP",
+      "s01a_q08__12": "Reason for not harvesting: CROP THEFT",
+      "s01a_q08__13": "Reason for not harvesting: UNABLE TO WORK ON THE FIELD DUE TO SICKNESS",
+      "s01a_q08__14": "Reason for not harvesting: NO AVAILABLE LABOR",
+      "s01a_q08__15": "Reason for not harvesting: NOT HARVEST SEASON",
+      "s01a_q08__16": "Reason for not harvesting: DELAYED/DEFERRED HARVEST",
+      "s01a_q08__888": "Reason for not harvesting: OTHER",
+      "s01a_q17__1": "Why was the area not harvested?: TOO LITTLE RAIN/DROUGHT",
+      "s01a_q17__2": "Why was the area not harvested?: TOO MUCH RAIN/FLOOD",
+      "s01a_q17__3": "Why was the area not harvested?: RAIN CAME TOO EARLY",
+      "s01a_q17__4": "Why was the area not harvested?: RAIN CAME TOO LATE",
+      "s01a_q17__5": "Why was the area not harvested?: ERRATIC/IRREGULAR RAINFALL",
+      "s01a_q17__6": "Why was the area not harvested?: HAIL",
+      "s01a_q17__7": "Why was the area not harvested?: FROST",
+      "s01a_q17__8": "Why was the area not harvested?: TOO MUCH WIND",
+      "s01a_q17__9": "Why was the area not harvested?: PEST/DISEASE",
+      "s01a_q17__10": "Why was the area not harvested?: FIRE",
+      "s01a_q17__11": "Why was the area not harvested?: DISAGREEMENT ON LAND OWNERSHIP",
+      "s01a_q17__12": "Why was the area not harvested?: CROP THEFT",
+      "s01a_q17__13": "Why was the area not harvested?: UNABLE TO WORK ON THE FIELD DUE TO SICKNESS",
+      "s01a_q17__14": "Why was the area not harvested?: NO AVAILABLE LABOR",
+      "s01a_q17__15": "Why was the area not harvested?: NOT HARVEST SEASON",
+      "s01a_q17__16": "Why was the area not harvested?: DELAYED/DEFERRED HARVEST",
+      "s01a_q17__17": "Why was the area not harvested?: DAMAGE DUE TO ANIMALS",
+      "s01a_q17__999": "Why was the area not harvested?: OTHER",
+      "s01h_q09__1": "VEGETABLE CROP: Reason for not harvesting: TOO LITTLE RAIN/DROUGHT",
+      "s01h_q09__2": "VEGETABLE CROP: Reason for not harvesting: TOO MUCH RAIN/FLOOD",
+      "s01h_q09__3": "VEGETABLE CROP: Reason for not harvesting: RAIN CAME TOO EARLY",
+      "s01h_q09__4": "VEGETABLE CROP: Reason for not harvesting: RAIN CAME TOO LATE",
+      "s01h_q09__5": "VEGETABLE CROP: Reason for not harvesting: ERRATIC/IRREGULAR RAINFALL",
+      "s01h_q09__6": "VEGETABLE CROP: Reason for not harvesting: HAIL",
+      "s01h_q09__7": "VEGETABLE CROP: Reason for not harvesting: FROST",
+      "s01h_q09__8": "VEGETABLE CROP: Reason for not harvesting: TOO MUCH WIND",
+      "s01h_q09__9": "VEGETABLE CROP: Reason for not harvesting: PEST/DISEASE",
+      "s01h_q09__10": "VEGETABLE CROP: Reason for not harvesting: FIRE",
+      "s01h_q09__11": "VEGETABLE CROP: Reason for not harvesting: DISAGREEMENT ON LAND OWNERSHIP",
+      "s01h_q09__12": "VEGETABLE CROP: Reason for not harvesting: CROP THEFT",
+      "s01h_q09__13": "VEGETABLE CROP: Reason ...: UNABLE TO WORK ON THE FIELD DUE TO SICKNESS",
+      "s01h_q09__14": "VEGETABLE CROP: Reason for not harvesting: NO AVAILABLE LABOR",
+      "s01h_q09__15": "VEGETABLE CROP: Reason for not harvesting: NOT HARVEST SEASON",
+      "s01h_q09__16": "VEGETABLE CROP: Reason for not harvesting: DELAYED/DEFERRED HARVEST",
+      "s01h_q09__888": "VEGETABLE CROP: Reason for not harvesting: OTHER",
+      "s01h_q22__1": "Why was the area not harvested?: TOO LITTLE RAIN/DROUGHT",
+      "s01h_q22__2": "Why was the area not harvested?: TOO MUCH RAIN/FLOOD",
+      "s01h_q22__3": "Why was the area not harvested?: RAIN CAME TOO EARLY",
+      "s01h_q22__4": "Why was the area not harvested?: RAIN CAME TOO LATE",
+      "s01h_q22__5": "Why was the area not harvested?: ERRATIC/IRREGULAR RAINFALL",
+      "s01h_q22__6": "Why was the area not harvested?: HAIL",
+      "s01h_q22__7": "Why was the area not harvested?: FROST",
+      "s01h_q22__8": "Why was the area not harvested?: TOO MUCH WIND",
+      "s01h_q22__9": "Why was the area not harvested?: PEST/DISEASE",
+      "s01h_q22__10": "Why was the area not harvested?: FIRE",
+      "s01h_q22__11": "Why was the area not harvested?: DISAGREEMENT ON LAND OWNERSHIP",
+      "s01h_q22__12": "Why was the area not harvested?: CROP THEFT",
+      "s01h_q22__13": "Why was the area not harvested?: UNABLE TO WORK ON THE FIELD DUE TO SICKNESS",
+      "s01h_q22__14": "Why was the area not harvested?: NO AVAILABLE LABOR",
+      "s01h_q22__15": "Why was the area not harvested?: NOT HARVEST SEASON",
+      "s01h_q22__16": "Why was the area not harvested?: DELAYED/DEFERRED HARVEST",
+      "s01h_q22__17": "Why was the area not harvested?: DAMAGE DUE TO ANIMALS",
+      "s01h_q22__999": "Why was the area not harvested?: OTHER"
+    },
+    "value_labels": {
+      "s03_cropRoster__id": {
+        "1010": "BEANS/COWPEA",
+        "1020": "CASSAVA",
+        "1040": "COCOYAM",
+        "1050": "COTTON",
+        "1060": "GROUND NUT/PEANUTS",
+        "1070": "GUINEA CORN/SORGHUM",
+        "1080": "MAIZE",
+        "1090": "MELON/EGUSI",
+        "1100": "MILLET/MAIWA",
+        "1110": "RICE",
+        "1121": "WHITE YAM",
+        "1122": "YELLOW YAM",
+        "1123": "WATER YAM",
+        "1124": "THREE LEAVE YAM",
+        "2010": "ACHA",
+        "2020": "BAMBARA NUT",
+        "2030": "BANANA",
+        "2040": "BEENI-SEED/SESAME",
+        "2050": "CARROT",
+        "2060": "CUCUMBER",
+        "2070": "CABBAGE",
+        "2071": "LETTUCE",
+        "2080": "GARDEN EGG",
+        "2090": "GARLIC",
+        "2100": "GINGER",
+        "2120": "OKRO",
+        "2130": "ONION",
+        "2141": "SWEET/BELL PEPPER (TATASHE)",
+        "2142": "SMALL PEPPER (RODO)",
+        "2150": "PIGEON PEA",
+        "2160": "PINEAPPLE",
+        "2170": "PLANTAIN",
+        "2180": "IRISH POTATO",
+        "2181": "SWEET POTATO",
+        "2190": "PUMPKIN",
+        "2194": "GREEN VEGETABLE",
+        "2210": "SHEA NUT",
+        "2220": "SOYA BEANS",
+        "2230": "SUGAR CANE",
+        "2240": "TEA",
+        "2250": "TOBACCO",
+        "2260": "TOMATO",
+        "2270": "WALNUT",
+        "2280": "WHEAT",
+        "2290": "ZOBO/HIBISCUS",
+        "3010": "APPLE",
+        "3020": "CASHEW",
+        "3030": "CHILLI PEPPER (SHOMBO)",
+        "3040": "COCOA",
+        "3050": "COCONUT",
+        "3060": "COFFEE",
+        "3070": "ALLIGATOR PEPPER",
+        "3080": "GRAPE FRUIT",
+        "3090": "GUAVA",
+        "3100": "JUTE (EWEDU)",
+        "3110": "KOLANUT",
+        "3113": "BITTER KOLA",
+        "3120": "LEMON",
+        "3130": "LIME",
+        "3150": "MANDARIN/TANGERINE",
+        "3160": "MANGO",
+        "3170": "ORANGE",
+        "3180": "OIL PALM TREE",
+        "3190": "AGBONO(ORO SEED)",
+        "3200": "OIL BEAN",
+        "3210": "PAWPAW",
+        "3220": "PEAR",
+        "3221": "AVOCADO PEAR",
+        "3222": "DATE PALM",
+        "3230": "RUBBER",
+        "3240": "AFRICAN CHERRY(AGBALUMO/UDARA)",
+        "3250": "WATERMELON",
+        "3260": "BUSH MANGO",
+        "9998": "OTHER, TEMPORARY CROP (SPECIFY)",
+        "9999": "OTHER, PERMANENT CROP (SPECIFY)"
+      },
+      "s03_cropsType": {
+        "1": "Temporary crop",
+        "2": "Permanent/Continuous crop"
+      },
+      "s01a_q07": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01a_q11": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01a_q16": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01h_q08": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01h_q16": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01h_q21": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01a_q08__1": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__2": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__3": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__4": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__5": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__6": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__7": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__8": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__9": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__10": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__11": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__12": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__13": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__14": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__15": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__16": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q08__888": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__1": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__2": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__3": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__4": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__5": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__6": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__7": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__8": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__9": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__10": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__11": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__12": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__13": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__14": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__15": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__16": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__17": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01a_q17__999": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__1": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__2": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__3": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__4": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__5": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__6": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__7": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__8": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__9": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__10": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__11": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__12": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__13": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__14": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__15": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__16": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q09__888": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__1": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__2": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__3": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__4": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__5": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__6": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__7": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__8": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__9": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__10": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__11": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__12": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__13": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__14": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__15": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__16": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__17": {
+        "0": "No",
+        "1": "Yes"
+      },
+      "s01h_q22__999": {
+        "0": "No",
+        "1": "Yes"
+      }
+    }
+  },
+  "5_Harvest_mainSeason.dta": {
+    "labels": {
+      "hhid": "HOUSEHOLD ID",
+      "s01b_harvestedCrops__id": "Id in s01b_harvestedCrops",
+      "s01b_q02": "Did your household sell any unprocessed  [CROP] since the harvest?",
+      "s01b_q11": "Were there losses during/after harvest, during post-harvest, transport & storage",
+      "s01b_q20": "Do you have any of the [CROP] harvested in unprocessed form in storage"
+    },
+    "value_labels": {
+      "s01b_harvestedCrops__id": {
+        "1010": "BEANS/COWPEA",
+        "1020": "CASSAVA",
+        "1040": "COCOYAM",
+        "1050": "COTTON",
+        "1060": "GROUND NUT/PEANUTS",
+        "1070": "GUINEA CORN/SORGHUM",
+        "1080": "MAIZE",
+        "1090": "MELON/EGUSI",
+        "1100": "MILLET/MAIWA",
+        "1110": "RICE",
+        "1121": "WHITE YAM",
+        "1122": "YELLOW YAM",
+        "1123": "WATER YAM",
+        "1124": "THREE LEAVE YAM",
+        "2010": "ACHA",
+        "2020": "BAMBARA NUT",
+        "2030": "BANANA",
+        "2040": "BEENI-SEED/SESAME",
+        "2050": "CARROT",
+        "2060": "CUCUMBER",
+        "2070": "CABBAGE",
+        "2071": "LETTUCE",
+        "2080": "GARDEN EGG",
+        "2090": "GARLIC",
+        "2100": "GINGER",
+        "2120": "OKRO",
+        "2130": "ONION",
+        "2141": "SWEET/BELL PEPPER (TATASHE)",
+        "2142": "SMALL PEPPER (RODO)",
+        "2150": "PIGEON PEA",
+        "2160": "PINEAPPLE",
+        "2170": "PLANTAIN",
+        "2180": "IRISH POTATO",
+        "2181": "SWEET POTATO",
+        "2190": "PUMPKIN",
+        "2194": "GREEN VEGETABLE",
+        "2210": "SHEA NUT",
+        "2220": "SOYA BEANS",
+        "2230": "SUGAR CANE",
+        "2240": "TEA",
+        "2250": "TOBACCO",
+        "2260": "TOMATO",
+        "2270": "WALNUT",
+        "2280": "WHEAT",
+        "2290": "ZOBO/HIBISCUS",
+        "3010": "APPLE",
+        "3020": "CASHEW",
+        "3030": "CHILLI PEPPER (SHOMBO)",
+        "3040": "COCOA",
+        "3050": "COCONUT",
+        "3060": "COFFEE",
+        "3070": "ALLIGATOR PEPPER",
+        "3080": "GRAPE FRUIT",
+        "3090": "GUAVA",
+        "3100": "JUTE (EWEDU)",
+        "3110": "KOLANUT",
+        "3113": "BITTER KOLA",
+        "3120": "LEMON",
+        "3130": "LIME",
+        "3150": "MANDARIN/TANGERINE",
+        "3160": "MANGO",
+        "3170": "ORANGE",
+        "3180": "OIL PALM TREE",
+        "3190": "AGBONO(ORO SEED)",
+        "3200": "OIL BEAN",
+        "3210": "PAWPAW",
+        "3220": "PEAR",
+        "3221": "AVOCADO PEAR",
+        "3222": "DATE PALM",
+        "3230": "RUBBER",
+        "3240": "AFRICAN CHERRY(AGBALUMO/UDARA)",
+        "3250": "WATERMELON",
+        "3260": "BUSH MANGO",
+        "9998": "OTHER, TEMPORARY CROP (SPECIFY)",
+        "9999": "OTHER, PERMANENT CROP (SPECIFY)"
+      },
+      "s01b_q02": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01b_q11": {
+        "1": "Yes",
+        "2": "No"
+      },
+      "s01b_q20": {
+        "1": "Yes",
+        "2": "No"
+      }
+    }
+  },
+  "9_Input_use_mainSeason.dta": {
+    "labels": {
+      "hhid": "HOUSEHOLD ID",
+      "s03c_inputType__id": "Id in s03c_inputType",
+      "s03c_q01": "Quantity of input used by the HH (Kg) in the agric season"
+    },
+    "value_labels": {
+      "s03c_inputType__id": {
+        "1": "INORGANIC FERTILIZER: UREA",
+        "2": "INORGANIC FERTILIZER: OTHER NITROGENOUS FERTILIZERS",
+        "3": "INORGANIC FERTILIZER: SUPERPHOSPHATES ABOVE 35% OF P2O5",
+        "4": "INORGANIC FERTILIZER: OTHER PHOSPHATIC FERTILIZERS",
+        "5": "INORGANIC FERTILIZER: POTASSIUM CHLORIDE (MOP)",
+        "6": "INORGANIC FERTILIZER: OTHER POTASSIC FERTILIZERS",
+        "7": "INORGANIC FERTILIZER: NPK COMPOUND",
+        "8": "INORGANIC FERTILIZER: DIAMMONIUM PHOSPHATE (DAP)",
+        "9": "INORGANIC FERTILIZER: OTHER COMPOUND FERTILIZERS",
+        "10": "ORGANIC FERTILIZER: SOLID MANURE",
+        "11": "ORGANIC FERTILIZER: LIQUID MANURE/SLURRY",
+        "12": "ORGANIC FERTILIZER: VEGETABLE MATERIAL &amp; COMPOST",
+        "13": "ORGANIC FERTILIZER: STABILISED SEWAGE SLUDGE",
+        "14": "ORGANIC FERTILIZER: BIOSTIMULANTS",
+        "15": "ORGANIC FERTILIZER: OTHER",
+        "16": "PESTICIDES/HERBICIDES: INSECTICIDES",
+        "17": "PESTICIDES/HERBICIDES: HERBICIDES (SOLID)",
+        "18": "PESTICIDES/HERBICIDES: HERBICIDES (LIQUID)",
+        "19": "PESTICIDES/HERBICIDES: FUNGICIDES",
+        "20": "PESTICIDES/HERBICIDES: RODENTICIDES",
+        "21": "PESTICIDES: OTHER"
+      }
+    }
+  }
+}

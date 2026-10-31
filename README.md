@@ -71,6 +71,27 @@ The website presents **Overview, Agricultural insights, Data quality, Recommenda
 
 Agricultural Insights also includes **Water Management**: verified infrastructure presence, main irrigation methods and water sources, with eligible plot denominators and percentage/count controls. See the [irrigation findings](reports/IRRIGATION_FINDINGS.md) and [delivery review](docs/IRRIGATION_REVIEW.md).
 
+The **Farming conditions, harvest and input records** explorer adds four question-led
+tabs: land tenure and dwelling-to-plot travel; branch-specific harvest difficulties;
+harvested-crop sales, retained storage and broad loss reports; and recorded-input
+quantity completeness. Composition rings, ordered/paired dot plots and heatmaps
+complement the earlier bars. Exact tables and denominators remain available, with
+mark figures on hover. These are historical unweighted records at different grains,
+not unique-farmer rates. See the [FC1 contract](docs/FARMING_CONDITIONS_CONTRACT.md),
+[findings](reports/FARMING_CONDITIONS_FINDINGS.md) and [review](docs/FARMING_CONDITIONS_REVIEW.md).
+
+Authorized owners can reproduce the additional private aggregate with:
+
+```powershell
+.\.venv-m4\Scripts\python.exe -m agrisight.farming_conditions data/raw/nass_2023/owner_download_2026-10-29/NASS_anonymized_dataset.zip --output reports/private/farming_conditions_fc1.json
+```
+
+Raw data and aggregate JSON remain ignored. The optional FC1 panel hides findings
+when the aggregate fails its reviewed hash, schema, accounting or origin checks.
+Input quantity units and stage-specific loss measurements are not sufficiently
+verified for quantity comparisons; seed variety/certification interpretation also
+remains gated.
+
 The historical technical explorer is retained separately: run `research_explorer_app.py` instead of `streamlit_app.py` to inspect survey methods and explicitly synthetic engineering studies. It is not part of the stakeholder site's navigation.
 
 The product revalidates three core survey aggregate inputs on each interaction and separately validates the optional coverage aggregate and packaged public boundaries; missing or changed evidence hides findings. Agricultural insights now defaults to a four-activity horizontal comparison with percentage/count controls and focused response breakdowns. An optional verified state/FCT map shows sample household coverage, with an accessible table; it is not a geographic prevalence estimate. It has no raw-data upload or experiment-rerun controls. See the [activity explorer and map review](docs/ACTIVITY_EXPLORER_REVIEW.md) and [boundary notices](THIRD_PARTY_NOTICES.md). Raw inputs and aggregate JSON remain ignored; authorized owners must reproduce the files following the findings and historical NASS-01/NASS-02 instructions.
