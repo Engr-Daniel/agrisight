@@ -6,6 +6,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from agrisight import reporting_brand as brand
+
 SOURCE = "Data context: NBS NASS 2023 · April–October 2022 context."
 
 
@@ -39,7 +41,7 @@ def dots(rows: list[dict], counts: bool = False, series: bool = False) -> alt.Ch
 def table(summary: dict) -> None:
     st.caption(f'{summary["valid"]:,} valid responses from {summary["eligible"]:,} eligible records; '
                f'{summary["missing"]:,} missing and {summary["invalid"]:,} invalid excluded from percentages.')
-    st.dataframe(pd.DataFrame([{"Response": r["label"], "Records": r["count"], "Share": rate(r["share"])}
+    brand.table(pd.DataFrame([{"Response": r["label"], "Records": r["count"], "Share": rate(r["share"])}
                                for r in summary["rows"]]), hide_index=True, width="stretch")
 
 
@@ -110,7 +112,7 @@ def difficulties(bundle: dict, counts: bool) -> None:
                      f'{leading["count"]:,} of {leading["valid"]:,} valid responses ({rate(leading["share"])}). '
                      "This is a reported reason, not independently measured causation.")
         st.altair_chart(chart_style(dots(rows, counts)), width="stretch")
-        st.dataframe(pd.DataFrame([{"Reason": r["label"], "Yes": r["rows"][1]["count"], "Valid": r["valid"],
+        brand.table(pd.DataFrame([{"Reason": r["label"], "Yes": r["rows"][1]["count"], "Valid": r["valid"],
             "Eligible": r["eligible"], "Missing": r["missing"], "Invalid": r["invalid"], "Share": rate(r["rows"][1]["share"])} for r in reasons]), hide_index=True, width="stretch")
         st.caption("Reasons can overlap. Each percentage uses that reason's valid 0/1 responses within the affected subset; missing is not no.")
     if question in ("Unharvested area due to shocks", "Shock reasons"):
@@ -143,7 +145,7 @@ def destinations(bundle: dict, counts: bool) -> None:
         st.caption("Default: up to 10 crops with the most recorded destination rows, not the highest percentages. "
                    f'{data["omitted_crop_categories"]:,} crop categories lack at least 30 valid responses per field and are omitted from crop detail. '
                    "Each dot uses its own field-valid household–crop denominator; these are not shares of crop output.")
-        st.dataframe(pd.DataFrame([{"Crop": c["label"], "Report": n.title(), "Yes": c[n]["rows"][0]["count"], "Valid": c[n]["valid"],
+        brand.table(pd.DataFrame([{"Crop": c["label"], "Report": n.title(), "Yes": c[n]["rows"][0]["count"], "Valid": c[n]["valid"],
             "Missing": c[n]["missing"], "Invalid": c[n]["invalid"], "Share": rate(c[n]["rows"][0]["share"])} for c in selected for n in ("sales", "storage")]), hide_index=True, width="stretch")
     elif mode == "Sales and storage overlap":
         joint = data["overlap"]
@@ -155,7 +157,7 @@ def destinations(bundle: dict, counts: bool) -> None:
             tooltip=["Sales:N", "Storage:N", alt.Tooltip("Records:Q", format=","), alt.Tooltip("Share:Q", format=".2%")]).properties(height=220)
         st.altair_chart(chart_style(chart), width="stretch")
         st.caption(f'{joint["valid"]:,} records valid for both questions; {joint["excluded"]:,} excluded. Sales and storage are not mutually exclusive.')
-        st.dataframe(pd.DataFrame(rows).assign(Share=[rate(r["Share"]) for r in rows]), hide_index=True, width="stretch")
+        brand.table(pd.DataFrame(rows).assign(Share=[rate(r["Share"]) for r in rows]), hide_index=True, width="stretch")
     else:
         st.altair_chart(chart_style(dots(dot_rows(data["losses"]), counts)), width="stretch")
         table(data["losses"])
@@ -198,7 +200,7 @@ def inputs(bundle: dict) -> None:
         tooltip=["Input type:N", "Status:N", alt.Tooltip("Records:Q", format=","), alt.Tooltip("Denominator:Q", format=","), alt.Tooltip("Share:Q", format=".2%")]).properties(height=max(220, len(bundle["inputs"])*29))
     st.altair_chart(chart_style(chart), width="stretch")
     st.caption("Each row sums to 100% of that input's recorded household–input rows. Colour shows quantity-status share, not amount used. Hover for figures.")
-    st.dataframe(pd.DataFrame([{"Input": unescape(r["label"]), "Recorded rows": r["records"],
+    brand.table(pd.DataFrame([{"Input": unescape(r["label"]), "Recorded rows": r["records"],
         **{s["label"]: s["count"] for s in r["statuses"]}} for r in bundle["inputs"]]), hide_index=True, width="stretch")
     st.caption("Missing quantity is not zero use. Amounts are not compared across input types.")
     with st.expander("Understanding these figures - input quantities"):

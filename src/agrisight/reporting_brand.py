@@ -5,6 +5,7 @@ from functools import lru_cache
 from html import escape
 from importlib.resources import files
 
+import pandas as pd
 import streamlit as st
 
 IMAGE_CREDIT = "Illustration: AI-generated agricultural artwork."
@@ -22,6 +23,19 @@ def presentation_assets() -> tuple[str, str]:
 def styles() -> None:
     css, _ = presentation_assets()
     st.html(f"<style>{css}</style>")
+
+
+def website_styles() -> None:
+    """Stakeholder website design layer (typography, hero, cards, chips, footer)."""
+    css = files("agrisight").joinpath("assets/website.css").read_text(encoding="utf-8")
+    st.html(f"<style>{css}</style>")
+
+
+def table(frame: pd.DataFrame, **kwargs) -> None:
+    """Exact table with locale thousands separators on whole-number columns; values unchanged."""
+    config = {name: st.column_config.NumberColumn(format="localized")
+              for name in frame.columns if pd.api.types.is_integer_dtype(frame[name])}
+    st.dataframe(frame, column_config=config, **kwargs)
 
 
 def navigation(pages: tuple[str, ...], current: str, go) -> None:

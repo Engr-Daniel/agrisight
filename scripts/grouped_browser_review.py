@@ -16,14 +16,18 @@ from websockets.sync.client import connect
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def tab(page: Page, label: str, ready: str) -> None:
-    wait_for(lambda: page.js("[...document.querySelectorAll('[role=tab]')].some(e=>"
-                             f"e.textContent.trim()==={json.dumps(label)})"))
-    assert page.js("(() => {const e=[...document.querySelectorAll('[role=tab]')].find(e=>"
-                   f"e.textContent.trim()==={json.dumps(label)});"
-                   "e.scrollIntoView({block:'center',behavior:'instant'});e.focus();return true;})()")
-    page.key("Enter", "Enter", 13)
-    wait_for(lambda: ready in page.text())
+def chip(page: Page, label: str, ready: str) -> None:
+    """Select one subject chip with a real pointer click at its position, then wait for content."""
+    find = ("[...document.querySelectorAll('button[data-variant=pills]')].find(e=>"
+            f"e.innerText.trim().endsWith({json.dumps(label)}))")
+    wait_for(lambda: page.js(f"!!{find}"))
+    page.js(f"{find}.scrollIntoView({{block:'center',behavior:'instant'}})")
+    time.sleep(.2)
+    box = page.js(f"(() => {{const r={find}.getBoundingClientRect();return [r.x+r.width/2, r.y+r.height/2];}})()")
+    for kind in ("mousePressed", "mouseReleased"):
+        page.call("Input.dispatchMouseEvent", {"type": kind, "x": box[0], "y": box[1],
+                                               "button": "left", "clickCount": 1})
+    wait_for(lambda: ready in page.text() and page.js(f"{find}.getAttribute('aria-checked')==='true'"))
     time.sleep(.2)
 
 
@@ -51,15 +55,22 @@ def review() -> None:
             for method in ("Page.enable", "Runtime.enable", "Network.enable"):
                 page.call(method)
             page.call("Page.navigate", {"url": f"http://127.0.0.1:{app_port}"})
-            wait_for(lambda: "92.84%" in page.text())
+            wait_for(lambda: "92.8%" in page.text() and "Households surveyed" in page.text())
             for mode, width, height in (("desktop", 1440, 1000), ("narrow", 390, 844)):
                 page.resize(width, height)
+                page.button("Overview")
+                wait_for(lambda: "Households surveyed" in page.text())
+                assert "143,105" in page.text() and "64% reported both crops and livestock" in page.text()
+                assert page.js("document.querySelectorAll('.agri-slide').length") == 6
+                audit["captures"].append(page.capture(output, mode+"_overview"))
                 page.button("Agricultural insights")
-                tab(page, "Activities", "Agricultural activity explorer")
+                chip(page, "Activities", "Agricultural activity explorer")
+                assert not page.js("document.querySelector('[role=tab]')")  # no nested tab bars
+                assert page.js("document.querySelectorAll('button[data-variant=pills]').length") == 9
                 assert "these are not national estimates" in page.text()
                 assert "Households may report multiple activities" in page.text()
                 audit["captures"].append(page.capture(output, mode+"_activities"))
-                for group, subject, ready, anchor in (
+                for _group, subject, ready, anchor in (
                     ("Crops & seeds", "Crop portfolio", "Crop portfolio and diversity", ".st-key-crop_portfolio"),
                     ("Crops & seeds", "Seed sources", "Explore seed records", ".st-key-seed_sources"),
                     ("Crops & seeds", "Input records", "quantity information gaps", ".st-key-input_records"),
@@ -68,8 +79,7 @@ def review() -> None:
                     ("Water & land", "Plot types", "What kinds of plots", None),
                     ("Harvest & markets", "Harvest difficulties", "Explore harvest response branch", ".st-key-harvest_difficulties"),
                     ("Harvest & markets", "Sales & storage", "Explore crop destinations", ".st-key-crop_destinations")):
-                    tab(page, group, subject)
-                    tab(page, subject, ready)
+                    chip(page, subject, ready)
                     if subject == "Crop portfolio":
                         assert "119,909 households with recorded temporary crops" in page.text()
                         assert "Crop-roster coverage differs" not in page.text()
@@ -102,7 +112,12 @@ def review() -> None:
                 audit["checks"][mode+"_quality_coverage"] = True
                 page.button("About AgriSight")
                 wait_for(lambda: "Source and scope" in page.text())
-                assert "not a photograph" not in page.text()
+                assert "not a photograph" not in page.text() and "AI-generated" not in page.text()
+                page.button("Overview")
+                wait_for(lambda: "Nine questions, four topics" in page.text())
+                page.button("Seed sources")  # topic card deep link
+                wait_for(lambda: "Explore seed records" in page.text())
+                audit["checks"][mode+"_topic_deep_link"] = True
             audit.update(runtime_exception_count=len(page.exceptions), request_hosts=sorted(page.hosts))
             assert not page.exceptions and page.hosts == {"127.0.0.1"}
             audit["status"] = "passed_pending_visual_inspection"

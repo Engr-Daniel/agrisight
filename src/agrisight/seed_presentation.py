@@ -3,6 +3,7 @@
 import pandas as pd
 import streamlit as st
 
+from agrisight import reporting_brand as brand
 from agrisight.data_context import show as data_context
 from agrisight.water_management import bars, rate
 
@@ -58,7 +59,7 @@ def show(bundle: dict) -> None:
         st.write("Published combination groups are mutually exclusive for complete records. Up to six frequent named combinations are shown; all others are pooled. All-zero selections do not establish that no seeds were used.")
         table = [{"Combination": r["label"], "Records": r["count"], "Share": rate(r["share"])} for r in rows]
     with st.expander("Read the complete seed table"):
-        st.dataframe(pd.DataFrame(table), hide_index=True, width="stretch")
+        brand.table(pd.DataFrame(table), hide_index=True, width="stretch")
     st.caption("Seed sources can overlap. Source channels do not establish seed variety or certification.")
     with st.expander("Understanding these figures — seed sources"):
         st.caption(f'{c["excluded_permanent_records"]:,} permanent/continuous seed records are excluded. '

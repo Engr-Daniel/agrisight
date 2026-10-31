@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from test_stakeholder_product import app, text
+from test_stakeholder_product import app, subject, text
 
 from agrisight import seed_reporting as adapter
 from agrisight import seed_sources as model
@@ -159,8 +159,7 @@ def test_cli_path_and_archive_guard(tmp_path, monkeypatch):
 def test_ui_modes_units_undefined_variety_gate_and_failure(monkeypatch):
     bundle = {"status": "available", "origin": "TEST FIXTURE", **adapter.project(data(), 3, 2)}
     monkeypatch.setattr(adapter, "build_bundle", lambda *args: copy.deepcopy(bundle))
-    at = app(monkeypatch)
-    at.button(key="nav_1").click().run()
+    at = subject(app(monkeypatch), "Seed sources")
     assert not at.exception and "Variety and certification percentages are not shown" in text(at)
     assert "Sources can overlap" in text(at)
     for view in ("Source combinations", "Sources"):
@@ -173,4 +172,5 @@ def test_ui_modes_units_undefined_variety_gate_and_failure(monkeypatch):
     bundle["status"] = "unavailable"
     at.run()
     assert not at.exception and "seed-source evidence is unavailable" in text(at)
+    at.pills(key="subject").set_value("Activities").run()
     assert at.selectbox(key="activity").value == "all"

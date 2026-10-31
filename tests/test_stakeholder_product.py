@@ -72,6 +72,13 @@ def app(monkeypatch, data=None):
     return AppTest.from_file(str(ROOT / "streamlit_app.py"), default_timeout=25).run()
 
 
+def subject(at, name="Activities"):
+    """Open Agricultural insights and choose one subject chip."""
+    at.button(key="nav_1").click().run()
+    at.pills(key="subject").set_value(name).run()
+    return at
+
+
 def text(at):
     return "\n".join(item.value for kind in ("markdown", "caption", "warning", "info")
                      for item in at.get(kind))
@@ -80,6 +87,7 @@ def text(at):
 def test_five_pages_activity_selection_and_source_context(monkeypatch):
     at = app(monkeypatch)
     assert not at.exception and not at.json
+    subject(at)
     assert at.selectbox(key="activity").value == "all"
     for i in ("crops", "livestock", "fish_capture", "fish_farming", "all"):
         at.selectbox(key="activity").set_value(i).run()
@@ -97,7 +105,7 @@ def test_undefined_share_and_unavailable_about(monkeypatch):
     hh, pp = frames()
     hh["s00_q15a"] = None
     data = {"analysis_version": "1.0", **model.calculate(hh, pp)}
-    at = app(monkeypatch, data)
+    at = subject(app(monkeypatch, data))
     at.selectbox(key="activity").set_value("crops").run()
     assert not at.exception
     assert "Undefined" in [m.value for m in at.metric]

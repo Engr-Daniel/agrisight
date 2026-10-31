@@ -5,6 +5,7 @@ from html import escape
 import pandas as pd
 import streamlit as st
 
+from agrisight import reporting_brand as brand
 from agrisight.data_context import show as data_context
 
 OPTIONS = ("Infrastructure presence", "Irrigation methods", "Water sources")
@@ -91,6 +92,6 @@ def show(bundle: dict) -> None:
         if selection != OPTIONS[0]:
             st.caption(f'Only the {presence["yes"]:,} infrastructure-yes plots are eligible for this question. '
                        "Missing fields outside that subset are expected skips, not ordinary incompleteness.")
-    st.dataframe(pd.DataFrame([{"Response": r["label"], "Plots": r["count"], "Share": rate(r["share"])}
+    brand.table(pd.DataFrame([{"Response": r["label"], "Plots": r["count"], "Share": rate(r["share"])}
                                for r in rows]), hide_index=True, width="stretch")
-    st.caption("Counting unit: plot records ? Main season: April?October 2022 ? NBS NASS 2023")
+    st.caption("Counting unit: plot records · Main season: April–October 2022 · NBS NASS 2023")

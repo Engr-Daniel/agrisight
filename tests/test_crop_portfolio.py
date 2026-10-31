@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 from test_stakeholder_analysis import frames as core_frames
-from test_stakeholder_product import app, text
+from test_stakeholder_product import app, subject, text
 
 from agrisight import crop_portfolio as model
 from agrisight import crop_reporting as adapter
@@ -134,8 +134,7 @@ def test_ui_modes_units_coverage_warning_and_optional_failure(monkeypatch):
     bundle = {"status": "available", "origin": "TEST FIXTURE",
               **adapter.project({"version": "1.0", **model.calculate(hh, pp, cc)}, 5, 3, 2)}
     monkeypatch.setattr(adapter, "build_bundle", lambda *args: copy.deepcopy(bundle))
-    at = app(monkeypatch)
-    at.button(key="nav_1").click().run()
+    at = subject(app(monkeypatch), "Crop portfolio")
     assert not at.exception and "households with recorded temporary crops" in text(at)
     assert not any("Crop-roster coverage differs" in w.value for w in at.warning)
     at.button(key="nav_2").click().run()
@@ -152,4 +151,5 @@ def test_ui_modes_units_coverage_warning_and_optional_failure(monkeypatch):
     bundle["status"] = "unavailable"
     at.run()
     assert not at.exception and "crop portfolio evidence is unavailable" in text(at)
+    at.pills(key="subject").set_value("Activities").run()
     assert at.selectbox(key="activity").value == "all"

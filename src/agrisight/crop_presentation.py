@@ -3,6 +3,7 @@
 import pandas as pd
 import streamlit as st
 
+from agrisight import reporting_brand as brand
 from agrisight.data_context import show as data_context
 from agrisight.water_management import bars, rate
 
@@ -39,7 +40,7 @@ def show(bundle: dict) -> None:
     else:
         st.info("No eligible temporary crop records; the portfolio and its percentages are undefined.")
     with st.expander("Read the complete crop table"):
-        st.dataframe(pd.DataFrame([{"Category": r["label"], "Households": r["count"], "Share": rate(r["share"])}
+        brand.table(pd.DataFrame([{"Category": r["label"], "Households": r["count"], "Share": rate(r["share"])}
                                    for r in rows]), hide_index=True, width="stretch")
     with st.expander("Understanding these figures — crop portfolio"):
         st.caption(f'{c["temporary_rows"]:,} temporary crop records become {c["household_crop_pairs"]:,} unique household–crop pairs. '

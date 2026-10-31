@@ -1,6 +1,6 @@
 """Activity comparison semantics and selector transitions with manually counted fixtures."""
 
-from test_stakeholder_product import app, text
+from test_stakeholder_product import app, subject, text
 
 from agrisight.activity_explorer import chart
 
@@ -10,7 +10,7 @@ def html(at):
 
 
 def test_default_all_four_bars_and_both_units(monkeypatch):
-    at = app(monkeypatch)
+    at = subject(app(monkeypatch))
     assert at.selectbox(key="activity").value == "all"
     assert at.radio(key="activity_unit").value == "Percentages"
     assert html(at).count('class="agri-activity-row"') == 4
@@ -25,7 +25,7 @@ def test_default_all_four_bars_and_both_units(monkeypatch):
 
 
 def test_focus_breakdown_interpretation_and_return_to_all(monkeypatch):
-    at = app(monkeypatch)
+    at = subject(app(monkeypatch))
     for identifier, percentage, yes in (("crops", "66.67%", "2"),
                                       ("livestock", "60.00%", "3"),
                                       ("fish_capture", "20.00%", "1"),

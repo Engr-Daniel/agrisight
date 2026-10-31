@@ -4,6 +4,8 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from agrisight import reporting_brand as brand
+
 
 def show(bundle: dict) -> None:
     st.subheader("Where the household sample is represented")
@@ -29,7 +31,7 @@ def show(bundle: dict) -> None:
                     .configure_view(stroke=None).configure(background="#f6f7f0"), width="stretch")
     if not bundle["suppressed"]:
         with st.expander("Read the state coverage table"):
-            st.dataframe(pd.DataFrame(bundle["states"]).rename(columns={
+            brand.table(pd.DataFrame(bundle["states"]).rename(columns={
                 "name": "State / FCT", "households": "Sample household records"}),
                 hide_index=True, width="stretch")
     st.caption("Source: NBS NASS 2023 released household sample; unweighted counts, not population "

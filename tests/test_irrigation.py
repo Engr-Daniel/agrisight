@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from test_stakeholder_product import app, text
+from test_stakeholder_product import app, subject, text
 
 from agrisight import irrigation as model
 from agrisight import irrigation_reporting as adapter
@@ -137,8 +137,7 @@ def ui_bundle():
 def test_all_question_unit_transitions_and_optional_failure(monkeypatch):
     bundle = ui_bundle()
     monkeypatch.setattr(adapter, "build_bundle", lambda root, total: copy.deepcopy(bundle))
-    at = app(monkeypatch)
-    at.button(key="nav_1").click().run()
+    at = subject(app(monkeypatch), "Water management")
     assert not at.exception and at.selectbox(key="water_question").value == "Infrastructure presence"
     assert "66.67%" in text(at) and "not prove a plot is rain-fed" in text(at)
     for question in ("Infrastructure presence", "Irrigation methods", "Water sources"):
@@ -155,6 +154,7 @@ def test_all_question_unit_transitions_and_optional_failure(monkeypatch):
     bundle["status"] = "unavailable"
     at.run()
     assert not at.exception and "irrigation evidence is unavailable" in text(at)
+    at.pills(key="subject").set_value("Activities").run()
     assert at.selectbox(key="activity").value == "all"
 
 
@@ -165,8 +165,7 @@ def test_ui_zero_eligible_and_missing_applicable(monkeypatch):
     bundle = {"status": "available", "origin": "TEST FIXTURE",
               **adapter.project({"version": "1.0", **model.calculate(hh, pp)}, 3)}
     monkeypatch.setattr(adapter, "build_bundle", lambda root, total: bundle)
-    at = app(monkeypatch)
-    at.button(key="nav_1").click().run()
+    at = subject(app(monkeypatch), "Water management")
     at.selectbox(key="water_question").set_value("Irrigation methods").run()
     assert not at.exception and "undefined" in text(at)
     assert "3 missing" in text(at)
