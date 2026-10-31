@@ -30,7 +30,7 @@ def choose_activity(page: Page, index: int, label: str = "Explore agricultural a
 
 
 def bar_values(page: Page) -> list:
-    return page.js("[...document.querySelectorAll('.agri-activity-chart:not(.agri-water-chart):not(.agri-crop-chart) strong')].map(e=>e.textContent)")
+    return page.js("[...document.querySelectorAll('.agri-activity-chart:not(.agri-water-chart):not(.agri-crop-chart):not(.agri-seed-chart) strong')].map(e=>e.textContent)")
 
 
 def water_unit(page: Page, label: str, key: str = "water_unit") -> None:
@@ -47,6 +47,10 @@ def water_values(page: Page) -> list:
 
 def crop_values(page: Page) -> list:
     return page.js("[...document.querySelectorAll('.agri-crop-chart strong')].map(e=>e.textContent)")
+
+
+def seed_values(page: Page) -> list:
+    return page.js("[...document.querySelectorAll('.agri-seed-chart strong')].map(e=>e.textContent)")
 
 
 def review():
@@ -129,6 +133,25 @@ def review():
                         choose_activity(page, 0, "Explore crop records")
                         wait_for(lambda: len(crop_values(page)) == 10)
                         audit["checks"][mode + "_crop_modes_units_scope"] = True
+                        choose_activity(page, 0, "Explore seed records")
+                        water_unit(page, "Percentages", "seed_unit")
+                        wait_for(lambda: seed_values(page) == ["62.83%", "3.59%", "42.08%", "2.97%", "1.50%"])
+                        assert "349,046" in page.text() and "119,897" in page.text()
+                        assert "Variety and certification percentages are not shown" in page.text()
+                        audit["captures"].append(page.capture(output, f"{mode}_seed_sources", anchor=".st-key-seed_sources"))
+                        water_unit(page, "Record counts", "seed_unit")
+                        wait_for(lambda: seed_values(page)[:1] == ["219,313"])
+                        audit["captures"].append(page.capture(output, f"{mode}_seed_counts", anchor=".st-key-seed_sources"))
+                        choose_activity(page, 1, "Explore seed records")
+                        wait_for(lambda: seed_values(page)[:3] == ["183,079", "110,515", "29,056"])
+                        audit["captures"].append(page.capture(output, f"{mode}_seed_combinations_counts", anchor=".st-key-seed_sources"))
+                        water_unit(page, "Percentages", "seed_unit")
+                        wait_for(lambda: seed_values(page)[:1] == ["52.45%"])
+                        assert "Rare combinations are not individually exposed" in page.text()
+                        audit["captures"].append(page.capture(output, f"{mode}_seed_combinations", anchor=".st-key-seed_sources"))
+                        choose_activity(page, 0, "Explore seed records")
+                        wait_for(lambda: len(seed_values(page)) == 5)
+                        audit["checks"][mode + "_seed_modes_units_denominators_variety_gate"] = True
                         choose_activity(page, 0, "Explore water management")
                         water_unit(page, "Percentages")
                         wait_for(lambda: water_values(page) == ["4.11%", "95.89%"])

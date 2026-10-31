@@ -17,7 +17,10 @@ def bars(rows: list[dict], denominator: int, unit: str, css_class: str = "agri-w
     body = []
     for row in rows:
         label = rate(row["share"]) if unit == "Percentages" else f'{row["count"]:,}'
-        width = 100*row["count"]/denominator if denominator else 0
+        if unit == "Percentages":
+            width = 100*row["share"] if row["share"] is not None else 0
+        else:
+            width = 100*row["count"]/denominator if denominator else 0
         body.append('<li class="agri-activity-row"><div class="agri-activity-label">'
                     f'<span>{escape(row["label"])}</span><strong>{label}</strong></div>'
                     f'<div class="agri-activity-track"><div style="width:{width:.8f}%;'

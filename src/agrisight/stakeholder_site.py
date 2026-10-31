@@ -12,6 +12,8 @@ from agrisight import (
     crop_presentation,
     crop_reporting,
     irrigation_reporting,
+    seed_presentation,
+    seed_reporting,
     stakeholder_reporting,
     water_management,
 )
@@ -89,6 +91,9 @@ def insights(bundle: dict, root: Path) -> None:
     with st.container(key="crop_portfolio"):
         crop_presentation.show(crop_reporting.build_bundle(root, bundle["activities"][0]["input_rows"],
             bundle["plots"]["total"], bundle["activities"][0]["yes"]))
+    with st.container(key="seed_sources"):
+        seed_presentation.show(seed_reporting.build_bundle(root, bundle["activities"][0]["input_rows"],
+            bundle["activities"][0]["yes"]))
     with st.container(key="water_management"):
         water_management.show(irrigation_reporting.build_bundle(root, bundle["plots"]["total"]))
     st.subheader("Where crop and livestock reports overlap")
