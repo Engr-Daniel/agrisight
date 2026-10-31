@@ -73,3 +73,11 @@ def test_text_builders_escape_content():
                 website.figures([("<script>", "a", "b")]), website.steps([("<script>", "b")]),
                 website.topic_card("crops", "<script>", "b"), website.footer("<script>")):
         assert "<script>" not in out
+
+
+def test_compact_banner_and_bar_values_need_no_hover():
+    assert 'class="agri-banner2 agri-compact"' in website.banner("a", "b", "c", "crops", compact=True)
+    assert 'class="agri-banner2"' in website.banner("a", "b", "c", "crops")
+    css = files("agrisight").joinpath("assets/dashboard.css").read_text(encoding="utf-8")
+    hidden = re.findall(r"([^{}]*)\{\s*opacity:\s*0", css)
+    assert hidden and all("strong" not in rule for rule in hidden)  # values are never hidden

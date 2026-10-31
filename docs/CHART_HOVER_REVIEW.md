@@ -1,3 +1,5 @@
+> **Superseded 2026-10-31:** bar values are now always visible; only the detail line is revealed on hover, focus or tap. See WEBSITE_DESIGN_REVIEW.md.
+
 # Chart figures on hover — 2026-10-31
 
 The owner requested figures only when hovering over charts. Activity, crop,

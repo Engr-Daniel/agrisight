@@ -108,9 +108,10 @@ def overlap_mosaic(overlap: dict) -> str:
             'column by livestock or poultry.</p></figcaption></figure>')
 
 
-def banner(eyebrow: str, title: str, lead: str, scene: str) -> str:
-    """Inner-page and subject banner: copy on the left, artwork on the right."""
-    return (f'<section class="agri-banner2"><div class="agri-banner2-copy"><span>{escape(eyebrow)}</span>'
+def banner(eyebrow: str, title: str, lead: str, scene: str, compact: bool = False) -> str:
+    """Inner-page banner: copy left, artwork right. Compact keeps charts near the top."""
+    css = "agri-banner2 agri-compact" if compact else "agri-banner2"
+    return (f'<section class="{css}"><div class="agri-banner2-copy"><span>{escape(eyebrow)}</span>'
             f'<h1>{escape(title)}</h1><p>{escape(lead)}</p></div>'
             f'<div class="agri-banner2-art">{site_art.scene(scene, "agri-banner-scene", True)}</div></section>')
 

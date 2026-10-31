@@ -31,6 +31,22 @@ def chip(page: Page, label: str, ready: str) -> None:
     time.sleep(.2)
 
 
+def keyboard_chip(page: Page) -> str:
+    """Real keyboard path: Tab into the chip group, ArrowRight to the next chip, Space selects."""
+    page.js("document.activeElement.blur()")
+    for _ in range(40):
+        page.key("Tab", "Tab", 9)
+        if page.js("document.activeElement.dataset.variant==='pills'"):
+            break
+    assert page.js("document.activeElement.innerText.trim().endsWith('Activities')")
+    page.key("ArrowRight", "ArrowRight", 39)
+    assert page.js("document.activeElement.innerText.trim().endsWith('Crop portfolio')")
+    page.key(" ", "Space", 32)
+    wait_for(lambda: "Crop portfolio and diversity" in page.text())
+    assert page.js("document.activeElement.dataset.variant==='pills'")  # focus kept on the chip
+    return page.js("getComputedStyle(document.activeElement).outlineStyle")
+
+
 def review() -> None:
     output = ROOT/"reports/private"/datetime.now(UTC).strftime("grouped-browser-%Y%m%dT%H%M%SZ")
     output.mkdir(parents=True)
@@ -67,6 +83,12 @@ def review() -> None:
                 chip(page, "Activities", "Agricultural activity explorer")
                 assert not page.js("document.querySelector('[role=tab]')")  # no nested tab bars
                 assert page.js("document.querySelectorAll('button[data-variant=pills]').length") == 9
+                assert page.js("[...document.querySelectorAll('.agri-activity-row strong')]"
+                               ".every(e=>getComputedStyle(e).opacity==='1')")  # values visible, no hover
+                audit["checks"][mode+"_values_visible_without_hover"] = True
+                assert keyboard_chip(page) == "solid"  # visible focus ring
+                audit["checks"][mode+"_keyboard_chip_selection"] = True
+                chip(page, "Activities", "Agricultural activity explorer")
                 assert "these are not national estimates" in page.text()
                 assert "Households may report multiple activities" in page.text()
                 audit["captures"].append(page.capture(output, mode+"_activities"))

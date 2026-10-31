@@ -56,7 +56,7 @@ def seed_values(page: Page) -> list:
 
 
 def check_hover_figures(page: Page) -> int:
-    """Exercise actual pointer entry/exit and keyboard focus, not just DOM text."""
+    """Values stay visible; the detail line follows real pointer entry/exit and keyboard focus."""
     count = page.js("document.querySelectorAll('.agri-activity-chart').length")
     assert count == 4
     for index in range(count):
@@ -64,8 +64,11 @@ def check_hover_figures(page: Page) -> int:
         page.js(f"{row}.scrollIntoView({{block:'center',behavior:'instant'}})")
         page.js("document.activeElement.blur()")
         page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": 0, "y": 0})
-        opacity = f"getComputedStyle({row}.querySelector('strong')).opacity"
-        assert page.js(opacity) == "0"
+        value = f"getComputedStyle({row}.querySelector('strong')).opacity"
+        opacity = f"getComputedStyle({row}.querySelector('small')||{row}.querySelector('strong')).opacity"
+        assert page.js(value) == "1"  # value visible without hover
+        detail = page.js(f"!!{row}.querySelector('small')")
+        assert page.js(opacity) == ("0" if detail else "1")
         before = page.js(f"{row}.getBoundingClientRect().height")
         point = page.js(f"(() => {{const r={row}.getBoundingClientRect();"
                         "return {x:r.x+r.width/2,y:r.y+r.height/2};})()")
@@ -73,11 +76,11 @@ def check_hover_figures(page: Page) -> int:
         assert page.js(opacity) == "1"
         assert page.js(f"{row}.getBoundingClientRect().height") == before
         page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": 0, "y": 0})
-        assert page.js(opacity) == "0"
+        assert page.js(opacity) == ("0" if detail else "1") and page.js(value) == "1"
         page.js(f"{row}.focus()")
         assert page.js(opacity) == "1"
         page.key("Tab", "Tab", 9)
-        assert page.js(opacity) == "0"
+        assert page.js(opacity) == ("0" if detail else "1") and page.js(value) == "1"
     return count
 
 

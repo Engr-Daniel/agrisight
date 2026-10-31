@@ -7,11 +7,11 @@
 .agri-activity-label { display: flex; justify-content: space-between; align-items: baseline;
   gap: 1rem; margin-bottom: .45rem; font-size: 1rem; }
 .agri-activity-label strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
-/* Keep the layout stable while revealing figures on pointer or keyboard focus.
-   Opacity preserves the values for assistive technology; tables remain available. */
-.agri-activity-row strong, .agri-activity-row small { opacity: 0; }
-.agri-activity-row:hover strong, .agri-activity-row:hover small,
-.agri-activity-row:focus-within strong, .agri-activity-row:focus-within small { opacity: 1; }
+/* Bar values are always visible (no hover needed, touch friendly). The secondary detail
+   line appears on pointer, keyboard focus or tap; opacity keeps layout stable and the
+   text available to assistive technology. Exact tables remain available. */
+.agri-activity-row small { opacity: 0; }
+.agri-activity-row:hover small, .agri-activity-row:focus-within small { opacity: 1; }
 .agri-activity-row:focus-visible { outline: 2px solid #174d36; outline-offset: 5px;
   border-radius: 4px; }
 .agri-activity-track { background: #e9efdf; height: 24px; border-radius: 5px; overflow: hidden; }

@@ -26,5 +26,5 @@ def chart(activities: list[dict], unit: str) -> str:
     scale = "100% of valid responses" if unit == "Percentages" else f"{maximum:,} household records"
     return ('<figure class="agri-activity-chart" aria-label="Reported agricultural activities">'
             '<ol>' + ''.join(rows) + '</ol><figcaption>Common scale: 0 to ' + scale +
-            '. Hover over or focus a bar to see its figures. '
+            '. Hover over, focus or tap a bar for its counts and period. '
             'Undefined percentages have no bar.</figcaption></figure>')

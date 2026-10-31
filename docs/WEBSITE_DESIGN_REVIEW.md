@@ -57,13 +57,38 @@ each subject is unchanged; candidates for later plain-language review include
   the legend and alt text.
 - Desktop and phone screenshots of every page and subject were inspected.
 
+## Follow-up after external review (same day)
+
+An external review of commit `09db02c` (CI `smoke` success observed via the GitHub
+API) recommended three changes before merging:
+
+1. **Chart values visible without hover.** Bar values are now always shown; the
+   secondary detail line (counts and period) still appears on hover, focus or tap.
+   This supersedes the hover-only rule in CHART_HOVER_REVIEW.md. A CSS regression test
+   ensures values are never hidden, and the browser review checks they are visible
+   without hovering at both widths.
+2. **Keyboard use of the subject chips, checked with real key events in Chrome.**
+   Tab reaches the chip group (5 presses from the page start). The arrow keys move
+   focus between chips without selecting (toolbar pattern), and Space or Enter
+   selects. Focus stays on the chip after the rerun, with a solid gold focus ring.
+   The earlier failure came from focusing the chip by script, not from the widget.
+   The browser review now exercises Tab → ArrowRight → Space at both widths.
+   A screen-reader pass is still not done.
+3. **Artwork density.** Subject pages use a compact banner (shorter, smaller
+   heading) so the chart reaches the first desktop screen. Full banners remain on
+   Data quality, Recommendations and About.
+
+Verification: 433 tests pass; Ruff clean; Chrome run
+`grouped-browser-20261031T070717Z`: 26 checks, 22 captures, 0 JavaScript exceptions,
+loopback only, ports closed.
+
 ## Limits and open items
 
-- After a dropdown interaction, a focused Streamlit pill did not respond to a
-  scripted Space key in headless Chrome. Pointer selection works. Keyboard behaviour
-  of Streamlit's pills needs a manual check with a real keyboard and screen reader.
-- Bar values still appear only on hover or focus (owner decision, CHART_HOVER_REVIEW).
-  On touch screens this needs a tap; consider always-visible values for presentations.
+- Keyboard selection is verified in Chrome (see follow-up); a screen-reader check
+  (NVDA/VoiceOver) of the chip group's announcements is still open.
+- While a subject is loading, Streamlit briefly dims elements from the previous page,
+  so one screenshot captured a faded button mid-transition. It is not present once
+  the run completes.
 - Illustrations are generic artwork. Real photography would need licence-verified
   sources or the owner's own photos, and consent for identifiable people.
 - No deployment, external hosting or remote-CI result is claimed. M6-04 release

@@ -31,7 +31,7 @@ def bars(rows: list[dict], denominator: int, unit: str, css_class: str = "agri-w
     maximum = "100%" if unit == "Percentages" else f"{denominator:,} {escape(count_unit)}"
     return f'<figure class="agri-activity-chart {escape(css_class)}"><ol>' + ''.join(body) + (
         f'</ol><figcaption>Common scale: 0 to {maximum}. '
-        'Hover over or focus a bar to see its figures. Undefined shares have no bar.</figcaption></figure>')
+        'Undefined shares have no bar.</figcaption></figure>')
 
 
 def show(bundle: dict) -> None:

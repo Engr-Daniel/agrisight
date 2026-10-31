@@ -144,7 +144,7 @@ def insights(bundle: dict, root: Path) -> None:
     keep_subject()
     subject = st.session_state["subject"]
     topic, scene, _, question, lead = SUBJECTS[subject]
-    st.html(website.banner(f"Agricultural insights · {topic}", question, lead, scene))
+    st.html(website.banner(f"Agricultural insights · {topic}", question, lead, scene, compact=True))
     with st.container(key="subject_nav"):
         st.pills("Choose a subject", list(SUBJECTS), key="subject", on_change=keep_subject,
                  format_func=lambda name: f"{SUBJECTS[name][2]} {name}")
